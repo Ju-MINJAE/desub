@@ -26,11 +26,11 @@ export const Button: React.FC<ButtonProps> = ({
   const getSizeStyles = () => {
     switch (size) {
       case 'full':
-        return 'w-[518px] h-[55px] text-[16px]';
+        return 'w-[32.375rem] h-[3.4375rem] text-[1ren]';
       case 'small':
-        return 'w-[153px] h-[33px] text-[13px]';
+        return 'w-[9.5625rem] h-[2.0625rem] text-[0.8125rem]';
       default:
-        return 'w-[400px] h-[55px]';
+        return 'w-[25rem] h-[3.4375rem]';
     }
   };
 
@@ -38,7 +38,7 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       className={`
         ${getSizeStyles()} rounded-[50px]
-        px-[22px]  py-[5px]
+        px-[1.375rem]  py-[0.3125rem]
         ${getVariantStyles()}
         ${className}
       `}
