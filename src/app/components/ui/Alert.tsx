@@ -6,7 +6,7 @@ interface AlertProps {
   childrenBottom: React.ReactNode;
   buttonText: string;
   variant?: 'green' | 'black' | 'outline';
-  size?: 'full' | 'small';
+  size?: 'full' | 'normal' | 'small';
   className?: string;
 }
 
@@ -14,8 +14,8 @@ export const Alert = ({
   childrenTop,
   childrenBottom,
   buttonText,
-  variant = 'black', // 기본값 추가
-  size = 'full', // 기본값 추가
+  variant = 'black',
+  size = 'full',
   className = '',
   ...props
 }: AlertProps) => {
@@ -36,6 +36,8 @@ export const Alert = ({
         return 'w-[100%] h-[5rem] text-[1.8rem]';
       case 'small':
         return 'w-[20rem] h-[5rem] text-[1.8rem]';
+      case 'normal':
+        return 'w-[32.8rem] h-[5rem] text-[1.8rem]';
       default:
         return 'w-[100%] h-[5rem] text-[1.8rem]';
     }

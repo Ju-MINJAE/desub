@@ -20,7 +20,7 @@ const meta: Meta<typeof Alert> = {
     },
     size: {
       control: 'radio',
-      options: ['full', 'small'],
+      options: ['full', 'normal', 'small'],
     },
     childrenTop: { control: 'text' },
     childrenBottom: { control: 'text' },
