@@ -1,60 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '@/app/components/ui/Button';
+import { Alert } from '@/app/components/ui/Alert';
 
-const meta: Meta<typeof Button> = {
-  title: 'Common/Alert', // 스토리북 UI에서 표시될 이름
-  component: Button,
+const meta: Meta<typeof Alert> = {
+  title: 'Alert',
+  component: Alert,
   parameters: {
-    layout: 'centered', // 컴포넌트를 중앙에 배치
+    layout: 'centered',
     docs: {
       source: {
-        type: 'auto', // 자동으로 렌더링된 HTML 코드를 생성
+        type: 'auto',
       },
     },
   },
   tags: ['autodocs'],
   argTypes: {
-    variant: {
-      options: ['green', 'black', 'outline'], // 선택 가능한 옵션
-    },
-    size: {
-      control: 'radio', // 라디오 버튼으로 선택 가능
-      options: ['default', 'full', 'small'], // 선택 가능한 옵션
-    },
-    type: {
-      control: 'radio', // 라디오 버튼으로 선택 가능
-      options: ['button', 'submit'], // 선택 가능한 옵션
-    },
-    className: { control: 'text' },
+    buttonText: { control: 'text' },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Green: Story = {
+export const Default: Story = {
   args: {
-    variant: 'green',
-    size: 'default',
-    type: 'button',
-    children: 'Button',
-  },
-};
-
-export const Black: Story = {
-  args: {
-    variant: 'black',
-    size: 'full',
-    type: 'button',
-    children: 'Button',
-  },
-};
-
-export const Outline: Story = {
-  args: {
-    variant: 'outline',
-    size: 'small',
-    type: 'button',
-    children: 'Button',
+    childrenTop: 'This is the top content',
+    childrenBottom: 'This is the bottom content',
+    buttonText: 'Click Me', // 버튼 텍스트 설정
   },
 };

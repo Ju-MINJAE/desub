@@ -5,6 +5,8 @@ export default {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,jsx,ts,tsx}', // Storybook에서 사용할 컴포넌트 경로
+    './.storybook/**/*.{js,jsx,ts,tsx}', // Storybook 파일 추가
   ],
   theme: {
     extend: {

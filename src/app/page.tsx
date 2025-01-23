@@ -1,9 +1,3 @@
-import { Alert } from './components/ui/Alert';
-
 export default function Home() {
-  return (
-    <>
-      <Alert />
-    </>
-  );
+  return <div className="text-red-400">Hello World</div>;
 }
