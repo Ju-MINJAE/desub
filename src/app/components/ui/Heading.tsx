@@ -6,9 +6,9 @@ type HeadingProps = {
 
 const Heading: React.FC<HeadingProps> = ({ tag: Tag = 'h1', children, className }) => {
   const baseClasses = {
-    h1: 'text-[5rem] leading-[7.5rem] font-bold',
-    h2: 'text-[1.875rem] leading-[2.8125rem] font-medium',
-    h3: 'text-[1.25rem] leading-[1.875rem] font-medium',
+    h1: 'text-[8rem] leading-[12rem] font-bold',
+    h2: 'text-[3rem] leading-[4.5rem] font-medium',
+    h3: 'text-[2rem] leading-[3rem] font-medium',
   };
 
   return <Tag className={`${baseClasses[Tag] || ''} ${className}`}>{children}</Tag>;
