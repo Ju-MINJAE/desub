@@ -25,6 +25,9 @@ const meta: Meta<typeof Button> = {
       control: 'radio', // 라디오 버튼으로 선택 가능
       options: ['button', 'submit'], // 선택 가능한 옵션
     },
+    disabled: {
+      control: 'boolean',
+    },
     className: { control: 'text' },
   },
 };
@@ -56,5 +59,6 @@ export const Outline: Story = {
     size: 'small',
     type: 'button',
     children: 'Button',
+    disabled: true,
   },
 };
