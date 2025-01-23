@@ -3,22 +3,22 @@ import WorkingProcess from './WorkingProcess';
 
 const UniqueProcess = () => {
   return (
-    <div className="relative w-full min-h-[800px] mt-[22.3rem] px-4 md:px-[8.4375rem]">
-      <h2 className="font-normal text-[2.5rem] md:text-[4rem] mb-20">Our unique process</h2>
+    <div className="relative w-full pb-[40rem] mt-[22.3rem]">
+      <h2 className="font-normal text-[2.5rem] ml-[13.5rem] mb-20">Our unique process</h2>
       <div className="flex justify-center items-center relative top-48 z-20">
         <WorkingProcess />
       </div>
       <div className="absolute right-[25%] top-0">
         <Image src="/icons/j.svg" alt="J icon" width={250} height={250} />
       </div>
-      <div className="absolute right-0 top-[30%]">
+      <div className="absolute right-0 top-[15%]">
         <Image src="/icons/star.svg" alt="Star icon" width={410} height={320} />
       </div>
-      <div className="absolute left-[5%] top-[60%]">
+      <div className="absolute left-[5%] top-[45%]">
         <Image src="/icons/s.svg" alt="S icon" width={190} height={190} />
       </div>
 
-      <div className="flex items-start space-x-8 absolute left-[20%] top-[100%] z-30">
+      <div className="flex items-start space-x-8 absolute left-[20%] -bottom-10 z-30">
         <Image src="/icons/w.svg" alt="W icon" width={470} height={420} />
         <div className="flex flex-col space-y-8 pt-[18rem] pl-[2rem]">
           <div className="flex items-start space-x-2">
