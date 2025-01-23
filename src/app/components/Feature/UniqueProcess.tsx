@@ -22,7 +22,13 @@ const UniqueProcess = () => {
         <Image src="/icons/w.svg" alt="W icon" width={470} height={420} />
         <div className="flex flex-col space-y-8 pt-[18rem] pl-[2rem]">
           <div className="flex items-start space-x-2">
-            <Image src="/icons/check.svg" alt="check" width={26} height={26} className="mt-1" />
+            <Image
+              src="/icons/check_circle.svg"
+              alt="check"
+              width={26}
+              height={26}
+              className="mt-1"
+            />
             <span className="text-[1.8rem] px-[1.8rem]">
               <span className="text-[1.8rem] font-semibold">Daily Work Routine</span>
               <br />
@@ -30,7 +36,13 @@ const UniqueProcess = () => {
             </span>
           </div>
           <div className="flex items-start space-x-2">
-            <Image src="/icons/check.svg" alt="check" width={26} height={26} className="mt-1" />
+            <Image
+              src="/icons/check_circle.svg"
+              alt="check"
+              width={26}
+              height={26}
+              className="mt-1"
+            />
             <span className="text-[1.8rem] px-[1.8rem]">
               <span className="text-[1.8rem] font-semibold">Cycle System</span>
               <br />
