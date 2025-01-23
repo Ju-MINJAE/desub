@@ -2,6 +2,7 @@ import Image from 'next/image';
 import HeroText from './components/Feature/HeroText';
 import Features from './components/Feature/Features';
 import UniqueProcess from './components/Feature/UniqueProcess';
+import Available from './components/Feature/Available';
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
       <HeroText />
       <Features />
       <UniqueProcess />
+      <Available />
     </div>
   );
 };
