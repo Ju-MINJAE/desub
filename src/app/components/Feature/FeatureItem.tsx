@@ -17,8 +17,8 @@ const FeatureItem = ({ imageSrc, title, description }: FeatureItemProps) => {
           style={{ objectFit: 'contain' }}
         />
       </div>
-      <h3 className="text-[2.8125rem] text-center font-semibold mt-[3.875rem]">{title}</h3>
-      <p className="text-[1.5625rem] text-black text-center mt-[2.6875rem] px-2">{description}</p>
+      <h3 className="text-[4.5rem] text-center font-semibold mt-[3.875rem]">{title}</h3>
+      <p className="text-[2.5rem] text-black text-center mt-[2.6875rem] px-2">{description}</p>
     </div>
   );
 };
