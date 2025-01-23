@@ -1,11 +1,13 @@
-import RoleDescription from '../components/about/AboutRole';
-import TeamSection from '../components/about/TeamSection';
+import MembersSection from '../components/about/Members';
+import RoleSection from '../components/about/Role';
+import VisionSection from '../components/about/Vision';
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <RoleDescription />
-      <TeamSection />
+      <RoleSection />
+      <MembersSection />
+      <VisionSection />
     </main>
   );
 }

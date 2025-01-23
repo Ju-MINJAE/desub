@@ -4,7 +4,7 @@ interface RoleProps {
   role: RoleType;
 }
 
-export const DesignerRole: React.FC<RoleProps> = ({ role }) => {
+export const RoleDescription: React.FC<RoleProps> = ({ role }) => {
   return (
     <div className="flex items-start pb-[5.5rem]">
       <span className="font-bold text-[5rem] mr-[6.3rem]">/</span>

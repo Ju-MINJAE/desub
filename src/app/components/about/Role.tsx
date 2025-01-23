@@ -1,5 +1,5 @@
 import { RoleType } from '@/types/about';
-import { DesignerRole } from './DesignerRole';
+import { RoleDescription } from './RoleDescription';
 
 const designerRoles: RoleType[] = [
   {
@@ -22,7 +22,7 @@ const designerRoles: RoleType[] = [
   },
 ];
 
-const RoleDescription: React.FC = () => {
+const RoleSection: React.FC = () => {
   return (
     <section className="relative">
       <span className="absolute -rotate-90 top-[108.2rem] pl-[7.7rem] text-[3rem] font-bold">
@@ -43,7 +43,7 @@ const RoleDescription: React.FC = () => {
 
             <div className="mt-[7.9rem]">
               {designerRoles.map((role, index) => (
-                <DesignerRole key={index} role={role} />
+                <RoleDescription key={index} role={role} />
               ))}
             </div>
           </div>
@@ -53,4 +53,4 @@ const RoleDescription: React.FC = () => {
   );
 };
 
-export default RoleDescription;
+export default RoleSection;
