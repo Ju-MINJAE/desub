@@ -5,7 +5,7 @@ const Home = () => {
     <div className="flex flex-col ">
       <div className="relative w-full h-[49.6875rem] max-h-screen">
         <Image
-          src="/images/desub_banner.svg"
+          src="/images/desub_banner.png"
           alt="Desub Banner"
           fill
           sizes="100vw"
@@ -37,7 +37,7 @@ const Home = () => {
           <div className="flex flex-col items-center w-full max-w-[30.3125rem]">
             <div className="relative w-full aspect-square max-w-[30.3125rem]">
               <Image
-                src="/images/features3.svg"
+                src="/images/feature3.png"
                 alt="feature1"
                 fill
                 style={{ objectFit: 'contain' }}
@@ -51,7 +51,7 @@ const Home = () => {
           <div className="flex flex-col items-center w-full max-w-[30.3125rem]">
             <div className="relative w-full aspect-square max-w-[30.3125rem]">
               <Image
-                src="/images/features3.svg"
+                src="/images/feature3.png"
                 alt="feature2"
                 fill
                 style={{ objectFit: 'contain' }}
@@ -65,7 +65,7 @@ const Home = () => {
           <div className="flex flex-col items-center w-full max-w-[30.3125rem]">
             <div className="relative w-full aspect-square max-w-[30.3125rem]">
               <Image
-                src="/images/features3.svg"
+                src="/images/feature3.png"
                 alt="feature3"
                 fill
                 style={{ objectFit: 'contain' }}
