@@ -10,6 +10,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'outline',
   size = 'default',
   className = '',
+  disabled = false,
   ...props
 }) => {
   const getVariantStyles = () => {
@@ -26,22 +27,24 @@ export const Button: React.FC<ButtonProps> = ({
   const getSizeStyles = () => {
     switch (size) {
       case 'full':
-        return 'w-[32.375rem] h-[3.4375rem] text-[1ren]';
+        return 'w-[51.8rem] h-[5.5rem] text-[1.6rem]';
       case 'small':
-        return 'w-[9.5625rem] h-[2.0625rem] text-[0.8125rem]';
+        return disabled // small button disable 속성 추가
+          ? 'w-[15.3rem] h-[3.3rem] text-[1.3rem] disabled:bg-lightgray disabled:text-darkgray disabled:cursor-not-allowed'
+          : 'w-[15.3rem] h-[3.3rem] text-[1.3rem]';
       default:
-        return 'w-[25rem] h-[3.4375rem]';
+        return 'w-[40rem] h-[5.5rem]';
     }
   };
 
   return (
     <button
+      disabled={disabled}
       className={`
-        ${getSizeStyles()} rounded-[50px]
-        px-[1.375rem]  py-[0.3125rem]
-        ${getVariantStyles()}
-        ${className}
-      `}
+      ${getSizeStyles()} rounded-[80px]
+      ${getVariantStyles()}
+      ${className}
+  `}
       {...props}
     >
       {children}
