@@ -10,9 +10,9 @@ interface AlertProps {
 
 export const Alert = ({ childrenTop, childrenBottom, buttonText }: AlertProps) => {
   return (
-    <div className="border border-black w-[28.5rem] h-[19rem] rounded-[1.875rem] px-[1.6875rem] pt-[1.375rem] pb-[1.75rem] flex flex-col justify-between items-center">
+    <div className="border border-black w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center">
       <Image className="self-end" src="/icons/close.svg" alt="" width={40} height={40} />
-      <div className="gap-[4.5rem] flex flex-col justify-center text-center">
+      <div className="gap-[7.2rem] flex flex-col justify-center text-center">
         <div>
           <div>{childrenTop}</div>
           <div>{childrenBottom}</div>

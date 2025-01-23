@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '@/app/components/ui/Button';
 
 const meta: Meta<typeof Button> = {
-  title: 'Example/Button', // 스토리북 UI에서 표시될 이름
+  title: 'Components/Button', // 스토리북 UI에서 표시될 이름
   component: Button,
   parameters: {
     layout: 'centered', // 컴포넌트를 중앙에 배치
