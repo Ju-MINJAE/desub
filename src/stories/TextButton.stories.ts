@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import TextButton from '@/app/components/ui/TextButton';
 
 const meta: Meta<typeof TextButton> = {
-  title: 'Example/TextButton',
+  title: 'Components/TextButton',
   component: TextButton,
   parameters: {
     layout: 'centered',
