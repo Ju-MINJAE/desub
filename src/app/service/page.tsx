@@ -16,6 +16,16 @@ const Service = () => {
         </div>
       </div>
       <Specialists />
+      <div className="mt-[40rem] flex flex-col gap-14">
+        <div className="font-light text-[5rem] ">
+          And with these tools,
+          <br />
+          we are invincible.
+        </div>
+        <Heading tag="h2" className="mb-[4.8rem] font-extrabold">
+          업무 효율에 가장 최적화된 생산성 툴을 사용하고 있습니다.
+        </Heading>
+      </div>
     </div>
   );
 };
