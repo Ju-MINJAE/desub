@@ -3,7 +3,7 @@ import FeatureItem from './FeatureItem';
 const Features = () => {
   return (
     <div className="mt-[5rem] md:mt-[9.4375rem] w-full">
-      <span className="font-normal text-[2.5rem] ml-[13.5rem] block">Features</span>
+      <span className="font-normal text-[4rem] ml-[13.5rem] block">Features</span>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-[4rem] mt-[2rem] md:mt-[3.625rem] px-4 md:px-[5.625rem]">
         <FeatureItem
           imageSrc="/images/feature3.png"
