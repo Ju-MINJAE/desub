@@ -18,8 +18,8 @@ const FAQAccordion = () => {
 
   return (
     <div className="flex flex-col pt-[22.5rem]">
-      <div className="w-full max-w-[80%] mx-auto">
-        <h2 className="font-normal text-[2.5rem] mb-20">FAQ</h2>
+      <h2 className="font-normal text-[2.5rem] ml-[13.5rem] mb-20">FAQ</h2>
+      <div className="w-full max-w-[75%] mx-auto">
         <div className="w-full h-[1px] bg-black mb-20"></div>
         <div className="space-y-4">
           {faqData.map((item, index) => (
