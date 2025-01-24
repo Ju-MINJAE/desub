@@ -1,12 +1,20 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import Heading from '@/app/components/ui/Heading';
 import { Button } from '@/app/components/ui/Button';
 import TextButton from '@/app/components/ui/TextButton';
 import Image from 'next/image';
 
 const Login = () => {
+  const router = useRouter();
+
+  const handleNavigate = () => {
+    router.push('/login/email');
+  };
   return (
     <div className="flex justify-center items-center pb-[8.4rem] min-h-screen">
-      <div className="pt-[20rem] w-1/2 text-center">
+      <div className="w-1/2 text-center h-screen flex flex-col justify-center">
         <Heading tag="h1" className="mb-[16.8rem]">
           login
         </Heading>
@@ -23,7 +31,7 @@ const Login = () => {
             </span>
             Google Login
           </Button>
-          <Button size="default" type="button" variant="outline">
+          <Button size="default" type="button" variant="outline" onClick={handleNavigate}>
             E-mail Login
           </Button>
         </div>
