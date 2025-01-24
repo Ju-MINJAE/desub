@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { faqData } from '@/app/constants/faq_accordion';
+import { faqData } from '@/constants/faq_accordion';
 import Image from 'next/image';
 
 const FAQAccordion = () => {
