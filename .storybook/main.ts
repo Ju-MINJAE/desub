@@ -8,6 +8,7 @@ const config: StorybookConfig = {
   },
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-postcss'],
+  staticDirs: ['../public'], // 이거 한줄 추가
   webpackFinal: async config => {
     config.resolve = config.resolve || {}; // 기본값 설정
     config.resolve.alias = {

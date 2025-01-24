@@ -1,5 +1,8 @@
+'use client';
+
 import type React from 'react';
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface AlertProps {
   childrenTop: React.ReactNode;
@@ -8,6 +11,7 @@ interface AlertProps {
   variant?: 'green' | 'black' | 'outline';
   size?: 'full' | 'normal' | 'small';
   className?: string;
+  onClose?: () => void;
 }
 
 export const Alert = ({
@@ -17,8 +21,18 @@ export const Alert = ({
   variant = 'black',
   size = 'full',
   className = '',
+  onClose,
   ...props
 }: AlertProps) => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  const closeAlert = () => {
+    setIsVisible(false);
+    if (onClose) onClose();
+  };
+
+  if (!isVisible) return null;
+
   const getVariantStyles = (variant?: AlertProps['variant']) => {
     switch (variant) {
       case 'green':
@@ -45,7 +59,14 @@ export const Alert = ({
 
   return (
     <div className="border border-black w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center">
-      <img className="self-end" src="/icons/close.svg" alt="" width={40} height={40} />
+      <Image
+        className="self-end cursor-pointer"
+        src="/icons/close.svg"
+        alt=""
+        width={40}
+        height={40}
+        onClick={closeAlert}
+      />
       <div className="w-full gap-[7.2rem] flex flex-col justify-center items-center text-center">
         <div className="block gap-[1.6rem]">
           <div className="font-medium text-[2rem]">{childrenTop}</div>

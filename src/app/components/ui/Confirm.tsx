@@ -1,5 +1,8 @@
+'use client';
+
 import type React from 'react';
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface ConfirmProps {
   childrenTop: React.ReactNode;
@@ -9,6 +12,7 @@ interface ConfirmProps {
   variant1?: 'green' | 'black' | 'outline';
   variant2?: 'green' | 'black' | 'outline';
   className?: string;
+  onClose?: () => void;
 }
 
 export const Confirm = ({
@@ -19,8 +23,18 @@ export const Confirm = ({
   variant1 = 'outline',
   variant2 = 'green',
   className = '',
+  onClose,
   ...props
 }: ConfirmProps) => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  const closeAlert = () => {
+    setIsVisible(false);
+    if (onClose) onClose();
+  };
+
+  if (!isVisible) return null;
+
   const getVariantStyles1 = (variant1?: ConfirmProps['variant1']) => {
     switch (variant1) {
       case 'green':
@@ -45,7 +59,14 @@ export const Confirm = ({
 
   return (
     <div className="border border-black w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center">
-      <Image className="self-end" src="/icons/close.svg" alt="" width={40} height={40} />
+      <Image
+        className="self-end cursor-pointer"
+        src="/icons/close.svg"
+        alt=""
+        width={40}
+        height={40}
+        onClick={closeAlert}
+      />
       <div className="w-full gap-[7.2rem] flex flex-col justify-center items-center text-center">
         <div className="block gap-[1.6rem]">
           <div className="font-medium text-[2rem]">{childrenTop}</div>
