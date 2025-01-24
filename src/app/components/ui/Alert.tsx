@@ -45,7 +45,7 @@ export const Alert = ({
 
   return (
     <div className="border border-black w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center">
-      <img className="self-end" src="/icons/close.svg" alt="" width={40} height={40} />
+      <Image className="self-end" src="/icons/close.svg" alt="" width={40} height={40} />
       <div className="w-full gap-[7.2rem] flex flex-col justify-center items-center text-center">
         <div className="block gap-[1.6rem]">
           <div className="font-medium text-[2rem]">{childrenTop}</div>
