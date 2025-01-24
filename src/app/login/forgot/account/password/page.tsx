@@ -3,13 +3,13 @@
 import { useRouter } from 'next/navigation';
 import Heading from '@/app/components/ui/Heading';
 import { BackButton } from '@/app/components/ui/BackButton';
-import FindAccountForm from '@/app/components/login/FindAccountForm';
+import ResetPasswordForm from '@/app/components/login/ResetPassWordForm';
 
-const Forgot = () => {
+const Password = () => {
   const router = useRouter();
 
   const handleNavigate = () => {
-    router.push('/login/forgot/account');
+    router.push('/login/forgot/account/password/sent');
   };
   return (
     <div className="h-full">
@@ -20,14 +20,16 @@ const Forgot = () => {
         <Heading tag="h1" className="mb-[4.4rem]">
           forgot account?
         </Heading>
-        <Heading tag="h2" className="mb-[13.3rem]">
-          가입 시 입력한 휴대폰번호를 입력해주세요.
+        <Heading tag="h2" className="mb-[13.3rem] text-center">
+          비밀번호 재설정을 위해
+          <br />
+          계정(이메일)을 입력하세요.
         </Heading>
 
-        <FindAccountForm />
+        <ResetPasswordForm />
       </div>
     </div>
   );
 };
 
-export default Forgot;
+export default Password;
