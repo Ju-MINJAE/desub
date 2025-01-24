@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '../styles/globals.css';
 import Footer from './components/ui/Footer';
+import Header from './components/ui/Header';
 
 export const metadata: Metadata = {
   title: 'desub',
@@ -15,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased flex flex-col min-h-screen">
+        <Header />
         <main className="flex-grow">{children}</main>
         <Footer />
       </body>
