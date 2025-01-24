@@ -1,4 +1,4 @@
-import { badges } from '@/app/constants/badges';
+import { badges } from '@/constants/badges';
 import Badge from '../ui/Badge';
 
 const Available = () => {
