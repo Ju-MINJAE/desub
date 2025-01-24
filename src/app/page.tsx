@@ -3,6 +3,11 @@ import HeroText from './components/Feature/HeroText';
 import Features from './components/Feature/Features';
 import UniqueProcess from './components/Feature/UniqueProcess';
 import Available from './components/Feature/Available';
+import LatestWorks from './components/Feature/LatestWorks';
+import FAQAccordion from './components/Feature/FAQ_Accordion';
+import Promotion from './components/Feature/Promotion';
+import Membership from './components/Feature/Membership';
+import Contact from './components/Feature/Contact';
 
 const Home = () => {
   return (
@@ -24,6 +29,12 @@ const Home = () => {
       <Features />
       <UniqueProcess />
       <Available />
+      <LatestWorks />
+      <FAQAccordion />
+      <Promotion />
+      <Membership />
+      <div className="bg-gray w-full h-96">What is this?</div>
+      <Contact />
     </div>
   );
 };
