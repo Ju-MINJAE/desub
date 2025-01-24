@@ -20,11 +20,6 @@ const Home = () => {
       </div>
       <HeroText />
       <Features />
-<<<<<<< HEAD
-      <UniqueProcess />
-      <Available />
-=======
->>>>>>> HEAD@{1}
     </div>
   );
 };

@@ -58,7 +58,7 @@ export const Alert = ({
   };
 
   return (
-    <div className="border border-black w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center">
+    <div className="border border-black z-99 w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center">
       <Image
         className="self-end cursor-pointer"
         src="/icons/close.svg"
