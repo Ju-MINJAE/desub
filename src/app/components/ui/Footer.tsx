@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="w-full px-[13rem] py-[10rem]">
       <Image
-        src="/images/desub_footer.png"
+        src="/images/desub_logo.png"
         alt="Footer"
         width={1920}
         height={100}
