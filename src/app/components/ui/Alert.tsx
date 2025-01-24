@@ -58,8 +58,8 @@ export const Alert = ({
   };
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-999">
-      <div className="w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center z-1000 bg-white">
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-50">
+      <div className="w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center z-60 bg-white">
         <Image
           className="self-end cursor-pointer"
           src="/icons/close.svg"
