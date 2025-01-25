@@ -3,7 +3,7 @@ import Image from 'next/image';
 const Specialists = () => {
   return (
     <div className="mt-[8.8rem] relative">
-      <div id="gray" className="w-[27.4rem] h-[19.2rem] absolute left-[calc(100%-14rem)]">
+      <div className="w-[27.4rem] h-[19.2rem] absolute left-[calc(100%-14rem)]">
         <div className="bg-gray w-full h-full z-10 absolute top-0 left-0 hover:bg-opacity-0"></div>
         <Image
           src="/images/Specialists1.png"
