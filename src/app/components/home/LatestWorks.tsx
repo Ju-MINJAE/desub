@@ -1,3 +1,5 @@
+'use client';
+
 import Heading from '../ui/Heading';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
