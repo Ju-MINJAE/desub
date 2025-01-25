@@ -1,15 +1,26 @@
 import { badges } from '@/constants/badges';
 import Badge from '../ui/Badge';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
 const Available = () => {
+  const ref = useRef(null);
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  });
+
+  const x = useTransform(scrollYProgress, [0, 1], ['10%', '-20%']);
+
   return (
-    <div className="w-full px-4 md:px-[8.4375rem] mt-20">
-      <h2 className="font-normal text-[2.5rem] mb-20">We available for</h2>
-      <div className="flex flex-wrap gap-3">
+    <div ref={ref} className="w-full px-[5rem] mt-20 overflow-hidden">
+      <h2 className="font-normal text-[4rem] ml-[13.5rem] block mb-20">We available for</h2>
+      <motion.div ref={containerRef} style={{ x }} className="flex gap-[3rem] w-max">
         {badges.map(badge => (
           <Badge key={badge.id} label={badge.label} variant={badge.variant} />
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };
