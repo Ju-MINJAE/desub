@@ -20,10 +20,10 @@ const FAQAccordion = () => {
     <div className="flex flex-col pt-[22.5rem]">
       <h2 className="font-normal text-[4rem] ml-[13.5rem] block mb-20">FAQ</h2>
       <div className="w-full max-w-[75%] mx-auto">
-        <div className="w-full h-[1px] bg-black mb-20"></div>
+        <div className="w-full h-[1px] bg-black"></div>
         <div className="space-y-4">
           {faqData.map((item, index) => (
-            <div key={index} className="border-b border-black pb-[3.5rem]">
+            <div key={index} className="border-b border-black ">
               <button
                 onClick={() => toggleAccordion(index)}
                 className="flex w-full items-center justify-between py-4 text-left text-[1.125rem]"
