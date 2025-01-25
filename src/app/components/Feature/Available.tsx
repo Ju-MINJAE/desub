@@ -11,7 +11,7 @@ const Available = () => {
     offset: ['start end', 'end start'],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ['10%', '-20%']);
+  const x = useTransform(scrollYProgress, [0, 1], ['5%', '-10%']);
 
   return (
     <div ref={ref} className="w-full px-[5rem] mt-20 overflow-hidden">
