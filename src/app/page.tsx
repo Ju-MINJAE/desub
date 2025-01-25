@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import HeroText from './components/Feature/HeroText';
 import Features from './components/Feature/Features';
 import UniqueProcess from './components/Feature/UniqueProcess';
@@ -10,20 +13,35 @@ import Membership from './components/Feature/Membership';
 import Contact from './components/Feature/Contact';
 
 const Home = () => {
+  const { scrollY } = useScroll();
+  const radius = useTransform(scrollY, [0, 300], [0, 50]);
+  const scale = useTransform(scrollY, [0, 300], [1, 0.95]);
+
   return (
     <div className="flex flex-col">
-      <div className="relative w-full pt-[56.25%]">
-        <Image
-          src="/images/desub_banner.png"
-          alt="Desub Banner"
-          layout="fill"
-          sizes="100vw"
+      <div className="relative w-full h-[80vh] mb-10">
+        <motion.div
           style={{
-            objectFit: 'contain',
-            objectPosition: 'top',
+            borderRadius: radius,
+            scale: scale,
+            overflow: 'hidden',
+            position: 'absolute',
+            inset: 0,
           }}
-          priority
-        />
+        >
+          <Image
+            src="/images/desub_banner.png"
+            alt="Unified Banner"
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center',
+            }}
+            priority
+            className="w-full"
+          />
+        </motion.div>
       </div>
       <HeroText />
       <Features />
