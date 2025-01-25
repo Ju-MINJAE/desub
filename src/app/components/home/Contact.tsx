@@ -22,7 +22,7 @@ const Contact = () => {
         <div className="relative ml-[18rem] mb-32">
           <Button
             variant="black"
-            className="w-[79rem] h-[12rem] bg-black font-bold text-[5rem] text-white"
+            className="w-[79rem] !h-[11rem] bg-black font-bold text-[5rem] text-white"
           >
             커스터마이징 프로젝트 의뢰하기
           </Button>
