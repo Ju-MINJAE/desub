@@ -2,15 +2,15 @@
 
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import HeroText from './components/Feature/HeroText';
-import Features from './components/Feature/Features';
-import UniqueProcess from './components/Feature/UniqueProcess';
-import Available from './components/Feature/Available';
-import LatestWorks from './components/Feature/LatestWorks';
-import FAQAccordion from './components/Feature/FAQ_Accordion';
-import Promotion from './components/Feature/Promotion';
-import Membership from './components/Feature/Membership';
-import Contact from './components/Feature/Contact';
+import HeroText from './components/home/HeroText';
+import Features from './components/home/Features';
+import UniqueProcess from './components/home/UniqueProcess';
+import Available from './components/home/Available';
+import LatestWorks from './components/home/LatestWorks';
+import FAQAccordion from './components/home/FAQ_Accordion';
+import Promotion from './components/home/Promotion';
+import Membership from './components/home/Membership';
+import Contact from './components/home/Contact';
 
 const Home = () => {
   const { scrollY } = useScroll();

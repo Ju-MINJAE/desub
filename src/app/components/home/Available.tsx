@@ -1,3 +1,5 @@
+'use client';
+
 import { badges } from '@/constants/badges';
 import Badge from '../ui/Badge';
 import { motion, useScroll, useTransform } from 'framer-motion';
