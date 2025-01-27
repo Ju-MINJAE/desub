@@ -2,7 +2,7 @@
 
 import Heading from '@/app/components/ui/Heading';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
 const PricingProcess = () => {
@@ -16,28 +16,47 @@ const PricingProcess = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPricingTextCount(preIndex => (preIndex + 1) % 4);
-    }, 2000);
+      setPricingTextCount(prevIndex => (prevIndex + 1) % 4);
+    }, 1300);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="mt-[45.274rem] mb-[30.793rem] w-[80rem] flex flex-col translate-x-[37rem]">
-      <Image src="/icons/ellipses.svg" alt="" width={318} height={99.572} />
+      <Image
+        src="/icons/ellipses.svg"
+        alt=""
+        width={318}
+        height={99.572}
+        className="mb-[2.947rem]"
+      />
       <Heading tag="h1">
-        <motion.div
-          className="mb-[6rem] inline"
-          initial={{ y: 50, opacity: 1 }}
-          animate={{ opacity: 0 }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-          }}
-        >
-          {pricingText[pricingTextCount]}
-        </motion.div>
-        가
-        <br />
+        <div className="h-[1.2em] relative mb-[2rem]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={pricingTextCount}
+              className="absolute"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: {
+                  duration: 0.3,
+                },
+              }}
+              exit={{
+                opacity: 0,
+                y: -20,
+                transition: {
+                  duration: 0.3,
+                  delay: 1.3,
+                },
+              }}
+            >
+              {pricingText[pricingTextCount] + `${'가'}`}
+            </motion.div>
+          </AnimatePresence>
+        </div>
         필요하세요?
       </Heading>
       <Image
