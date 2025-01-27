@@ -18,21 +18,21 @@ const FAQAccordion = () => {
 
   return (
     <div className="flex flex-col pt-[22.5rem]">
-      <h2 className="font-normal text-[2.5rem] ml-[13.5rem] mb-20">FAQ</h2>
+      <h2 className="font-normal text-[4rem] ml-[13.5rem] block mb-20">FAQ</h2>
       <div className="w-full max-w-[75%] mx-auto">
-        <div className="w-full h-[1px] bg-black mb-20"></div>
-        <div className="space-y-4">
+        <div className="w-full h-[1px] bg-black"></div>
+        <div>
           {faqData.map((item, index) => (
-            <div key={index} className="border-b border-black pb-[3.5rem]">
+            <div key={index} className="border-b border-black">
               <button
                 onClick={() => toggleAccordion(index)}
-                className="flex w-full items-center justify-between py-4 text-left text-[1.125rem]"
+                className="flex w-full items-center justify-between py-4"
               >
                 <span className="text-[3rem]">{item.question}</span>
                 <Image
                   width={64}
                   height={64}
-                  alt="q"
+                  alt="chevron-down"
                   src="/icons/chevron-down.svg"
                   className={`transition-transform duration-200 ${
                     openIndex === index ? 'rotate-180' : ''
@@ -48,7 +48,7 @@ const FAQAccordion = () => {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="pt-[6rem] text-[2.5rem]">{item.answer}</p>
+                  <p className="pt-[6rem] pb-6 text-[2.5rem] whitespace-pre-line">{item.answer}</p>
                 </div>
               </div>
             </div>

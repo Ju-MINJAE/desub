@@ -4,7 +4,7 @@ import WorkingProcess from './WorkingProcess';
 const UniqueProcess = () => {
   return (
     <div className="relative w-full pb-[40rem] mt-[22.3rem]">
-      <h2 className="font-normal text-[2.5rem] ml-[13.5rem] mb-20">Our unique process</h2>
+      <h2 className="font-normal text-[4rem] ml-[13.5rem] block mb-20">Our unique process</h2>
       <div className="flex justify-center items-center relative top-48 z-20">
         <WorkingProcess />
       </div>

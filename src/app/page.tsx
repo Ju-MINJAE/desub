@@ -1,29 +1,19 @@
-import Image from 'next/image';
-import HeroText from './components/Feature/HeroText';
-import Features from './components/Feature/Features';
-import UniqueProcess from './components/Feature/UniqueProcess';
-import Available from './components/Feature/Available';
-import LatestWorks from './components/Feature/LatestWorks';
-import FAQAccordion from './components/Feature/FAQ_Accordion';
-import Promotion from './components/Feature/Promotion';
-import Membership from './components/Feature/Membership';
-import Contact from './components/Feature/Contact';
+import HeroText from './components/home/HeroText';
+import Features from './components/home/Features';
+import UniqueProcess from './components/home/UniqueProcess';
+import Available from './components/home/Available';
+import LatestWorks from './components/home/LatestWorks';
+import FAQAccordion from './components/home/FAQ_Accordion';
+import Promotion from './components/home/Promotion';
+import Membership from './components/home/Membership';
+import Contact from './components/home/Contact';
+import BannerImage from './components/home/BannerImage';
 
 const Home = () => {
   return (
     <div className="flex flex-col">
-      <div className="relative w-full pt-[56.25%]">
-        <Image
-          src="/images/desub_banner.png"
-          alt="Desub Banner"
-          layout="fill"
-          sizes="100vw"
-          style={{
-            objectFit: 'contain',
-            objectPosition: 'top',
-          }}
-          priority
-        />
+      <div className="relative w-full h-[80vh] mb-10">
+        <BannerImage />
       </div>
       <HeroText />
       <Features />
