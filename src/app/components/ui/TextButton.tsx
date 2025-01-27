@@ -6,9 +6,12 @@ type TextButtonProps = {
   className?: string;
 };
 
-const TextButton: React.FC<TextButtonProps> = ({ children, className }) => {
+const TextButton: React.FC<TextButtonProps> = ({ children, className, href }) => {
   return (
-    <Link href="" className={`text-[1.3rem] leading-[1.6rem] font-medium underline ${className}`}>
+    <Link
+      href={href}
+      className={`text-[1.3rem] leading-[1.6rem] font-medium underline ${className}`}
+    >
       {children}
     </Link>
   );
