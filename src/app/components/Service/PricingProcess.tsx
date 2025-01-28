@@ -13,11 +13,11 @@ const PricingProcess = () => {
     'product designer',
   ]);
   const [pricingTextCount, setPricingTextCount] = useState(0);
-  console.log(pricingTextCount);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setPricingTextCount(prevIndex => (prevIndex + 1) % 4);
-    }, 1900);
+    }, 2100);
     return () => clearInterval(interval);
   }, []);
 
@@ -49,7 +49,7 @@ const PricingProcess = () => {
                 y: -20,
                 transition: {
                   duration: 0.3,
-                  delay: 1.3,
+                  delay: 1.5,
                 },
               }}
             >
