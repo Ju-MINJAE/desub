@@ -14,7 +14,7 @@ const Email = () => {
 
         <LoginForm />
         <div className="flex justify-center">
-          <TextButton href="주소값">회원가입</TextButton>
+          <TextButton href="/signup">회원가입</TextButton>
         </div>
       </div>
 
