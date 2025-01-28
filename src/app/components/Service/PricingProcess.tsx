@@ -13,11 +13,11 @@ const PricingProcess = () => {
     'product designer',
   ]);
   const [pricingTextCount, setPricingTextCount] = useState(0);
-
+  console.log(pricingTextCount);
   useEffect(() => {
     const interval = setInterval(() => {
       setPricingTextCount(prevIndex => (prevIndex + 1) % 4);
-    }, 1300);
+    }, 1900);
     return () => clearInterval(interval);
   }, []);
 
