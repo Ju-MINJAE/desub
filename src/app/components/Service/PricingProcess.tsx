@@ -53,7 +53,7 @@ const PricingProcess = () => {
                 },
               }}
             >
-              {pricingText[pricingTextCount] + `${'가'}`}
+              {pricingText[pricingTextCount] + `가`}
             </motion.div>
           </AnimatePresence>
         </div>
