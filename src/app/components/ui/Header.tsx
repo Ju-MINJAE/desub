@@ -1,8 +1,26 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './Button';
 
 const Header = () => {
+  const pathname = usePathname();
+  if (pathname === '/login') return null;
+
+  if (pathname.startsWith('/signup')) {
+    return (
+      <div className="w-full">
+        <header className="px-[3.7rem] py-[2rem] flex items-center justify-center">
+          <Link href="/" className="relative">
+            <Image src="/images/desub_logo.png" alt="header_logo" width={194} height={44} />
+          </Link>
+        </header>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full border-b">
       <header className="px-[3.7rem] py-[2rem] flex items-center justify-between">

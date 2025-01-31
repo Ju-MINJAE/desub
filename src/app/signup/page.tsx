@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Heading from '../components/ui/Heading';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
+import TextButton from '@/app/components/ui/TextButton';
 
 export default function SignUp() {
   const [checkboxes, setCheckboxes] = useState({
@@ -37,7 +38,7 @@ export default function SignUp() {
   return (
     <div className="container mx-auto px-4 flex justify-center">
       <div className="w-full max-w-[98rem] flex flex-col items-center">
-        <Heading tag="h1" className="mt-10 mb-16">
+        <Heading tag="h1" className="mt-[9rem] mb-[13rem]">
           join
         </Heading>
 
@@ -95,7 +96,7 @@ export default function SignUp() {
           </div>
 
           <div className="flex flex-col gap-10">
-            <label className="flex items-center space-x-2">
+            <label className="flex items-center space-x-[2.3rem]">
               <input
                 type="checkbox"
                 className="peer hidden"
@@ -105,7 +106,7 @@ export default function SignUp() {
               <span className="w-14 h-14 border-2 border-black rounded-sm peer-checked:bg-primary peer-checked:border-black"></span>
               <span className="font-bold text-[3rem]">전체 동의</span>
             </label>
-            <label className="flex items-center space-x-2">
+            <label className="flex items-center space-x-[2.3rem] mt-[7.4rem]">
               <input
                 type="checkbox"
                 className="peer hidden"
@@ -114,10 +115,13 @@ export default function SignUp() {
               />
               <span className="w-14 h-14 border-2 border-black rounded-sm peer-checked:bg-primary peer-checked:border-black"></span>
               <span className="text-[3rem]">
-                <u className="font-bold">이용약관</u>에 동의합니다.(필수)
+                <TextButton href="/signup/terms" className="text-[3rem] !font-bold">
+                  이용약관
+                </TextButton>
+                에 동의합니다.(필수)
               </span>
             </label>
-            <label className="flex items-center space-x-2">
+            <label className="flex items-center space-x-[2.3rem]">
               <input
                 type="checkbox"
                 className="peer hidden"
@@ -126,10 +130,13 @@ export default function SignUp() {
               />
               <span className="w-14 h-14 border-2 border-black rounded-sm peer-checked:bg-primary peer-checked:border-black"></span>
               <span className="text-[3rem]">
-                <u className="font-bold">개인정보처리방침</u>에 동의합니다.(필수)
+                <TextButton href="/signup/privacy-policy" className="text-[3rem] !font-bold">
+                  개인정보처리방침
+                </TextButton>
+                에 동의합니다.(필수)
               </span>
             </label>
-            <label className="flex items-center space-x-2">
+            <label className="flex items-center space-x-[2.3rem]">
               <input
                 type="checkbox"
                 className="peer hidden"
