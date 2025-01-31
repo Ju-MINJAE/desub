@@ -17,7 +17,7 @@ const PricingProcess = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setPricingTextCount(prevIndex => (prevIndex + 1) % 4);
-    }, 1300);
+    }, 2100);
     return () => clearInterval(interval);
   }, []);
 
@@ -49,11 +49,11 @@ const PricingProcess = () => {
                 y: -20,
                 transition: {
                   duration: 0.3,
-                  delay: 1.3,
+                  delay: 1.5,
                 },
               }}
             >
-              {pricingText[pricingTextCount] + `${'가'}`}
+              {pricingText[pricingTextCount] + '가'}
             </motion.div>
           </AnimatePresence>
         </div>
