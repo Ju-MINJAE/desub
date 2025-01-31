@@ -29,9 +29,7 @@ export const Button: React.FC<ButtonProps> = ({
       case 'full':
         return 'w-[51.8rem] h-[5.5rem] text-[1.6rem]';
       case 'small':
-        return disabled // small button disable 속성 추가
-          ? 'w-[15.3rem] h-[3.3rem] text-[1.3rem] disabled:bg-lightgray disabled:text-darkgray disabled:cursor-not-allowed'
-          : 'w-[15.3rem] h-[3.3rem] text-[1.3rem]';
+        return 'w-[15.3rem] h-[3.3rem] text-[1.3rem]';
       default:
         return 'w-[40rem] h-[5.5rem]';
     }
@@ -44,6 +42,7 @@ export const Button: React.FC<ButtonProps> = ({
       ${getSizeStyles()} rounded-[80px]
       ${getVariantStyles()}
       ${className}
+      disabled:bg-lightgray disabled:text-darkgray disabled:cursor-not-allowed
   `}
       {...props}
     >

@@ -1,5 +1,6 @@
 'use client';
 
+import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import Heading from '../components/ui/Heading';
 import { Button } from '../components/ui/Button';
@@ -7,8 +8,19 @@ import { Input } from '../components/ui/Input';
 import TextButton from '@/app/components/ui/TextButton';
 import { formatTime } from '@/utils/time';
 import { formatPhoneNumber } from '@/utils/phone';
+import { SignUpSchema, SignupFormData } from '../auth/schemas/SignupSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function SignUp() {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(SignUpSchema),
+  });
+
   const [isPhoneAuthDisabled, setIsPhoneAuthDisabled] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [phone, setPhone] = useState('');
@@ -62,6 +74,10 @@ export default function SignUp() {
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(formatPhoneNumber(e.target.value));
   };
+
+  const onSubmit = (data: SignupFormData) => {
+    console.log('회원가입 데이터:', data);
+  };
   return (
     <div className="container mx-auto px-4 flex justify-center">
       <div className="w-full max-w-[98rem] flex flex-col items-center">
@@ -69,12 +85,18 @@ export default function SignUp() {
           join
         </Heading>
 
-        <form className="w-full space-y-[8rem]">
+        <form className="w-full space-y-[8rem]" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-[30rem_54rem_14rem] gap-x-8 items-center">
             <label htmlFor="email" className="text-[3rem]">
               e-mail address
             </label>
-            <Input id="email" type="email" placeholder="e-mail address" status="default" />
+            <Input
+              id="email"
+              type="email"
+              placeholder="e-mail address"
+              status="default"
+              {...register('email')}
+            />
             <Button variant="outline" className="!w-[14rem] h-[5rem] text-[2rem]">
               가입여부 확인
             </Button>
@@ -90,6 +112,7 @@ export default function SignUp() {
               helperText="영문대/소문자, 숫자, 특수문자 1개 이상 포함 10자 이상"
               placeholder="password"
               status="default"
+              {...register('password')}
             />
           </div>
 
@@ -102,6 +125,7 @@ export default function SignUp() {
               type="password"
               placeholder="confirm password"
               status="default"
+              {...register('password_confirm')}
             />
           </div>
 
@@ -126,7 +150,6 @@ export default function SignUp() {
             />
             <Button
               variant="outline"
-              size="small"
               className="!w-[14rem] h-[5rem] text-[2rem]"
               disabled={isPhoneAuthDisabled}
               onClick={handlePhoneAuthClick}
@@ -150,6 +173,12 @@ export default function SignUp() {
                 인증 확인
               </Button>
             </div>
+          )}
+          {errors.phone_number && (
+            <p className="text-red-500 text-[2rem] mt-2">{errors.phone_number.message}</p>
+          )}
+          {errors.isPhoneVerified && (
+            <p className="text-red-500 text-[2rem] mt-2">{errors.isPhoneVerified.message}</p>
           )}
 
           <div className="flex flex-col gap-10">
@@ -178,6 +207,9 @@ export default function SignUp() {
                 에 동의합니다.(필수)
               </span>
             </label>
+            {errors.terms && (
+              <p className="text-red-500 text-[2rem] mt-2">{errors.terms.message}</p>
+            )}
             <label className="flex items-center space-x-[2.3rem]">
               <input
                 type="checkbox"
@@ -193,6 +225,10 @@ export default function SignUp() {
                 에 동의합니다.(필수)
               </span>
             </label>
+            {errors.privacy && (
+              <p className="text-red-500 text-[2rem] mt-2">{errors.privacy.message}</p>
+            )}
+
             <label className="flex items-center space-x-[2.3rem]">
               <input
                 type="checkbox"
@@ -205,9 +241,13 @@ export default function SignUp() {
             </label>
           </div>
 
-          <div className="grid grid-cols-[20rem_auto] gap-x-8 items-start mt-16">
-            <div></div>
-            <Button type="submit" className="w-[54rem] h-[6.6rem] text-[2.5rem]">
+          <div className="flex items-center justify-center mt-[14.4rem]">
+            <Button
+              variant="green"
+              type="submit"
+              className="w-[54rem] h-[6.6rem] text-[2.5rem]"
+              disabled
+            >
               join
             </Button>
           </div>
