@@ -23,7 +23,7 @@ export const SignUpSchema = z
           return hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
         },
         {
-          message: '비밀번호는 영문 대/소문자, 숫자, 특수문자를 최소 1개 이상 포함해야 합니다.',
+          message: '비밀번호는 영문 대/소문자, 숫자, 특수문자를 모두 포함해야 합니다.',
         },
       ),
 
@@ -45,9 +45,9 @@ export const SignUpSchema = z
 
     phone_number: z
       .string()
-      .regex(/^01[0-9]\d{7,8}$/, '휴대폰번호 유형에 맞게 입력해주세요.')
-      .min(10, '휴대폰 번호는 10자리 이상 입력해야 합니다.')
-      .max(11, '휴대폰 번호는 11자리 이하로 입력해야 합니다.'),
+      .regex(/^01[0-9]-?\d{3,4}-?\d{4}$/, '휴대폰번호 유형에 맞게 입력해주세요.'),
+    // .min(12, '휴대폰 번호는 10자리 이상 입력해야 합니다.')
+    // .max(13, '휴대폰 번호는 11자리 이하로 입력해야 합니다.'),
 
     /** 휴대폰 인증 필수 */
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import Heading from '../components/ui/Heading';
 import { Button } from '../components/ui/Button';
@@ -18,9 +18,11 @@ export default function SignUp() {
     watch,
     setValue,
     setError,
-    formState: { errors },
+    control,
+    formState: { errors, isValid },
   } = useForm<SignupFormData>({
     resolver: zodResolver(SignUpSchema),
+    mode: 'onChange',
     defaultValues: {
       email: '',
       password: '',
@@ -50,7 +52,7 @@ export default function SignUp() {
     privacy: false,
     marketing: false,
   });
-
+  console.log(isValid);
   const handleCheckboxChange = (name: keyof typeof checkboxes) => {
     if (name === 'all') {
       const newValue = !checkboxes.all;
@@ -61,9 +63,9 @@ export default function SignUp() {
         marketing: newValue,
       });
       // 폼 값도 함께 업데이트
-      setValue('terms', newValue);
-      setValue('privacy', newValue);
-      setValue('marketing', newValue);
+      setValue('terms', newValue, { shouldValidate: true });
+      setValue('privacy', newValue, { shouldValidate: true });
+      setValue('marketing', newValue, { shouldValidate: true });
     } else {
       const newCheckboxes = {
         ...checkboxes,
@@ -73,6 +75,7 @@ export default function SignUp() {
         ...newCheckboxes,
         all: newCheckboxes.terms && newCheckboxes.privacy && newCheckboxes.marketing,
       });
+      setValue(name, !checkboxes[name], { shouldValidate: true });
     }
   };
   const handlePhoneAuthClick = () => {
@@ -123,17 +126,16 @@ export default function SignUp() {
       const isAvailable = true;
       setEmailMessage(isAvailable ? '사용 가능한 이메일입니다.' : '이미 사용중인 이메일입니다.');
       setIsEmailAvailable(isAvailable);
-      setValue('isEmailAvailable', isAvailable); // 폼 상태 업데이트 추가
+      setValue('isEmailAvailable', isAvailable, { shouldValidate: true }); // 폼 상태 업데이트 추가
     } catch (error) {
       setIsEmailAvailable(false);
-      setValue('isEmailAvailable', false);
+      setValue('isEmailAvailable', false, { shouldValidate: true });
       console.error(error);
     }
   };
   // 휴대폰 인증
   const handleVerifyCode = async () => {
     const code = watch('phone_auth'); // ✅ 입력된 인증번호 가져오기
-    console.log(code);
     if (!code) {
       setError('phone_auth', { message: '인증번호를 입력해주세요.' });
       return;
@@ -162,9 +164,12 @@ export default function SignUp() {
     */
 
     // ✅ API 호출 없이 테스트용 코드 (인증번호가 '123456'이면 성공, 아니면 실패)
+
     if (code === '123456') {
-      setValue('isPhoneVerified', true); // ✅ 인증 성공 처리
+      console.log(code);
+      setValue('isPhoneVerified', true, { shouldValidate: true }); // ✅ 인증 성공 처리
     } else {
+      console.log(code);
       setError('phone_auth', { message: '인증번호가 올바르지 않습니다.' }); // ✅ 인증 실패 메시지 표시
     }
   };
@@ -190,7 +195,7 @@ export default function SignUp() {
               helperText={errors.email?.message || emailMessage || '이메일을 입력해주세요.'} // ✅ 오류 메시지가 우선, 없으면 API 응답 메시지, 그마저도 없으면 기본값
               {...register('email', {
                 onChange: e => {
-                  setValue('email', e.target.value);
+                  setValue('email', e.target.value, { shouldValidate: true });
                   setEmailMessage(''); // 유효성 메시지 초기화
                   setIsEmailAvailable(null); // 이메일 사용 가능 여부 초기화
                 },
@@ -219,7 +224,11 @@ export default function SignUp() {
               helperText={
                 errors.password?.message || '영문대/소문자, 숫자, 특수문자 1개 이상 포함 10자 이상'
               }
-              {...register('password')}
+              {...register('password', {
+                onChange: e => {
+                  setValue('password', e.target.value, { shouldValidate: true });
+                },
+              })}
             />
           </div>
 
@@ -233,7 +242,11 @@ export default function SignUp() {
               placeholder="confirm password"
               status={errors.password_confirm ? 'error' : 'default'}
               helperText={errors.password_confirm?.message}
-              {...register('password_confirm')}
+              {...register('password_confirm', {
+                onChange: e => {
+                  setValue('password_confirm', e.target.value, { shouldValidate: true });
+                },
+              })}
             />
           </div>
 
@@ -247,7 +260,11 @@ export default function SignUp() {
               placeholder="홍길동"
               status={errors.username ? 'error' : 'default'}
               helperText={errors.username?.message}
-              {...register('username')}
+              {...register('username', {
+                onChange: e => {
+                  setValue('username', e.target.value, { shouldValidate: true });
+                },
+              })}
             />
           </div>
 
@@ -265,7 +282,9 @@ export default function SignUp() {
               {...register('phone_number', {
                 onChange: e => {
                   setPhone(formatPhoneNumber(e.target.value)); // 상태 업데이트
-                  setValue('phone_number', formatPhoneNumber(e.target.value)); // 폼 상태 업데이트
+                  setValue('phone_number', formatPhoneNumber(e.target.value), {
+                    shouldValidate: true,
+                  }); // 폼 상태 업데이트
                 },
               })}
             />
@@ -290,7 +309,11 @@ export default function SignUp() {
                 helperText={
                   errors.phone_auth?.message || `인증번호를 입력해주세요. ${formatTime(timeLeft)}`
                 }
-                {...register('phone_auth')}
+                {...register('phone_auth', {
+                  onChange: e => {
+                    setValue('phone_auth', e.target.value, { shouldValidate: true });
+                  },
+                })}
               />
               <Button
                 type="button"
@@ -362,7 +385,12 @@ export default function SignUp() {
           </div>
 
           <div className="flex items-center justify-center mt-[14.4rem]">
-            <Button variant="green" type="submit" className="w-[54rem] h-[6.6rem] text-[2.5rem]">
+            <Button
+              variant="green"
+              type="submit"
+              className="w-[54rem] h-[6.6rem] text-[2.5rem]"
+              disabled={!isValid}
+            >
               join
             </Button>
           </div>
