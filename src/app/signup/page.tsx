@@ -15,15 +15,35 @@ export default function SignUp() {
   const {
     register,
     handleSubmit,
+    watch,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<SignupFormData>({
     resolver: zodResolver(SignUpSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      password_confirm: '',
+      username: '',
+      phone_number: '',
+      phone_auth: '',
+      isPhoneVerified: false,
+      isEmailAvailable: false,
+      terms: false,
+      privacy: false,
+      marketing: false,
+    },
   });
 
   const [isPhoneAuthDisabled, setIsPhoneAuthDisabled] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [phone, setPhone] = useState('');
+  // 이메일
+  const email = watch('email') || '';
+  const [emailMessage, setEmailMessage] = useState(''); // 이메일 가입여부 메세지
+  const [isEmailAvailable, setIsEmailAvailable] = useState<boolean | null>(false); // 이메일 가입가능여부 저장
+
   const [checkboxes, setCheckboxes] = useState({
     all: false,
     terms: false,
@@ -40,6 +60,10 @@ export default function SignUp() {
         privacy: newValue,
         marketing: newValue,
       });
+      // 폼 값도 함께 업데이트
+      setValue('terms', newValue);
+      setValue('privacy', newValue);
+      setValue('marketing', newValue);
     } else {
       const newCheckboxes = {
         ...checkboxes,
@@ -78,6 +102,73 @@ export default function SignUp() {
   const onSubmit = (data: SignupFormData) => {
     console.log('회원가입 데이터:', data);
   };
+
+  // 이메일 가입여부 확인 api 호출
+  // const checkEmailForSignup = async () => {
+  //   if (!email.includes('@')) return;
+  //   try {
+  //     // const response = await fetch(`/api/check-email?email=${email}`);
+  //     // const data = await response.json();
+  //     // setEmailMessage(data.message);
+  //     // setIsEmailAvailable(data.available); // 가입 가능 여부 저장
+  //   } catch (error) {
+  //     // setIsEmailAvailable(false);
+  //     console.error(error);
+  //   }
+  // };
+  const checkEmailForSignup = async () => {
+    if (!email.includes('@')) return;
+    try {
+      // API 호출 시뮬레이션
+      const isAvailable = true;
+      setEmailMessage(isAvailable ? '사용 가능한 이메일입니다.' : '이미 사용중인 이메일입니다.');
+      setIsEmailAvailable(isAvailable);
+      setValue('isEmailAvailable', isAvailable); // 폼 상태 업데이트 추가
+    } catch (error) {
+      setIsEmailAvailable(false);
+      setValue('isEmailAvailable', false);
+      console.error(error);
+    }
+  };
+  // 휴대폰 인증
+  const handleVerifyCode = async () => {
+    const code = watch('phone_auth'); // ✅ 입력된 인증번호 가져오기
+    console.log(code);
+    if (!code) {
+      setError('phone_auth', { message: '인증번호를 입력해주세요.' });
+      return;
+    }
+
+    // 🔽 실제 API 호출 자리
+    /*
+    try {
+      const response = await fetch('/api/verify-phone', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: watch('phone_number'), code }),
+      });
+  
+      const data = await response.json();
+  
+      if (data.success) {
+        setValue('isPhoneVerified', true); // ✅ 인증 성공 시 값 업데이트
+      } else {
+        setError('phone_auth', { message: '인증번호가 올바르지 않습니다.' });
+      }
+    } catch (error) {
+      console.error('휴대폰 인증 실패:', error);
+      setError('phone_auth', { message: '인증 중 오류가 발생했습니다.' });
+    }
+    */
+
+    // ✅ API 호출 없이 테스트용 코드 (인증번호가 '123456'이면 성공, 아니면 실패)
+    if (code === '123456') {
+      setValue('isPhoneVerified', true); // ✅ 인증 성공 처리
+    } else {
+      setError('phone_auth', { message: '인증번호가 올바르지 않습니다.' }); // ✅ 인증 실패 메시지 표시
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 flex justify-center">
       <div className="w-full max-w-[98rem] flex flex-col items-center">
@@ -94,10 +185,24 @@ export default function SignUp() {
               id="email"
               type="email"
               placeholder="e-mail address"
-              status="default"
-              {...register('email')}
+              value={email}
+              status={errors.email ? 'error' : isEmailAvailable ? 'success' : 'default'} // ✅ 에러가 있으면 'error', 없으면 'success' 또는 'default'
+              helperText={errors.email?.message || emailMessage || '이메일을 입력해주세요.'} // ✅ 오류 메시지가 우선, 없으면 API 응답 메시지, 그마저도 없으면 기본값
+              {...register('email', {
+                onChange: e => {
+                  setValue('email', e.target.value);
+                  setEmailMessage(''); // 유효성 메시지 초기화
+                  setIsEmailAvailable(null); // 이메일 사용 가능 여부 초기화
+                },
+              })}
             />
-            <Button variant="outline" className="!w-[14rem] h-[5rem] text-[2rem]">
+            <Button
+              type="button"
+              variant="outline"
+              className="!w-[14rem] h-[5rem] text-[2rem]"
+              onClick={checkEmailForSignup}
+              disabled={!email.includes('@')}
+            >
               가입여부 확인
             </Button>
           </div>
@@ -109,9 +214,11 @@ export default function SignUp() {
             <Input
               id="password"
               type="password"
-              helperText="영문대/소문자, 숫자, 특수문자 1개 이상 포함 10자 이상"
               placeholder="password"
-              status="default"
+              status={errors.password ? 'error' : 'default'}
+              helperText={
+                errors.password?.message || '영문대/소문자, 숫자, 특수문자 1개 이상 포함 10자 이상'
+              }
               {...register('password')}
             />
           </div>
@@ -124,7 +231,8 @@ export default function SignUp() {
               id="confirm-password"
               type="password"
               placeholder="confirm password"
-              status="default"
+              status={errors.password_confirm ? 'error' : 'default'}
+              helperText={errors.password_confirm?.message}
               {...register('password_confirm')}
             />
           </div>
@@ -133,7 +241,14 @@ export default function SignUp() {
             <label htmlFor="name" className="text-[3rem]">
               name
             </label>
-            <Input id="name" type="text" placeholder="홍길동" status="default" />
+            <Input
+              id="username"
+              type="text"
+              placeholder="홍길동"
+              status={errors.username ? 'error' : 'default'}
+              helperText={errors.username?.message}
+              {...register('username')}
+            />
           </div>
 
           <div className="grid grid-cols-[30rem_54rem_14rem] gap-x-8 items-center">
@@ -143,12 +258,19 @@ export default function SignUp() {
             <Input
               id="phone"
               type="tel"
-              placeholder="010-1234-5678"
               value={phone}
-              onChange={handlePhoneChange}
-              status="default"
+              placeholder="010-1234-5678"
+              status={errors.phone_number ? 'error' : 'default'}
+              helperText={errors.phone_number?.message}
+              {...register('phone_number', {
+                onChange: e => {
+                  setPhone(formatPhoneNumber(e.target.value)); // 상태 업데이트
+                  setValue('phone_number', formatPhoneNumber(e.target.value)); // 폼 상태 업데이트
+                },
+              })}
             />
             <Button
+              type="button"
               variant="outline"
               className="!w-[14rem] h-[5rem] text-[2rem]"
               disabled={isPhoneAuthDisabled}
@@ -163,22 +285,22 @@ export default function SignUp() {
               <Input
                 id="phone_auth"
                 type="number"
-                status="default"
                 placeholder="인증번호 입력"
-                helperText={`인증번호를 입력해주세요. ${formatTime(timeLeft)}`}
-                className="border p-[2rem] h-auto"
-                autoFocus
+                status={errors.phone_auth ? 'error' : 'default'}
+                helperText={
+                  errors.phone_auth?.message || `인증번호를 입력해주세요. ${formatTime(timeLeft)}`
+                }
+                {...register('phone_auth')}
               />
-              <Button variant="outline" className="!w-[14rem] h-[5rem] text-[2rem] mt-[2.2rem]">
+              <Button
+                type="button"
+                variant="outline"
+                className="!w-[14rem] h-[5rem] text-[2rem] mt-[2.2rem]"
+                onClick={handleVerifyCode}
+              >
                 인증 확인
               </Button>
             </div>
-          )}
-          {errors.phone_number && (
-            <p className="text-red-500 text-[2rem] mt-2">{errors.phone_number.message}</p>
-          )}
-          {errors.isPhoneVerified && (
-            <p className="text-red-500 text-[2rem] mt-2">{errors.isPhoneVerified.message}</p>
           )}
 
           <div className="flex flex-col gap-10">
@@ -207,9 +329,7 @@ export default function SignUp() {
                 에 동의합니다.(필수)
               </span>
             </label>
-            {errors.terms && (
-              <p className="text-red-500 text-[2rem] mt-2">{errors.terms.message}</p>
-            )}
+            {errors.terms && <p className="text-red text-[1.5rem] mt-2">{errors.terms.message}</p>}
             <label className="flex items-center space-x-[2.3rem]">
               <input
                 type="checkbox"
@@ -226,7 +346,7 @@ export default function SignUp() {
               </span>
             </label>
             {errors.privacy && (
-              <p className="text-red-500 text-[2rem] mt-2">{errors.privacy.message}</p>
+              <p className="text-red text-[1.5rem] mt-2">{errors.privacy.message}</p>
             )}
 
             <label className="flex items-center space-x-[2.3rem]">
@@ -242,12 +362,7 @@ export default function SignUp() {
           </div>
 
           <div className="flex items-center justify-center mt-[14.4rem]">
-            <Button
-              variant="green"
-              type="submit"
-              className="w-[54rem] h-[6.6rem] text-[2.5rem]"
-              disabled
-            >
+            <Button variant="green" type="submit" className="w-[54rem] h-[6.6rem] text-[2.5rem]">
               join
             </Button>
           </div>

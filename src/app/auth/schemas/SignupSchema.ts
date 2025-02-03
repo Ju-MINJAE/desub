@@ -2,21 +2,24 @@ import { z } from 'zod';
 
 export const SignUpSchema = z
   .object({
-    email: z.string().refine(email => email.includes('@'), {
-      message: '이메일 주소에는 "@"가 포함되어야 합니다.',
-    }),
+    email: z
+      .string()
+      .min(1, '이메일을 입력해주세요.')
+      .refine(email => email.includes('@'), {
+        message: '이메일 주소에는 "@"가 포함되어야 합니다.',
+      }),
 
     password: z
       .string()
+      .min(1, '비밀번호를 입력해주세요.')
       .min(10, '비밀번호는 최소 10자 이상이어야 합니다.')
       .max(20, '비밀번호는 최대 20자까지만 허용됩니다.')
       .refine(
         password => {
-          const hasUpperCase = /[A-Z]/.test(password); // 대문자 포함 여부
-          const hasLowerCase = /[a-z]/.test(password); // 소문자 포함 여부
-          const hasNumber = /\d/.test(password); // 숫자 포함 여부
-          const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password); // 특수문자 포함 여부
-
+          const hasUpperCase = /[A-Z]/.test(password);
+          const hasLowerCase = /[a-z]/.test(password);
+          const hasNumber = /\d/.test(password);
+          const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
           return hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
         },
         {
@@ -26,11 +29,13 @@ export const SignUpSchema = z
 
     password_confirm: z
       .string()
+      .min(1, '비밀번호 확인을 입력해주세요.')
       .min(10, '비밀번호는 최소 10자 이상이어야 합니다.')
       .max(20, '비밀번호는 최대 20자까지만 허용됩니다.'),
 
     username: z
       .string()
+      .min(1, '이름을 입력해주세요.')
       .min(2, '이름은 최소 2자 이상이어야 합니다.')
       .max(30, '이름은 최대 30자까지만 허용됩니다.')
       .regex(
@@ -45,6 +50,12 @@ export const SignUpSchema = z
       .max(11, '휴대폰 번호는 11자리 이하로 입력해야 합니다.'),
 
     /** 휴대폰 인증 필수 */
+
+    phone_auth: z
+      .string()
+      .min(6, '인증번호는 6자리 숫자로 입력해주세요.')
+      .max(6, '인증번호는 6자리 숫자로 입력해주세요.'),
+
     isPhoneVerified: z.boolean().refine(value => value === true, {
       message: '휴대폰 인증이 필요합니다.',
     }),
@@ -65,7 +76,7 @@ export const SignUpSchema = z
   })
   .refine(data => data.password === data.password_confirm, {
     message: '동일한 비밀번호를 입력해주세요.',
-    path: ['password_confirm'],
+    path: ['password_confirm'], // ✅ password_confirm 필드에 에러 메시지를 표시하도록 설정
   });
 
 export type SignupFormData = z.infer<typeof SignUpSchema>;
