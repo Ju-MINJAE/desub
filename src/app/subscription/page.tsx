@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '../components/ui/Button';
 import TextButton from '../components/ui/TextButton';
@@ -7,11 +8,27 @@ import { useState } from 'react';
 import SubscriptionInactive from '../components/subscription/SubscriptionInactive';
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
-import { Alert } from '../components/ui/Alert';
+import { SimpleAlert } from '../components/ui/SimpleAlert';
 
 const Subscription = () => {
   const [subscriptionBtnStatus, setSubscriptionBtnStatus] = useState('unsubscribed');
   const [subscriptionDetails, setSubscriptionDetails] = useState(false);
+
+  // 더미데이터
+  const example = [
+    {
+      logTime: '2025-01-15 15:30',
+      changeLog: '재개',
+    },
+    {
+      logTime: '2025-02-15 15:30',
+      changeLog: '일시정지',
+    },
+    {
+      logTime: '2025-03-15 15:30',
+      changeLog: '결제',
+    },
+  ];
 
   const handleStatus = () => {
     switch (subscriptionBtnStatus) {
@@ -29,12 +46,17 @@ const Subscription = () => {
   return (
     <div className="h-full">
       {subscriptionDetails && (
-        <Alert
-          buttonText="Click Me"
-          childrenBottom="This is a green alert message."
-          childrenTop="Green Alert Top"
-          size="full"
-          variant="green"
+        <SimpleAlert
+          childrenBottom={example.map((item, index) => (
+            <>
+              <div key={index} className="flex items-center">
+                <div className="w-3/4">{item.logTime}</div>
+                <div className="w-1/4">{item.changeLog}</div>
+              </div>
+            </>
+          ))}
+          childrenTop="구독현황 변경 및 결제이력"
+          onClose={() => setSubscriptionDetails(false)}
         />
       )}
       <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
@@ -88,7 +110,12 @@ const Subscription = () => {
         <div className="flex flex-col pl-[5.9rem] justify-center">
           <div className="flex justify-between mt-[0.9rem]">
             <p>Status</p>
-            <button onClick={() => setSubscriptionDetails(true)}>구독현황 변경 및 결제이력</button>
+            <button
+              className="font-extrabold hover:underline"
+              onClick={() => setSubscriptionDetails(true)}
+            >
+              구독현황 변경 및 결제이력
+            </button>
           </div>
           {handleStatus()}
         </div>
