@@ -1,12 +1,25 @@
 import { Button } from '../ui/Button';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { setSubscriptionStatus } from '../../../store/subscriptionStatusSlice';
 
 const Unsubscribed = () => {
+  const dispatch = useDispatch();
+
+  const handleSubscriptionStatus = () => {
+    dispatch(setSubscriptionStatus('paused'));
+  };
+
   return (
     <div>
       <div className="flex w-[40.1rem] justify-between">
         <p className="text-[5rem] font-bold hover:underline hover:decoration-2">구독중</p>
-        <Button className="w-[14.7rem] h-[6rem] font-bold text-2xl" size="small" variant="outline">
+        <Button
+          className="w-[14.7rem] h-[6rem] font-bold text-2xl"
+          size="small"
+          variant="outline"
+          onClick={handleSubscriptionStatus}
+        >
           일시정지
         </Button>
       </div>

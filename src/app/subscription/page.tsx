@@ -9,10 +9,12 @@ import SubscriptionInactive from '../components/subscription/SubscriptionInactiv
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 const Subscription = () => {
-  const [subscriptionBtnStatus, setSubscriptionBtnStatus] = useState('unsubscribed');
-  const [subscriptionDetails, setSubscriptionDetails] = useState(false);
+  const subscriptionStatus = useSelector((state: RootState) => state.subscriptionStatus.status);
+  const [subscriptionModal, setSubscriptionModal] = useState(false);
 
   // 더미데이터
   const example = [
@@ -31,7 +33,7 @@ const Subscription = () => {
   ];
 
   const handleStatus = () => {
-    switch (subscriptionBtnStatus) {
+    switch (subscriptionStatus) {
       case 'unsubscribed':
         return <SubscriptionInactive />;
       case 'subscribed':
@@ -45,7 +47,7 @@ const Subscription = () => {
 
   return (
     <div className="h-full">
-      {subscriptionDetails && (
+      {subscriptionModal && (
         <SimpleAlert
           childrenBottom={example.map((item, index) => (
             <>
@@ -56,7 +58,7 @@ const Subscription = () => {
             </>
           ))}
           childrenTop="구독현황 변경 및 결제이력"
-          onClose={() => setSubscriptionDetails(false)}
+          onClose={() => setSubscriptionModal(false)}
         />
       )}
       <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
@@ -112,7 +114,7 @@ const Subscription = () => {
             <p>Status</p>
             <button
               className="font-extrabold hover:underline"
-              onClick={() => setSubscriptionDetails(true)}
+              onClick={() => setSubscriptionModal(true)}
             >
               구독현황 변경 및 결제이력
             </button>
