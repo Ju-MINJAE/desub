@@ -9,11 +9,10 @@ import SubscriptionInactive from '../components/subscription/SubscriptionInactiv
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
+import { useAppSelector } from '@/libs/redux/hooks';
 
 const Subscription = () => {
-  const subscriptionStatus = useSelector((state: RootState) => state.subscriptionStatus.status);
+  const subscriptionStatus = useAppSelector(state => state.subscriptionStatus.status);
   const [subscriptionModal, setSubscriptionModal] = useState(false);
 
   // 더미데이터

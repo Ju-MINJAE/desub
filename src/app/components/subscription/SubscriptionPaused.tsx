@@ -1,10 +1,11 @@
 import { Button } from '../ui/Button';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@/libs/redux/hooks';
 import { setSubscriptionStatus } from '../../../store/subscriptionStatusSlice';
 
 const Unsubscribed = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSubscriptionStatus = () => {
     dispatch(setSubscriptionStatus('subscribed'));
