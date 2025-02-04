@@ -48,9 +48,11 @@ const Header = () => {
         </div>
 
         <div className="flex items-center">
-          <Button variant="green" size="small" className="w-[14.2rem] h-[5rem] text-[2rem]">
-            subscribe
-          </Button>
+          <Link href="/subscription">
+            <Button variant="green" size="small" className="w-[14.2rem] h-[5rem] text-[2rem]">
+              subscribe
+            </Button>
+          </Link>
           <Link href="/login">
             <button className="ml-[3.9rem] text-[2rem]">login</button>
           </Link>

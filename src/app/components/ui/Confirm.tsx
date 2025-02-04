@@ -2,7 +2,6 @@
 
 import type React from 'react';
 import Image from 'next/image';
-import { useState } from 'react';
 
 interface ConfirmProps {
   childrenTop: React.ReactNode;
@@ -26,15 +25,6 @@ export const Confirm = ({
   onClose,
   ...props
 }: ConfirmProps) => {
-  const [isVisible, setIsVisible] = useState(true);
-
-  const closeAlert = () => {
-    setIsVisible(false);
-    if (onClose) onClose();
-  };
-
-  if (!isVisible) return null;
-
   const getVariantStyles1 = (variant1?: ConfirmProps['variant1']) => {
     switch (variant1) {
       case 'green':
@@ -59,14 +49,16 @@ export const Confirm = ({
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-60">
-      <div className="w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center bg-white">
+      <div
+        className={`w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center bg-white ${className}`}
+      >
         <Image
           className="self-end cursor-pointer"
           src="/icons/close.svg"
           alt=""
           width={40}
           height={40}
-          onClick={closeAlert}
+          onClick={onClose}
         />
         <div className="w-full gap-[7.2rem] flex flex-col justify-center items-center text-center">
           <div className="block gap-[1.6rem]">
@@ -80,7 +72,6 @@ export const Confirm = ({
             px-[1.375rem] py-[0.3125rem]
             w-[20rem] h-[5rem] text-[1.8rem]
             ${getVariantStyles1(variant1)}
-            ${className}
           `}
               {...props}
             >

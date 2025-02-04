@@ -24,7 +24,9 @@ const Contact = () => {
             variant="black"
             className="w-[79rem] !h-[11rem] bg-black font-bold text-[5rem] text-white"
           >
-            커스터마이징 프로젝트 의뢰하기
+            <a href="https://dbre.co.kr/" target="_blank" rel="noopener noreferrer">
+              커스터마이징 프로젝트 의뢰하기
+            </a>
           </Button>
         </div>
 
