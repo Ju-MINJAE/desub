@@ -46,8 +46,6 @@ export const SignUpSchema = z
     phone_number: z
       .string()
       .regex(/^01[0-9]-?\d{3,4}-?\d{4}$/, '휴대폰번호 유형에 맞게 입력해주세요.'),
-    // .min(12, '휴대폰 번호는 10자리 이상 입력해야 합니다.')
-    // .max(13, '휴대폰 번호는 11자리 이하로 입력해야 합니다.'),
 
     /** 휴대폰 인증 필수 */
 
@@ -61,12 +59,8 @@ export const SignUpSchema = z
     }),
 
     /** 약관 필수 2개 (terms, privacy) + 선택 1개 (marketing) */
-    terms: z.boolean().refine(value => value === true, {
-      message: '이용약관에 동의해야 가입이 가능합니다.',
-    }),
-    privacy: z.boolean().refine(value => value === true, {
-      message: '개인정보처리방침에 동의해야 가입이 가능합니다.',
-    }),
+    terms: z.boolean(),
+    privacy: z.boolean(),
     marketing: z.boolean().optional(), // 선택 약관
 
     /** 이메일 기입여부 확인 필수 */
@@ -77,6 +71,10 @@ export const SignUpSchema = z
   .refine(data => data.password === data.password_confirm, {
     message: '동일한 비밀번호를 입력해주세요.',
     path: ['password_confirm'], // ✅ password_confirm 필드에 에러 메시지를 표시하도록 설정
+  })
+  .refine(data => data.terms && data.privacy, {
+    message: '이용약관과 개인정보처리방침에 모두 동의해야 합니다.',
+    path: ['terms'], // ✅ terms 필드에만 에러 표시
   });
 
 export type SignupFormData = z.infer<typeof SignUpSchema>;
