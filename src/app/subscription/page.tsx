@@ -14,7 +14,9 @@ import Image from 'next/image';
 
 const Subscription = () => {
   const subscriptionStatus = useAppSelector(state => state.subscriptionStatus.status);
-  const [subscriptionModal, setSubscriptionModal] = useState(false);
+  // 구독현황 변경 및 결제이력
+  const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
+  const [requestForWork, setrequestForWork] = useState(false);
 
   // 더미데이터
   const example = [
@@ -47,18 +49,39 @@ const Subscription = () => {
 
   return (
     <div className="h-full">
-      {subscriptionModal && (
+      {subscriptionStatusModal && (
         <SimpleAlert
-          childrenBottom={example.map((item, index) => (
-            <>
-              <div key={index} className="flex items-center">
-                <div className="w-3/4">{item.logTime}</div>
-                <div className="w-1/4">{item.changeLog}</div>
+          childrenBottom={
+            <div className="w-full h-full flex flex-col">
+              <div className="flex py-[1.9rem] text-[2rem] font-extrabold">
+                <div className="w-3/4">
+                  <p>일시</p>
+                </div>
+                <div className="w-1/4">
+                  <p>내용</p>
+                </div>
               </div>
-            </>
-          ))}
+              <div className="flex flex-col gap-[1.5rem] text-[2rem]">
+                {example.map((item, index) => (
+                  <>
+                    <div key={index} className="flex items-center">
+                      <div className="w-3/4">{item.logTime}</div>
+                      <div className="w-1/4">{item.changeLog}</div>
+                    </div>
+                  </>
+                ))}
+              </div>
+            </div>
+          }
           childrenTop="구독현황 변경 및 결제이력"
-          onClose={() => setSubscriptionModal(false)}
+          onClose={() => setSubscriptionStatusModal(false)}
+        />
+      )}
+      {requestForWork && (
+        <SimpleAlert
+          childrenBottom=""
+          childrenTop="작업 요청하기"
+          onClose={() => setrequestForWork(false)}
         />
       )}
       <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
@@ -91,6 +114,7 @@ const Subscription = () => {
                 className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem]"
                 size="small"
                 variant="green"
+                onClick={() => setrequestForWork(true)}
               >
                 작업 요청하기
               </Button>
@@ -121,7 +145,7 @@ const Subscription = () => {
             <p>Status</p>
             <button
               className="font-extrabold hover:underline"
-              onClick={() => setSubscriptionModal(true)}
+              onClick={() => setSubscriptionStatusModal(true)}
             >
               구독현황 변경 및 결제이력
             </button>

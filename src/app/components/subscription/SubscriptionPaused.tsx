@@ -1,6 +1,5 @@
 import { Button } from '../ui/Button';
 import Link from 'next/link';
-// import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '@/libs/redux/hooks';
 import { setSubscriptionStatus } from '../../../store/subscriptionStatusSlice';
 import Image from 'next/image';
