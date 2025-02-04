@@ -10,6 +10,7 @@ import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
 import { useAppSelector } from '@/libs/redux/hooks';
+import Image from 'next/image';
 
 const Subscription = () => {
   const subscriptionStatus = useAppSelector(state => state.subscriptionStatus.status);
@@ -62,9 +63,12 @@ const Subscription = () => {
       )}
       <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
         <BackButton text="my subscription" />
-        <Button className="w-[11.9rem] h-[3.3rem] text-[1.5rem]" size="small" variant="outline">
-          리뷰 작성하기
-        </Button>
+        <div className="flex items-center">
+          <Button className="w-[11.9rem] h-[3.3rem] text-[1.5rem]" size="small" variant="outline">
+            리뷰 작성하기
+          </Button>
+          <Image src="/icons/review.svg" alt="" width={176.99} height={68} />
+        </div>
       </div>
 
       <div className="grid grid-cols-2 h-[71.2rem] mt-[2.9rem] px-[5.8rem]">
@@ -74,8 +78,11 @@ const Subscription = () => {
             <div className="w-[19.8rem] h-[19.8rem] bg-gray rounded-[100rem]"></div>
             <div className="mt-[2rem]">
               <p className="text-[5rem] font-extrabold italic">wassup</p>
-              <div>
+              <div className="flex gap-[1rem]">
                 <p className="text-[5rem] font-bold hover:underline hover:decoration-2">홍길동님</p>
+                <button>
+                  <Image src="/icons/setting.svg" alt="" width={24} height={24} />
+                </button>
               </div>
             </div>
 
@@ -89,11 +96,12 @@ const Subscription = () => {
               </Button>
 
               <Button
-                className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem]"
+                className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem] flex justify-center items-center gap-[1.7rem]"
                 size="small"
                 variant="outline"
               >
                 Workspace
+                <Image src="/icons/workSpace.svg" alt="" width={24} height={24} />
               </Button>
             </div>
 

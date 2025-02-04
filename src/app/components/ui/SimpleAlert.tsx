@@ -6,13 +6,21 @@ import Image from 'next/image';
 interface SimpleAlertProps {
   childrenTop: React.ReactNode;
   childrenBottom: React.ReactNode;
+  className?: string;
   onClose?: () => void;
 }
 
-export const SimpleAlert = ({ childrenTop, childrenBottom, onClose }: SimpleAlertProps) => {
+export const SimpleAlert = ({
+  childrenTop,
+  childrenBottom,
+  className = '',
+  onClose,
+}: SimpleAlertProps) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-60">
-      <div className="w-[64rem] h-[46.8rem] rounded-[5.7rem] px-[4.7rem] py-[5.5rem] flex flex-col bg-white justify-between gap-[7.9rem]">
+      <div
+        className={`w-[64rem] h-[46.8rem] rounded-[5.7rem] px-[4.7rem] py-[5.5rem] flex flex-col bg-white justify-between gap-[7.9rem] ${className}`}
+      >
         <div className="flex justify-between items-center">
           <div className="text-[3rem] font-extrabold">{childrenTop}</div>
           <Image
