@@ -2,7 +2,6 @@
 
 import type React from 'react';
 import Image from 'next/image';
-import { useState } from 'react';
 
 interface AlertProps {
   childrenTop: React.ReactNode;
@@ -24,15 +23,6 @@ export const Alert = ({
   onClose,
   ...props
 }: AlertProps) => {
-  const [isVisible, setIsVisible] = useState(true);
-
-  const closeAlert = () => {
-    setIsVisible(false);
-    if (onClose) onClose();
-  };
-
-  if (!isVisible) return null;
-
   const getVariantStyles = (variant?: AlertProps['variant']) => {
     switch (variant) {
       case 'green':
@@ -66,7 +56,7 @@ export const Alert = ({
           alt=""
           width={40}
           height={40}
-          onClick={closeAlert}
+          onClick={onClose}
         />
         <div className="w-full gap-[7.2rem] flex flex-col justify-center items-center text-center">
           <div className="block gap-[1.6rem]">
