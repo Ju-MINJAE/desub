@@ -2,7 +2,6 @@
 
 import type React from 'react';
 import Image from 'next/image';
-import { useState } from 'react';
 
 interface ConfirmProps {
   childrenTop: React.ReactNode;
@@ -26,15 +25,6 @@ export const Confirm = ({
   onClose,
   ...props
 }: ConfirmProps) => {
-  const [isVisible, setIsVisible] = useState(true);
-
-  const closeAlert = () => {
-    setIsVisible(false);
-    if (onClose) onClose();
-  };
-
-  if (!isVisible) return null;
-
   const getVariantStyles1 = (variant1?: ConfirmProps['variant1']) => {
     switch (variant1) {
       case 'green':
@@ -66,7 +56,7 @@ export const Confirm = ({
           alt=""
           width={40}
           height={40}
-          onClick={closeAlert}
+          onClick={onClose}
         />
         <div className="w-full gap-[7.2rem] flex flex-col justify-center items-center text-center">
           <div className="block gap-[1.6rem]">
