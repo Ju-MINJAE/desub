@@ -9,13 +9,15 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    docs: {
-      story: {
-        inline: false,
-        iframeWidth: 1000,
-        iframeHeight: 500,
-      },
-    },
+    // docs: {
+    //   source: {
+    //     type: 'auto',
+    //   },
+    //   story: {
+    //     inline: false,
+    //     iframeHeight: 500,
+    //   },
+    // },
   },
 };
 

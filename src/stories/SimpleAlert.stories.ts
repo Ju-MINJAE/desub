@@ -5,7 +5,7 @@ const meta: Meta<typeof SimpleAlert> = {
   title: 'Components/SimpleAlert',
   component: SimpleAlert,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       source: {
         type: 'auto',

@@ -5,7 +5,7 @@ const meta: Meta<typeof Confirm> = {
   title: 'Components/Confirm',
   component: Confirm,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       source: {
         type: 'auto',
