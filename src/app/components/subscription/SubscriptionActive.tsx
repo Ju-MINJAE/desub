@@ -1,10 +1,10 @@
 import { Button } from '../ui/Button';
 import Link from 'next/link';
-// import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '@/libs/redux/hooks';
 import { setSubscriptionStatus } from '../../../store/subscriptionStatusSlice';
 import { Alert } from '../ui/Alert';
 import { useState } from 'react';
+import Image from 'next/image';
 
 const Unsubscribed = () => {
   const dispatch = useAppDispatch();
@@ -19,21 +19,23 @@ const Unsubscribed = () => {
       <div className="flex w-[40.1rem] justify-between">
         {subscriptionModal && (
           <Alert
-            buttonText="Click Me"
+            buttonText="구독취소"
             childrenBottom="This is a green alert message."
             childrenTop="Green Alert Top"
-            size="full"
+            size="normal"
             variant="green"
             onClose={() => setSubscriptionModal(false)}
+            className="w-[109.2rem] h-[98.7rem]"
           />
         )}
         <p className="text-[5rem] font-bold hover:underline hover:decoration-2">구독중</p>
         <Button
-          className="w-[14.7rem] h-[6rem] font-bold text-2xl"
+          className="w-[14.7rem] h-[6rem] font-bold text-[1.8rem] flex justify-center items-center gap-[0.6rem]"
           size="small"
           variant="outline"
           onClick={handleSubscriptionStatus}
         >
+          <Image src="/icons/pause-circle.svg" alt="" width={24} height={24} />
           일시정지
         </Button>
       </div>
