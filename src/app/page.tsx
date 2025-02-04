@@ -4,7 +4,7 @@ import UniqueProcess from './components/home/UniqueProcess';
 import Available from './components/home/Available';
 import LatestWorks from './components/home/LatestWorks';
 import FAQAccordion from './components/home/FAQ_Accordion';
-import Promotion from './components/home/Promotion';
+import Marquee from './components/home/Marquee';
 import Membership from './components/home/Membership';
 import Contact from './components/home/Contact';
 import BannerImage from './components/home/BannerImage';
@@ -21,7 +21,7 @@ const Home = () => {
       <Available />
       <LatestWorks />
       <FAQAccordion />
-      <Promotion />
+      <Marquee />
       <Membership />
       <div className="bg-gray w-full h-96">What is this?</div>
       <Contact />
