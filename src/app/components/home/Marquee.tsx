@@ -1,12 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { promotionText } from '@/constants/promotion';
+import { marqueeText } from '@/constants/marquee';
 
-const Promotion = () => {
+const Marquee = () => {
   const marqueeVariants = {
     animate: {
-      x: [-1000, 0],
+      x: [0, -1000],
       transition: {
         x: {
           repeat: Infinity,
@@ -18,7 +18,7 @@ const Promotion = () => {
     },
   };
 
-  const repeatedText = promotionText.repeat(20);
+  const repeatedText = marqueeText.repeat(20);
 
   return (
     <div className="w-full h-[9.6rem] pt-[18rem]">
@@ -35,4 +35,4 @@ const Promotion = () => {
   );
 };
 
-export default Promotion;
+export default Marquee;
