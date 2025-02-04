@@ -32,17 +32,6 @@ export const SimpleAlert = ({
             onClick={onClose}
           />
         </div>
-        {/* <div className="w-full h-full flex flex-col">
-          <div className="flex py-[1.9rem] text-[2rem] font-extrabold">
-            <div className="w-3/4">
-              <p>일시</p>
-            </div>
-            <div className="w-1/4">
-              <p>내용</p>
-            </div>
-          </div>
-          <div className="flex flex-col gap-[1.5rem] text-[2rem]">{childrenBottom}</div>
-        </div> */}
         {childrenBottom}
       </div>
     </div>
