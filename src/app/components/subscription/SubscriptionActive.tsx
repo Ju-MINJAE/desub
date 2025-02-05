@@ -4,6 +4,7 @@ import { setSubscriptionStatus } from '../../../store/subscriptionStatusSlice';
 import { Alert } from '../ui/Alert';
 import { useState } from 'react';
 import Image from 'next/image';
+import UnsubscribeModalContents from './UnsubscribeModalContents';
 
 const Unsubscribed = () => {
   const dispatch = useAppDispatch();
@@ -19,8 +20,14 @@ const Unsubscribed = () => {
         {subscriptionModal && (
           <Alert
             buttonText="구독취소"
-            childrenBottom="This is a green alert message."
-            childrenTop="버"
+            childrenBottom={<UnsubscribeModalContents />}
+            childrenTop={
+              <>
+                벌써 떠나시나요? 다시 오실거죠?
+                <br />
+                구독취소 사유를 알려주시면 서비스 개선에 참고하겠습니다.
+              </>
+            }
             size="normal"
             variant="green"
             onClose={() => setSubscriptionModal(false)}
