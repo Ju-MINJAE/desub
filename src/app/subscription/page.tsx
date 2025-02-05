@@ -11,9 +11,10 @@ import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
 import { useAppSelector } from '@/libs/redux/hooks';
 import Image from 'next/image';
+import { RootState } from '@/store/store';
 
 const Subscription = () => {
-  const subscriptionStatus = useAppSelector(state => state.subscriptionStatus.status);
+  const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
   // 구독현황 변경 및 결제이력
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
   const [requestForWork, setrequestForWork] = useState(false);
@@ -129,7 +130,7 @@ const Subscription = () => {
               </Button>
             </div>
 
-            <TextButton href="주소값" className="mt-[3.3rem] text-[1.5rem]">
+            <TextButton href="/HowToRequest" className="mt-[3.3rem] text-[1.5rem]">
               how to request
             </TextButton>
           </div>

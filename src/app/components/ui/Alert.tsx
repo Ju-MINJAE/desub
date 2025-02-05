@@ -65,17 +65,17 @@ export const Alert = ({
             <div className="font-medium text-[2rem]">{childrenTop}</div>
             <div className="font-normal text-[1.6rem]">{childrenBottom}</div>
           </div>
-          <button
-            className={`
+        </div>
+        <button
+          className={`
             ${getSizeStyles(size)} rounded-[50px]
             px-[1.375rem] py-[0.3125rem]
             ${getVariantStyles(variant)}
           `}
-            {...props}
-          >
-            {buttonText}
-          </button>
-        </div>
+          {...props}
+        >
+          {buttonText}
+        </button>
       </div>
     </div>
   );
