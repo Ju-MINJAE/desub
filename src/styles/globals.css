@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@font-face {
+  font-family: 'Poppins-Regular';
+  src: url('/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  /* 62.5% of 16px browser font size is 10px (16px * 0.625 = 10px) */
+  font-size: 62.5%;
+}
+
+body {
+  /* 1.6 * 10px = 16px */
+  font-size: 1.6rem;
+  font-family: 'Poppins-Regular', sans-serif;
+}
+
+.css-xzp052 {
+  height: 700px; /* 전체 높이 */
+}

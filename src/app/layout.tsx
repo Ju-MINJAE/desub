@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import '../styles/globals.css';
+import Footer from './components/ui/Footer';
+import Header from './components/ui/Header';
+import StoreProvider from './StoreProvider';
 
 export const metadata: Metadata = {
   title: 'desub',
@@ -13,7 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased flex flex-col min-h-screen">
+        <StoreProvider>
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </StoreProvider>
+      </body>
     </html>
   );
 }
