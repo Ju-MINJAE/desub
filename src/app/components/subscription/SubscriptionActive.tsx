@@ -1,5 +1,4 @@
 import { Button } from '../ui/Button';
-import Link from 'next/link';
 import { useAppDispatch } from '@/libs/redux/hooks';
 import { setSubscriptionStatus } from '../../../store/subscriptionStatusSlice';
 import { Alert } from '../ui/Alert';
@@ -21,11 +20,11 @@ const Unsubscribed = () => {
           <Alert
             buttonText="구독취소"
             childrenBottom="This is a green alert message."
-            childrenTop="Green Alert Top"
+            childrenTop="버"
             size="normal"
             variant="green"
             onClose={() => setSubscriptionModal(false)}
-            className="w-[109.2rem] h-[98.7rem]"
+            className="w-[70rem] h-[60rem]"
           />
         )}
         <p className="text-[5rem] font-bold hover:underline hover:decoration-2">구독중</p>

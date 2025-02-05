@@ -65,31 +65,30 @@ export const Confirm = ({
             <div className="font-medium text-[2rem]">{childrenTop}</div>
             <div className="font-normal text-[1.6rem]">{childrenBottom}</div>
           </div>
-          <div className="flex gap-[0.5rem]">
-            <button
-              className={`
+        </div>
+        <div className="flex gap-[5%]">
+          <button
+            className={`
             rounded-[50px]
             px-[1.375rem] py-[0.3125rem]
             w-[20rem] h-[5rem] text-[1.8rem]
             ${getVariantStyles1(variant1)}
           `}
-              {...props}
-            >
-              {buttonText1}
-            </button>
-            <button
-              className={`
+            {...props}
+          >
+            {buttonText1}
+          </button>
+          <button
+            className={`
             rounded-[50px]
             px-[1.375rem] py-[0.3125rem]
             w-[20rem] h-[5rem] text-[1.8rem]
             ${getVariantStyles2(variant2)}
-            ${className}
           `}
-              {...props}
-            >
-              {buttonText2}
-            </button>
-          </div>
+            {...props}
+          >
+            {buttonText2}
+          </button>
         </div>
       </div>
     </div>
