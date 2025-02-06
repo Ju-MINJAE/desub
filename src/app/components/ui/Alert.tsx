@@ -11,6 +11,7 @@ interface AlertProps {
   size?: 'full' | 'normal' | 'small';
   className?: string;
   onClose?: () => void;
+  onSubmit?: () => void;
 }
 
 export const Alert = ({
@@ -21,6 +22,7 @@ export const Alert = ({
   size = 'full',
   className = '',
   onClose,
+  onSubmit,
   ...props
 }: AlertProps) => {
   const getVariantStyles = (variant?: AlertProps['variant']) => {
@@ -67,6 +69,7 @@ export const Alert = ({
           </div>
         </div>
         <button
+          onClick={onSubmit}
           className={`
             ${getSizeStyles(size)} rounded-[50px]
             px-[1.375rem] py-[0.3125rem]

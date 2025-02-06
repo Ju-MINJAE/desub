@@ -38,7 +38,7 @@ const Login = () => {
             </Button>
           </div>
 
-          <TextButton href="주소값">회원가입</TextButton>
+          <TextButton href="/signup">회원가입</TextButton>
         </div>
       </div>
 

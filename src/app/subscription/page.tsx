@@ -9,7 +9,7 @@ import SubscriptionInactive from '../components/subscription/SubscriptionInactiv
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
-import { useAppSelector } from '@/libs/redux/hooks';
+import { useAppSelector } from '@/hooks/redux/hooks';
 import Image from 'next/image';
 import { RootState } from '@/store/store';
 
@@ -17,6 +17,7 @@ const Subscription = () => {
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
   // 구독현황 변경 및 결제이력
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
+  // 작업 요청하기 버튼 클릭
   const [requestForWork, setrequestForWork] = useState(false);
 
   // 더미데이터
