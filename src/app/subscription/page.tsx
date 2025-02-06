@@ -30,10 +30,6 @@ const Subscription = () => {
       logTime: '2025-02-15 15:30',
       changeLog: '일시정지',
     },
-    {
-      logTime: '2025-03-15 15:30',
-      changeLog: '결제',
-    },
   ];
 
   const handleStatus = () => {
@@ -53,9 +49,9 @@ const Subscription = () => {
     <div className="h-full">
       {subscriptionStatusModal && (
         <SimpleAlert
-          childrenBottom={
-            <div className="w-full h-full flex flex-col">
-              <div className="flex py-[1.9rem] text-[2rem] font-extrabold">
+          contents={
+            <div className="w-full h-[15rem] flex flex-col overflow-hidden">
+              <div className="flex pb-[1.9rem] text-[1.5rem] font-extrabold">
                 <div className="w-3/4">
                   <p>일시</p>
                 </div>
@@ -63,28 +59,25 @@ const Subscription = () => {
                   <p>내용</p>
                 </div>
               </div>
-              <div className="flex flex-col gap-[1.5rem] text-[2rem]">
+              <div className="flex flex-col gap-[1.5rem] text-[1.5rem] overflow-y-auto">
+                {' '}
+                {/* 내용이 넘칠 경우 스크롤 적용 */}
                 {example.map((item, index) => (
-                  <>
-                    <div key={index} className="flex items-center">
-                      <div className="w-3/4">{item.logTime}</div>
-                      <div className="w-1/4">{item.changeLog}</div>
-                    </div>
-                  </>
+                  <div key={index} className="flex items-center">
+                    <div className="w-3/4">{item.logTime}</div>
+                    <div className="w-1/4">{item.changeLog}</div>
+                  </div>
                 ))}
               </div>
             </div>
           }
-          childrenTop="구독현황 변경 및 결제이력"
+          title="구독현황 변경 및 결제이력"
           onClose={() => setSubscriptionStatusModal(false)}
+          className="w-[50rem] max-h-[30.5rem]"
         />
       )}
       {requestForWork && (
-        <SimpleAlert
-          childrenBottom=""
-          childrenTop="작업 요청하기"
-          onClose={() => setrequestForWork(false)}
-        />
+        <SimpleAlert contents="" title="작업 요청하기" onClose={() => setrequestForWork(false)} />
       )}
       <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
         <BackButton text="my subscription" />

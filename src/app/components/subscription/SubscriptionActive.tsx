@@ -7,10 +7,15 @@ import Image from 'next/image';
 
 const Unsubscribed = () => {
   const dispatch = useAppDispatch();
+  // 구독현황 변경 및 결제이력 클릭 시
   const [subscriptionModal, setSubscriptionModal] = useState(false);
+  // 구독취소 체크 항목
   const [selectedReason, setSelectedReason] = useState<UnSubscriptionReason[]>([]);
+  // 구독취소 etc 체크 했는지
   const [isEtc, setIsEtc] = useState(false);
+  // etc 내용
   const [etcContents, setEtcContents] = useState('');
+  // 주의 문구
   const [warningMessage, setWarningMessage] = useState('');
 
   const handleSubscriptionStatus = () => {
@@ -73,7 +78,15 @@ const Unsubscribed = () => {
       setWarningMessage('기타 사유를 입력해주세요.');
       return;
     }
-    console.log('제출된 사유:', selectedReason);
+    console.log(selectedReason);
+  };
+
+  const handleClose = () => {
+    setSubscriptionModal(false);
+    setSelectedReason([]);
+    setIsEtc(false);
+    setEtcContents('');
+    setWarningMessage('');
   };
 
   return (
@@ -82,36 +95,36 @@ const Unsubscribed = () => {
         {subscriptionModal && (
           <Alert
             buttonText="구독취소"
-            childrenBottom={
-              <div className="w-full h-[40rem] pt-[4rem] flex flex-col">
+            contents={
+              <div className="pt-[4rem] pb-[4rem] flex flex-col gap-[2rem]">
                 <div className="flex flex-col gap-2">
                   {unSubscriptionReasons.map(item => (
-                    <label key={item.id} className="flex items-center space-x-[2.3rem]">
+                    <label key={item.id} className="flex items-center gap-[0.9rem]">
                       <input
                         type="checkbox"
                         checked={selectedReason.some(reason => reason.id === item.id)}
                         onChange={() => handleSelectedReason(item)}
                         className="peer hidden"
                       />
-                      <span className="w-10 h-10 border-2 border-black rounded-sm peer-checked:bg-primary peer-checked:border-black"></span>
-                      <span className="text-[2rem]">{item.label}</span>
+                      <span className="w-[2.3rem] h-[2.3rem] border-2 border-black rounded-sm peer-checked:bg-black peer-checked:border-black"></span>
+                      <span className="text-[1.6rem]">{item.label}</span>
                     </label>
                   ))}
                 </div>
                 {isEtc && (
                   <textarea
-                    className="w-full h-[10rem] border border-black p-[1rem] mt-[1rem]"
+                    className="w-full h-[20.7rem] border border-black p-[1rem]"
                     onChange={handleEtcContents}
                     value={etcContents}
                     placeholder="여기에 구독취소 사유를 작성해주세요."
                   ></textarea>
                 )}
                 {warningMessage && (
-                  <div className="text-red text-[1.6rem] mt-[1rem] text-left">{warningMessage}</div>
+                  <div className="text-red text-[1.6rem] text-left">{warningMessage}</div>
                 )}
               </div>
             }
-            childrenTop={
+            title={
               <>
                 벌써 떠나시나요? 다시 오실거죠?
                 <br />
@@ -120,9 +133,9 @@ const Unsubscribed = () => {
             }
             size="normal"
             variant="green"
-            onClose={() => setSubscriptionModal(false)}
+            onClose={() => handleClose()}
             onSubmit={handleSubmit}
-            className="w-[70rem] h-[60rem]"
+            className="w-[60rem] min-h-[53.7rem]"
           />
         )}
         <p className="text-[5rem] font-bold hover:underline hover:decoration-2">구독중</p>
