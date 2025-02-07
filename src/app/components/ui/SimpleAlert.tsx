@@ -4,25 +4,20 @@ import type React from 'react';
 import Image from 'next/image';
 
 interface SimpleAlertProps {
-  childrenTop: React.ReactNode;
-  childrenBottom?: React.ReactNode;
+  title: React.ReactNode;
+  contents?: React.ReactNode;
   className?: string;
   onClose?: () => void;
 }
 
-export const SimpleAlert = ({
-  childrenTop,
-  childrenBottom,
-  className = '',
-  onClose,
-}: SimpleAlertProps) => {
+export const SimpleAlert = ({ title, contents, className = '', onClose }: SimpleAlertProps) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-60">
       <div
-        className={`w-[64rem] h-[46.8rem] rounded-[5.7rem] px-[4.7rem] py-[5.5rem] flex flex-col bg-white gap-[7.9rem] ${className}`}
+        className={`w-[45.6rem] h-[30.4rem] rounded-[3rem] p-[2.7rem] flex flex-col bg-white gap-[4rem] ${className}`}
       >
         <div className="flex justify-between items-center">
-          <div className="text-[3rem] font-extrabold">{childrenTop}</div>
+          <div className="text-[2rem] font-medium">{title}</div>
           <Image
             className="self-end cursor-pointer"
             src="/icons/close.svg"
@@ -32,7 +27,7 @@ export const SimpleAlert = ({
             onClick={onClose}
           />
         </div>
-        <div className="h-full flex justify-center items-center">{childrenBottom}</div>
+        <div className="h-full flex justify-center items-center">{contents}</div>
       </div>
     </div>
   );

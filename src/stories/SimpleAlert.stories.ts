@@ -14,8 +14,8 @@ const meta: Meta<typeof SimpleAlert> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    childrenTop: { control: 'text' },
-    childrenBottom: { control: 'text' },
+    title: { control: 'text' },
+    contents: { control: 'text' },
     className: { control: 'text' },
   },
 };
@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 
 export const GreenAlert: Story = {
   args: {
-    childrenTop: 'Title',
-    childrenBottom: 'This is a simple alert.',
+    title: 'Title',
+    contents: 'This is a simple alert.',
   },
 };
