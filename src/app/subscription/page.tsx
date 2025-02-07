@@ -145,7 +145,7 @@ const Subscription = () => {
         <SimpleAlert
           contents={
             <div className="w-full h-[15rem] flex flex-col overflow-hidden">
-              <div className="flex pb-[1.9rem] text-[1.5rem] font-extrabold">
+              <div className="flex pb-[1.9rem] text-[1.5rem] font-bold">
                 <div className="w-3/4">
                   <p>일시</p>
                 </div>
@@ -155,7 +155,7 @@ const Subscription = () => {
               </div>
               <div className="flex flex-col gap-[1.5rem] text-[1.5rem] overflow-y-auto">
                 {example.map((item, index) => (
-                  <div key={index} className="flex items-center">
+                  <div key={index} className="flex items-center text-medium">
                     <div className="w-3/4">{item.logTime}</div>
                     <div className="w-1/4">{item.changeLog}</div>
                   </div>
@@ -192,9 +192,11 @@ const Subscription = () => {
           <div className="mt-[5.5rem] flex flex-col items-center">
             <div className="w-[19.8rem] h-[19.8rem] bg-gray rounded-[100rem]"></div>
             <div className="mt-[2rem]">
-              <p className="text-[5rem] font-extrabold italic">wassup</p>
+              <p className="text-[5rem] font-bold italic">wassup!</p>
               <div className="flex gap-[1rem]">
-                <p className="text-[5rem] font-bold hover:underline hover:decoration-2">홍길동님</p>
+                <p className="text-[5rem] font-bold">
+                  <span className="underline">홍길동</span> 님
+                </p>
                 <button>
                   <Image src="/icons/setting.svg" alt="" width={24} height={24} />
                 </button>
@@ -220,23 +222,19 @@ const Subscription = () => {
                 <Image src="/icons/workSpace.svg" alt="" width={24} height={24} />
               </Button>
             </div>
-
-            <TextButton href="/HowToRequest" className="mt-[3.3rem] text-[1.5rem]">
-              how to request
-            </TextButton>
+            <button className="mt-[4rem] font-bold text-[1.5rem] text-[#878787]">logout</button>
           </div>
-
-          <button className="font-extrabold text-[1.5rem] self-start text-neutral-500">
-            logout
-          </button>
+          <TextButton href="/HowToRequest" className="text-[1.5rem]">
+            <span className="font-bold">how to request</span>
+          </TextButton>
         </div>
 
         {/* 구독현황 */}
         <div className="flex flex-col pl-[5.9rem] justify-center">
           <div className="flex justify-between mt-[0.9rem]">
-            <p>Status</p>
+            <p className="font-bold">Status</p>
             <button
-              className="font-extrabold hover:underline"
+              className="font-bold underline"
               onClick={() => setSubscriptionStatusModal(true)}
             >
               구독현황 변경 및 결제이력
