@@ -3,21 +3,27 @@ import { Button } from '../ui/Button';
 import { useAppDispatch } from '@/hooks/redux/hooks';
 import { setSubscriptionStatus } from '../../../store/subscriptionStatusSlice';
 import { Alert } from '../ui/Alert';
+import { Confirm } from '../ui/Confirm';
 import Image from 'next/image';
 
 const Unsubscribed = () => {
   const dispatch = useAppDispatch();
-  // 구독현황 변경 및 결제이력 클릭 시
+  // 구독취소 클릭 시
+  const [firstCheckModal, setFirstCheckModal] = useState(false);
+  // 첫번째 팝업 확인 클릭 시
   const [subscriptionModal, setSubscriptionModal] = useState(false);
   // 구독취소 체크 항목
   const [selectedReason, setSelectedReason] = useState<UnSubscriptionReason[]>([]);
-  // 구독취소 etc 체크 했는지
+  // etc 체크 했는지
   const [isEtc, setIsEtc] = useState(false);
   // etc 내용
   const [etcContents, setEtcContents] = useState('');
   // 주의 문구
   const [warningMessage, setWarningMessage] = useState('');
+  // 마지막 확인 알럿
+  const [lastCheckModal, setLastCheckModal] = useState(false);
 
+  // 구독현황 상태
   const handleSubscriptionStatus = () => {
     dispatch(setSubscriptionStatus('paused'));
   };
@@ -37,6 +43,17 @@ const Unsubscribed = () => {
     { id: 'etc', label: '기타' },
   ];
 
+  // 첫번째 모달
+  const handleFirstCheck = () => {
+    setFirstCheckModal(false);
+    setSubscriptionModal(true);
+    setSelectedReason([]);
+    setIsEtc(false);
+    setEtcContents('');
+    setWarningMessage('');
+  };
+
+  // 두번째 모달
   const handleSelectedReason = (item: UnSubscriptionReason) => {
     setWarningMessage('');
     setSelectedReason(prev => {
@@ -58,6 +75,7 @@ const Unsubscribed = () => {
     });
   };
 
+  // 두번째 모달 구취 사유 'etc'
   const handleEtcContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const content = e.target.value;
     setEtcContents(content);
@@ -69,7 +87,8 @@ const Unsubscribed = () => {
     );
   };
 
-  const handleSubmit = () => {
+  // 두번째 모달 최종 제출
+  const handleSubscriptionReasonSubmit = () => {
     if (selectedReason.length === 0) {
       setWarningMessage('구독취소 사유를 선택해주세요.');
       return;
@@ -79,9 +98,12 @@ const Unsubscribed = () => {
       return;
     }
     console.log(selectedReason);
+    setSubscriptionModal(false);
+    setLastCheckModal(true);
   };
 
-  const handleClose = () => {
+  // 두번째 모달 x버튼
+  const handleSubscriptionReasonModalClose = () => {
     setSubscriptionModal(false);
     setSelectedReason([]);
     setIsEtc(false);
@@ -89,9 +111,39 @@ const Unsubscribed = () => {
     setWarningMessage('');
   };
 
+  // 마지막 모달 최종 제출
+  const handleLastCheckSubmit = () => {
+    setLastCheckModal(false);
+    console.log('구독 취소 로직');
+  };
+
+  // 마지막 모달 x버튼
+  const handleLastCheckModalClose = () => {
+    setLastCheckModal(prev => !prev);
+  };
+
   return (
     <div>
       <div className="flex w-[40.1rem] justify-between">
+        {firstCheckModal && (
+          <Confirm
+            buttonText1="구독유지"
+            buttonText2="구독취소"
+            contents={
+              <p className="mt-[1.6rem]">
+                구독을 취소하면 YYYY년 MM월 DD에
+                <br />
+                결제되지 않습니다.
+              </p>
+            }
+            title="정말 구독을 취소하시겠습니까?"
+            variant1="outline"
+            variant2="green"
+            onClose={() => setFirstCheckModal(false)}
+            onCancel={() => setFirstCheckModal(false)}
+            onSubmit={handleFirstCheck}
+          />
+        )}
         {subscriptionModal && (
           <Alert
             buttonText="구독취소"
@@ -133,9 +185,19 @@ const Unsubscribed = () => {
             }
             size="normal"
             variant="green"
-            onClose={() => handleClose()}
-            onSubmit={handleSubmit}
+            onClose={() => handleSubscriptionReasonModalClose()}
+            onSubmit={handleSubscriptionReasonSubmit}
             className="w-[60rem] min-h-[53.7rem]"
+          />
+        )}
+        {lastCheckModal && (
+          <Alert
+            buttonText="확인"
+            title={<p>구독 취소가 완료되었습니다.</p>}
+            size="full"
+            variant="outline"
+            onClose={() => handleLastCheckModalClose()}
+            onSubmit={handleLastCheckSubmit}
           />
         )}
         <p className="text-[5rem] font-bold hover:underline hover:decoration-2">구독중</p>
@@ -151,7 +213,7 @@ const Unsubscribed = () => {
       </div>
       <p className="text-[1.8rem] font-extrabold mt-[1.8rem]">~2025.06.12 / D-593일 남음</p>
       <div className="mt-[9.3rem]">
-        <button onClick={() => setSubscriptionModal(true)} className="text-[1.8rem] underline">
+        <button onClick={() => setFirstCheckModal(true)} className="text-[1.8rem] underline">
           구독취소
         </button>
       </div>

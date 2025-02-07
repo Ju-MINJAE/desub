@@ -61,13 +61,3 @@ export const OutlineAlert: Story = {
     size: 'small',
   },
 };
-
-export const SmallAlert: Story = {
-  args: {
-    title: 'Small Alert Top',
-    contents: 'This is a small alert message.',
-    buttonText: 'Click Me',
-    variant: 'outline',
-    size: 'small',
-  },
-};

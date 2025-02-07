@@ -22,8 +22,8 @@ const meta: Meta<typeof Confirm> = {
       control: 'radio',
       options: ['green', 'black', 'outline'],
     },
-    childrenTop: { control: 'text' },
-    childrenBottom: { control: 'text' },
+    title: { control: 'text' },
+    contents: { control: 'text' },
     buttonText1: { control: 'text' },
     buttonText2: { control: 'text' },
     className: { control: 'text' },
@@ -35,8 +35,8 @@ type Story = StoryObj<typeof meta>;
 
 export const OutlineAlert: Story = {
   args: {
-    childrenTop: 'Outline Alert Top',
-    childrenBottom: 'This is an outline alert message.',
+    title: 'Outline Alert Top',
+    contents: 'This is an outline alert message.',
     buttonText1: 'Click Me',
     buttonText2: 'Click Me',
     variant1: 'outline',
@@ -46,8 +46,8 @@ export const OutlineAlert: Story = {
 
 export const SmallAlert: Story = {
   args: {
-    childrenTop: 'Small Alert Top',
-    childrenBottom: 'This is a small alert message.',
+    title: 'Small Alert Top',
+    contents: 'This is a small alert message.',
     buttonText1: 'Click Me',
     buttonText2: 'Click Me',
     variant1: 'outline',

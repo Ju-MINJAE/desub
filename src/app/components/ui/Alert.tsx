@@ -5,12 +5,12 @@ import Image from 'next/image';
 
 interface AlertProps {
   title: React.ReactNode;
-  contents: React.ReactNode;
+  contents?: React.ReactNode;
   buttonText: string;
   variant?: 'green' | 'black' | 'outline';
-  size?: 'full' | 'normal' | 'small';
+  size: 'full' | 'normal' | 'small';
   className?: string;
-  onClose?: () => void;
+  onClose: () => void;
   onSubmit?: () => void;
 }
 
@@ -52,7 +52,7 @@ export const Alert = ({
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-60">
       <div
-        className={`min-w-[45.6rem] min-h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col items-center bg-white ${className}`}
+        className={`min-w-[45.6rem] min-h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center bg-white ${className}`}
       >
         <Image
           className="self-end cursor-pointer mb-0"
@@ -69,7 +69,7 @@ export const Alert = ({
           className={`
         ${getSizeStyles(size)} rounded-[50px]
         px-[1.375rem] py-[0.3125rem]
-        ${getVariantStyles(variant)} mt-auto
+        ${getVariantStyles(variant)} 
       `}
           {...props}
         >
