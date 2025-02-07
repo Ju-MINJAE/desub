@@ -5,6 +5,7 @@ export interface RoleType {
 
 export interface TeamMember {
   image: string;
+  hoverImage: string;
   role: string;
   name: string;
 }

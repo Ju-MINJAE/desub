@@ -12,7 +12,7 @@ const ContactSection: React.FC = () => {
         <Image src="/images/doll.png" alt="doll" fill className="object-cover rounded-[5.4rem]" />
         <div className="absolute left-[17%] top-[41%] z-20 w-[35rem] h-[35rem] bg-[#FF009D] rounded-full flex items-center justify-center p-[8rem] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
           <Image
-            src="/icons/stick.svg"
+            src="/icons/Union.svg"
             alt="stick"
             width={0}
             height={0}
@@ -20,14 +20,7 @@ const ContactSection: React.FC = () => {
           />
         </div>
         <Image
-          src="/images/Rectangle.png"
-          alt=""
-          width={290}
-          height={290}
-          className="absolute right-[25%] top-[23%] z-30 p-[6.6rem]"
-        />
-        <Image
-          src="/icons/Vector.svg"
+          src="/icons/vector.svg"
           alt="Vector"
           width={290}
           height={290}
@@ -50,7 +43,7 @@ const ContactSection: React.FC = () => {
         href="https://dbre.co.kr/"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center ml-[22.5rem] mt-[15.9rem] mb-[19.5rem] cursor-pointer"
+        className="flex items-center ml-[22.5rem] mt-[15.9rem] pb-[19.5rem] cursor-pointer"
       >
         <button className="w-[71rem] flex-shrink-0 bg-[#161616] text-white py-[2rem] rounded-[5.9rem] text-[7rem] font-bold">
           <span className="underline underline-offset-[1.5rem]">desub과 함께하기</span>
