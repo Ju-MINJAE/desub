@@ -14,13 +14,12 @@ import Image from 'next/image';
 import { RootState } from '@/store/store';
 import { Alert } from '../components/ui/Alert';
 import Rating from 'react-rating';
+import { useRouter } from 'next/navigation';
 
 const Subscription = () => {
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
   // 구독현황 변경 및 결제이력
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
-  // 작업 요청하기 버튼 클릭
-  const [requestForWork, setrequestForWork] = useState(false);
   // 리뷰 작성하기 클릭
   const [reviewModal, setReviewModal] = useState(false);
   // 리뷰 내용
@@ -33,6 +32,7 @@ const Subscription = () => {
   const [warningMessage, setWarningMessage] = useState('');
   // 마지막 확인 알럿
   const [lastCheckModal, setLastCheckModal] = useState(false);
+  const router = useRouter();
 
   // 더미데이터
   const example = [
@@ -168,9 +168,6 @@ const Subscription = () => {
           className="w-[50rem] max-h-[30.5rem]"
         />
       )}
-      {requestForWork && (
-        <SimpleAlert contents="" title="작업 요청하기" onClose={() => setrequestForWork(false)} />
-      )}
       <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
         <BackButton text="my subscription" />
         <div className="flex items-center">
@@ -206,7 +203,7 @@ const Subscription = () => {
                 className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem]"
                 size="small"
                 variant="green"
-                onClick={() => setrequestForWork(true)}
+                onClick={() => router.push('/workRequest')}
               >
                 작업 요청하기
               </Button>
