@@ -9,15 +9,30 @@ import SubscriptionInactive from '../components/subscription/SubscriptionInactiv
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
-import { useAppSelector } from '@/libs/redux/hooks';
+import { useAppSelector } from '@/hooks/redux/hooks';
 import Image from 'next/image';
 import { RootState } from '@/store/store';
+import { Alert } from '../components/ui/Alert';
+import Rating from 'react-rating';
 
 const Subscription = () => {
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
   // 구독현황 변경 및 결제이력
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
+  // 작업 요청하기 버튼 클릭
   const [requestForWork, setrequestForWork] = useState(false);
+  // 리뷰 작성하기 클릭
+  const [reviewModal, setReviewModal] = useState(false);
+  // 리뷰 내용
+  const [review, setReview] = useState({
+    rating: 0,
+    contents: '',
+  });
+  const [reviewContents, setReviewContents] = useState('');
+  // 주의 문구
+  const [warningMessage, setWarningMessage] = useState('');
+  // 마지막 확인 알럿
+  const [lastCheckModal, setLastCheckModal] = useState(false);
 
   // 더미데이터
   const example = [
@@ -28,10 +43,6 @@ const Subscription = () => {
     {
       logTime: '2025-02-15 15:30',
       changeLog: '일시정지',
-    },
-    {
-      logTime: '2025-03-15 15:30',
-      changeLog: '결제',
     },
   ];
 
@@ -48,13 +59,93 @@ const Subscription = () => {
     }
   };
 
+  // 리뷰 관리
+  const handleReviewContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const content = e.target.value;
+    setReviewContents(e.target.value);
+    if (content.trim() !== '') {
+      setWarningMessage('');
+      setReview(prev => ({ ...prev, contents: content }));
+    }
+  };
+
+  // 리뷰 리셋
+  const resetReview = () => {
+    setReviewModal(false);
+    setWarningMessage('');
+    setReview({
+      rating: 0,
+      contents: '',
+    });
+  };
+
+  // 최종 제출
+  const handleReviewSubmit = () => {
+    if (reviewContents.trim() === '') {
+      setWarningMessage('후기 내용을 입력해주세요.');
+      return;
+    }
+    console.log(review);
+    resetReview();
+    setLastCheckModal(true);
+  };
+
   return (
     <div className="h-full">
+      {reviewModal && (
+        <Alert
+          buttonText="작성완료"
+          contents={
+            <div className="pb-[4rem] flex flex-col items-center gap-[2rem]">
+              <Rating
+                emptySymbol={<p className="text-[5rem]">☆</p>}
+                fullSymbol={<p className="text-[5rem]">★</p>}
+                initialRating={review.rating}
+                onChange={value => setReview(prev => ({ ...prev, rating: value }))}
+                className="flex gap-2"
+              />
+              <textarea
+                className="w-full h-[20.7rem] border border-black p-[1rem]"
+                onChange={handleReviewContents}
+                value={review.contents}
+                placeholder="여기에 솔직한 후기를 작성해주세요."
+              ></textarea>
+              {warningMessage && (
+                <div className=" w-full">
+                  <p className="text-red text-[1.6rem]">{warningMessage}</p>
+                </div>
+              )}
+            </div>
+          }
+          title={
+            <>
+              구독기간 중 언제든 리뷰를 작성하실 수 있어요.
+              <br />
+              작성된 리뷰는 서비스 개선에 참고하겠습니다.
+            </>
+          }
+          size="normal"
+          variant="green"
+          onClose={() => resetReview()}
+          onSubmit={handleReviewSubmit}
+          className="w-[60rem] min-h-[60.4rem]"
+        />
+      )}
+      {lastCheckModal && (
+        <Alert
+          buttonText="확인"
+          title={<p>소중한 의견 감사합니다.</p>}
+          size="full"
+          variant="outline"
+          onClose={() => setLastCheckModal(false)}
+          onSubmit={() => setLastCheckModal(false)}
+        />
+      )}
       {subscriptionStatusModal && (
         <SimpleAlert
-          childrenBottom={
-            <div className="w-full h-full flex flex-col">
-              <div className="flex py-[1.9rem] text-[2rem] font-extrabold">
+          contents={
+            <div className="w-full h-[15rem] flex flex-col overflow-hidden">
+              <div className="flex pb-[1.9rem] text-[1.5rem] font-extrabold">
                 <div className="w-3/4">
                   <p>일시</p>
                 </div>
@@ -62,33 +153,33 @@ const Subscription = () => {
                   <p>내용</p>
                 </div>
               </div>
-              <div className="flex flex-col gap-[1.5rem] text-[2rem]">
+              <div className="flex flex-col gap-[1.5rem] text-[1.5rem] overflow-y-auto">
                 {example.map((item, index) => (
-                  <>
-                    <div key={index} className="flex items-center">
-                      <div className="w-3/4">{item.logTime}</div>
-                      <div className="w-1/4">{item.changeLog}</div>
-                    </div>
-                  </>
+                  <div key={index} className="flex items-center">
+                    <div className="w-3/4">{item.logTime}</div>
+                    <div className="w-1/4">{item.changeLog}</div>
+                  </div>
                 ))}
               </div>
             </div>
           }
-          childrenTop="구독현황 변경 및 결제이력"
+          title="구독현황 변경 및 결제이력"
           onClose={() => setSubscriptionStatusModal(false)}
+          className="w-[50rem] max-h-[30.5rem]"
         />
       )}
       {requestForWork && (
-        <SimpleAlert
-          childrenBottom=""
-          childrenTop="작업 요청하기"
-          onClose={() => setrequestForWork(false)}
-        />
+        <SimpleAlert contents="" title="작업 요청하기" onClose={() => setrequestForWork(false)} />
       )}
       <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
         <BackButton text="my subscription" />
         <div className="flex items-center">
-          <Button className="w-[11.9rem] h-[3.3rem] text-[1.5rem]" size="small" variant="outline">
+          <Button
+            onClick={() => setReviewModal(true)}
+            className="w-[11.9rem] h-[3.3rem] text-[1.5rem]"
+            size="small"
+            variant="outline"
+          >
             리뷰 작성하기
           </Button>
           <Image src="/icons/review.svg" alt="" width={176.99} height={68} />

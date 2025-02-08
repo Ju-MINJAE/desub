@@ -4,25 +4,29 @@ import type React from 'react';
 import Image from 'next/image';
 
 interface ConfirmProps {
-  childrenTop: React.ReactNode;
-  childrenBottom: React.ReactNode;
+  title: React.ReactNode;
+  contents: React.ReactNode;
   buttonText1: string;
   buttonText2: string;
-  variant1?: 'green' | 'black' | 'outline';
-  variant2?: 'green' | 'black' | 'outline';
+  variant1: 'green' | 'black' | 'outline';
+  variant2: 'green' | 'black' | 'outline';
   className?: string;
-  onClose?: () => void;
+  onClose: () => void;
+  onSubmit?: () => void;
+  onCancel?: () => void;
 }
 
 export const Confirm = ({
-  childrenTop,
-  childrenBottom,
+  title,
+  contents,
   buttonText1,
   buttonText2,
   variant1 = 'outline',
   variant2 = 'green',
   className = '',
   onClose,
+  onSubmit,
+  onCancel,
   ...props
 }: ConfirmProps) => {
   const getVariantStyles1 = (variant1?: ConfirmProps['variant1']) => {
@@ -62,12 +66,13 @@ export const Confirm = ({
         />
         <div className="w-full gap-[7.2rem] flex flex-col justify-center items-center text-center">
           <div className="block gap-[1.6rem]">
-            <div className="font-medium text-[2rem]">{childrenTop}</div>
-            <div className="font-normal text-[1.6rem]">{childrenBottom}</div>
+            <div className="font-medium text-[2rem]">{title}</div>
+            <div className="font-normal text-[1.6rem]">{contents}</div>
           </div>
         </div>
         <div className="flex gap-[5%]">
           <button
+            onClick={onCancel}
             className={`
             rounded-[50px]
             px-[1.375rem] py-[0.3125rem]
@@ -79,6 +84,7 @@ export const Confirm = ({
             {buttonText1}
           </button>
           <button
+            onClick={onSubmit}
             className={`
             rounded-[50px]
             px-[1.375rem] py-[0.3125rem]

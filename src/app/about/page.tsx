@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import ContactSection from '../components/about/Contact';
 import MembersSection from '../components/about/Members';
 import RoleSection from '../components/about/Role';
@@ -5,11 +6,22 @@ import VisionSection from '../components/about/Vision';
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <RoleSection />
-      <MembersSection />
-      <VisionSection />
-      <ContactSection />
+    <main className="relative min-h-screen">
+      <div className="absolute inset-0 w-full h-full">
+        <Image
+          src="/images/Vector 1.png"
+          alt="background"
+          fill
+          className="object-cover w-full h-full -z-10"
+          priority
+        />
+      </div>
+      <div className="relative">
+        <RoleSection />
+        <MembersSection />
+        <VisionSection />
+        <ContactSection />
+      </div>
     </main>
   );
 }
