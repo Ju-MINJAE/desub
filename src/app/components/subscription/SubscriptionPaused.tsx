@@ -199,7 +199,7 @@ const Unsubscribed = () => {
             onSubmit={handleLastCheckSubmit}
           />
         )}
-        <p className="text-[5rem] font-bold hover:underline hover:decoration-2">일시정지</p>
+        <p className="text-[5rem] font-bold">일시정지</p>
         <Button
           className="w-[14.7rem] h-[6rem] font-bold text-[1.8rem] flex justify-center items-center gap-[0.6rem]"
           size="small"
@@ -210,7 +210,7 @@ const Unsubscribed = () => {
           구독재개
         </Button>
       </div>
-      <p className="text-[1.8rem] font-extrabold mt-[1.8rem]">~2025.06.12 / D-593일 남음</p>
+      <p className="text-[1.8rem] font-bold mt-[1.8rem]">~2025.06.12 / D-593일 남음</p>
       <div className="mt-[9.3rem]">
         <button onClick={() => setFirstCheckModal(true)} className="text-[1.8rem] underline">
           구독취소
