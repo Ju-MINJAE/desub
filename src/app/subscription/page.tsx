@@ -15,6 +15,21 @@ import type { RootState } from '@/store/store';
 import { Alert } from '../components/ui/Alert';
 import Rating from 'react-rating';
 import '../../styles/review.css';
+<<<<<<< HEAD
+
+const example = [
+  {
+    logTime: '2025-01-15 15:30',
+    changeLog: '재개',
+  },
+  {
+    logTime: '2025-02-15 15:30',
+    changeLog: '일시정지',
+  },
+];
+=======
+import { useRouter } from 'next/navigation';
+>>>>>>> feature/workRequest
 
 const example = [
   {
@@ -30,7 +45,10 @@ const example = [
 const Subscription = () => {
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
+<<<<<<< HEAD
   const [requestForWork, setrequestForWork] = useState(false);
+=======
+>>>>>>> feature/workRequest
   const [reviewModal, setReviewModal] = useState(false);
   const [review, setReview] = useState({
     rating: 0,
@@ -40,6 +58,10 @@ const Subscription = () => {
   const [warningMessage, setWarningMessage] = useState('');
   const [lastCheckModal, setLastCheckModal] = useState(false);
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
+<<<<<<< HEAD
+=======
+  const router = useRouter();
+>>>>>>> feature/workRequest
 
   const handleStarHover = () => {
     setIsBlinking(false);
