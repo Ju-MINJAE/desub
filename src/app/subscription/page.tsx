@@ -14,10 +14,8 @@ import Image from 'next/image';
 import type { RootState } from '@/store/store';
 import { Alert } from '../components/ui/Alert';
 import Rating from 'react-rating';
-<<<<<<< HEAD
-import { useRouter } from 'next/navigation';
-=======
 import '../../styles/review.css';
+import { useRouter } from 'next/navigation';
 
 const example = [
   {
@@ -29,16 +27,10 @@ const example = [
     changeLog: '일시정지',
   },
 ];
->>>>>>> develop
 
 const Subscription = () => {
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
-<<<<<<< HEAD
-  // 리뷰 작성하기 클릭
-=======
-  const [requestForWork, setrequestForWork] = useState(false);
->>>>>>> develop
   const [reviewModal, setReviewModal] = useState(false);
   const [review, setReview] = useState({
     rating: 0,
@@ -47,11 +39,8 @@ const Subscription = () => {
   const [reviewContents, setReviewContents] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
   const [lastCheckModal, setLastCheckModal] = useState(false);
-<<<<<<< HEAD
-  const router = useRouter();
-=======
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
->>>>>>> develop
+  const router = useRouter();
 
   const handleStarHover = () => {
     setIsBlinking(false);
