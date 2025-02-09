@@ -5,12 +5,12 @@ import { BackButton } from '@/app/components/ui/BackButton';
 import { useState } from 'react';
 import LogoForm from '../components/workRequest/LogoForm';
 import WebsiteForm from '../components/workRequest/WebsiteForm';
-import PrintingForm from '../components/workRequest/printingForm';
-import ProposalForm from '../components/workRequest/proposalForm';
+import PrintingForm from '../components/workRequest/PrintingForm';
+import ProposalForm from '../components/workRequest/ProposalForm';
 import SnsContentsForm from '../components/workRequest/SnsContentsForm';
 import UIUXForm from '../components/workRequest/UIUXForm';
-import CharacterForm from '../components/workRequest/characterForm';
-import EditingForm from '../components/workRequest/editingForm';
+import CharacterForm from '../components/workRequest/CharacterForm';
+import EditingForm from '../components/workRequest/EditingForm';
 import MotionGraphicForm from '../components/workRequest/MotionGraphicForm';
 import Graphic3dForm from '../components/workRequest/Graphic3dForm';
 
@@ -56,7 +56,7 @@ const WorkRequest: React.FC = () => {
         <select
           id="WorkSelector"
           onChange={handleWorkSelect}
-          className="w-[43.7rem] h-[4.7rem] p-[0.8rem] select_renewal input-text"
+          className="w-[43.7rem] h-[4.7rem] p-[0.8rem]"
           defaultValue="text"
         >
           <option value="text" disabled>
