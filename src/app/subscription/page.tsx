@@ -15,21 +15,7 @@ import type { RootState } from '@/store/store';
 import { Alert } from '../components/ui/Alert';
 import Rating from 'react-rating';
 import '../../styles/review.css';
-<<<<<<< HEAD
-
-const example = [
-  {
-    logTime: '2025-01-15 15:30',
-    changeLog: '재개',
-  },
-  {
-    logTime: '2025-02-15 15:30',
-    changeLog: '일시정지',
-  },
-];
-=======
 import { useRouter } from 'next/navigation';
->>>>>>> feature/workRequest
 
 const example = [
   {
@@ -45,10 +31,6 @@ const example = [
 const Subscription = () => {
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
-<<<<<<< HEAD
-  const [requestForWork, setrequestForWork] = useState(false);
-=======
->>>>>>> feature/workRequest
   const [reviewModal, setReviewModal] = useState(false);
   const [review, setReview] = useState({
     rating: 0,
@@ -58,10 +40,7 @@ const Subscription = () => {
   const [warningMessage, setWarningMessage] = useState('');
   const [lastCheckModal, setLastCheckModal] = useState(false);
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
-<<<<<<< HEAD
-=======
   const router = useRouter();
->>>>>>> feature/workRequest
 
   const handleStarHover = () => {
     setIsBlinking(false);
@@ -208,9 +187,6 @@ const Subscription = () => {
           className="w-[50rem] max-h-[30.5rem]"
         />
       )}
-      {requestForWork && (
-        <SimpleAlert contents="" title="작업 요청하기" onClose={() => setrequestForWork(false)} />
-      )}
       <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
         <BackButton text="my subscription" />
         <div className="flex items-center">
@@ -255,7 +231,7 @@ const Subscription = () => {
                 className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem]"
                 size="small"
                 variant="green"
-                onClick={() => setrequestForWork(true)}
+                onClick={() => router.push('/workRequest')}
               >
                 작업 요청하기
               </Button>
