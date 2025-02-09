@@ -18,7 +18,6 @@ export default {
         green: '#008129',
         gray: '#B3B3B3',
         lightgray: '#e9e9e9',
-        darkgray: '#4d4d4d',
       },
       gridTemplateColumns: {
         '24': 'repeat(24, minmax(0, 1fr))',
