@@ -6,7 +6,7 @@ import '@/styles/pricing.css';
 const Membership = () => {
   return (
     <div className="flex flex-col justify-center items-center text-center pt-[20rem] pb-[13.3rem]">
-      <h2 className="font-normal text-[2.5rem] mb-20 self-start text-left ml-[13.5rem]">Pricing</h2>
+      <h2 className="font-normal text-[4rem] mb-20 self-start text-left ml-[13.5rem]">Pricing</h2>
       <div className="relative">
         <div className="price-box rounded-[4rem] border pt-[4.1rem] px-[19.1rem] pb-[3.8rem]">
           <p className="text-[5rem] font-bold leading-[7.5rem]">standard</p>
