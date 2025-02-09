@@ -33,7 +33,7 @@ const WorkRequest: React.FC = () => {
     '서비스 기획(UI/UX)',
     '캐릭터디자인(character)',
     '영상편집(editing)',
-    'motio모션그래픽(motion graphic)',
+    '모션그래픽(motion graphic)',
     '쓰리디(3D graphic)',
   ];
 
@@ -55,7 +55,7 @@ const WorkRequest: React.FC = () => {
         return <CharacterForm />;
       case '영상편집(editing)':
         return <EditingForm />;
-      case 'motio모션그래픽(motion graphic)':
+      case '모션그래픽(motion graphic)':
         return <MotionGraphicForm />;
       case '쓰리디(3D graphic)':
         return <Graphic3dForm />;
@@ -63,7 +63,7 @@ const WorkRequest: React.FC = () => {
         return <LogoForm />;
     }
   };
-
+  console.log(handleFormSelect());
   return (
     <div className="h-full">
       <BackButton className="pt-[4.7rem] px-[4.7rem]" text="작업 요청하기" />
