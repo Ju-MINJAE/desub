@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import type React from 'react';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '../components/ui/Button';
 import TextButton from '../components/ui/TextButton';
@@ -11,40 +11,45 @@ import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
 import { useAppSelector } from '@/hooks/redux/hooks';
 import Image from 'next/image';
-import { RootState } from '@/store/store';
+import type { RootState } from '@/store/store';
 import { Alert } from '../components/ui/Alert';
 import Rating from 'react-rating';
+import '../../styles/review.css';
+
+const example = [
+  {
+    logTime: '2025-01-15 15:30',
+    changeLog: '재개',
+  },
+  {
+    logTime: '2025-02-15 15:30',
+    changeLog: '일시정지',
+  },
+];
 
 const Subscription = () => {
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
-  // 구독현황 변경 및 결제이력
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
-  // 작업 요청하기 버튼 클릭
   const [requestForWork, setrequestForWork] = useState(false);
-  // 리뷰 작성하기 클릭
   const [reviewModal, setReviewModal] = useState(false);
-  // 리뷰 내용
   const [review, setReview] = useState({
     rating: 0,
     contents: '',
   });
   const [reviewContents, setReviewContents] = useState('');
-  // 주의 문구
   const [warningMessage, setWarningMessage] = useState('');
-  // 마지막 확인 알럿
   const [lastCheckModal, setLastCheckModal] = useState(false);
+  const [isBlinking, setIsBlinking] = useState<boolean>(true);
 
-  // 더미데이터
-  const example = [
-    {
-      logTime: '2025-01-15 15:30',
-      changeLog: '재개',
-    },
-    {
-      logTime: '2025-02-15 15:30',
-      changeLog: '일시정지',
-    },
-  ];
+  const handleStarHover = () => {
+    setIsBlinking(false);
+  };
+
+  const handleStarLeave = () => {
+    if (!reviewModal) {
+      setIsBlinking(true);
+    }
+  };
 
   const handleStatus = () => {
     switch (subscriptionStatus) {
@@ -69,8 +74,21 @@ const Subscription = () => {
     }
   };
 
+  const openReviewModal = () => {
+    setIsBlinking(false);
+    setReviewModal(true);
+  };
+
+  const closeReviewModal = () => {
+    resetReview();
+    if (!reviewModal) {
+      setIsBlinking(true);
+    }
+  };
+
   // 리뷰 리셋
   const resetReview = () => {
+    setIsBlinking(true);
     setReviewModal(false);
     setWarningMessage('');
     setReview({
@@ -126,7 +144,7 @@ const Subscription = () => {
           }
           size="normal"
           variant="green"
-          onClose={() => resetReview()}
+          onClose={closeReviewModal}
           onSubmit={handleReviewSubmit}
           className="w-[60rem] min-h-[60.4rem]"
         />
@@ -175,14 +193,21 @@ const Subscription = () => {
         <BackButton text="my subscription" />
         <div className="flex items-center">
           <Button
-            onClick={() => setReviewModal(true)}
-            className="w-[11.9rem] h-[3.3rem] text-[1.5rem]"
+            onClick={openReviewModal}
+            className={`w-[11.9rem] h-[3.3rem] text-[1.5rem] ${isBlinking ? 'blinking' : ''}`}
             size="small"
             variant="outline"
           >
             리뷰 작성하기
           </Button>
-          <Image src="/icons/review.svg" alt="" width={176.99} height={68} />
+          <div
+            onMouseEnter={handleStarHover}
+            onMouseLeave={handleStarLeave}
+            className="cursor-pointer"
+            onClick={openReviewModal}
+          >
+            <Image src="/icons/review.svg" alt="review_button" width={176.99} height={68} />
+          </div>
         </div>
       </div>
 
