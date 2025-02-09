@@ -36,7 +36,6 @@ const WorkRequest: React.FC = () => {
     'motio모션그래픽(motion graphic)',
     '쓰리디(3D graphic)',
   ];
-  console.log(selectedForm);
 
   const handleFormSelect = () => {
     switch (selectedForm) {
