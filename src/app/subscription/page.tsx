@@ -245,7 +245,7 @@ const Subscription = () => {
                 <Image src="/icons/workSpace.svg" alt="" width={24} height={24} />
               </Button>
             </div>
-            <TextButton href="/HowToRequest" className="mt-[4rem] text-[1.5rem]">
+            <TextButton href="/howToRequest" className="mt-[4rem] text-[1.5rem]">
               <span className="font-bold">how to request</span>
             </TextButton>
           </div>
