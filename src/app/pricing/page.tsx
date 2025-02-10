@@ -1,10 +1,17 @@
+'use client';
 import Heading from '@/app/components/ui/Heading';
 import { Button } from '@/app/components/ui/Button';
 import TextButton from '@/app/components/ui/TextButton';
 import PricingTooltip from '../components/ui/pricing/PricingTooltip';
+import { useRouter } from 'next/navigation';
 import '@/styles/pricing.css';
 
 const Pricing = () => {
+  const router = useRouter();
+
+  const handleNavigateSubscribe = () => {
+    router.push('/pricing/subscribe');
+  };
   return (
     <div className="flex flex-col justify-center items-center text-center pt-[12.2rem] pb-[13.3rem]">
       <Heading tag="h1" className="mb-[9.9rem]">
@@ -48,6 +55,7 @@ const Pricing = () => {
           </ul>
 
           <Button
+            onClick={handleNavigateSubscribe}
             size="default"
             type="button"
             variant="green"
@@ -56,7 +64,7 @@ const Pricing = () => {
             check-in
           </Button>
         </div>
-        <TextButton href="주소값" className="link-btn">
+        <TextButton href="/pricing/terms" className="link-btn">
           일시정지/구독취소/환불 규정 확인하기
         </TextButton>
       </div>

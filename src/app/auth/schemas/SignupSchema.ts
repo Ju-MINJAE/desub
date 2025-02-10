@@ -27,12 +27,7 @@ export const SignUpSchema = z
         },
       ),
 
-    password_confirm: z
-      .string()
-      .min(1, '비밀번호 확인을 입력해주세요.')
-      .min(10, '비밀번호는 최소 10자 이상이어야 합니다.')
-      .max(20, '비밀번호는 최대 20자까지만 허용됩니다.'),
-
+    password_confirm: z.string().min(1, '비밀번호 확인을 입력해주세요.'),
     username: z
       .string()
       .min(1, '이름을 입력해주세요.')
@@ -45,22 +40,23 @@ export const SignUpSchema = z
 
     phone_number: z
       .string()
-      .regex(/^01[0-9]-?\d{3,4}-?\d{4}$/, '휴대폰번호 유형에 맞게 입력해주세요.'),
+      .regex(/^01[0-9]-\d{3,4}-\d{4}$/, '휴대폰번호 유형에 맞게 입력해주세요.'),
 
     /** 휴대폰 인증 필수 */
 
-    phone_auth: z
-      .string()
-      .min(6, '인증번호는 6자리 숫자로 입력해주세요.')
-      .max(6, '인증번호는 6자리 숫자로 입력해주세요.'),
+    phone_auth: z.string(),
 
     isPhoneVerified: z.boolean().refine(value => value === true, {
       message: '휴대폰 인증이 필요합니다.',
     }),
 
     /** 약관 필수 2개 (terms, privacy) + 선택 1개 (marketing) */
-    terms: z.boolean(),
-    privacy: z.boolean(),
+    terms: z.boolean().refine(value => value === true, {
+      message: '이용약관에 동의해야 가입이 가능합니다.',
+    }),
+    privacy: z.boolean().refine(value => value === true, {
+      message: '개인정보처리방침에 동의해야 가입이 가능합니다.',
+    }),
     marketing: z.boolean().optional(), // 선택 약관
 
     /** 이메일 기입여부 확인 필수 */
@@ -71,10 +67,6 @@ export const SignUpSchema = z
   .refine(data => data.password === data.password_confirm, {
     message: '동일한 비밀번호를 입력해주세요.',
     path: ['password_confirm'], // ✅ password_confirm 필드에 에러 메시지를 표시하도록 설정
-  })
-  .refine(data => data.terms && data.privacy, {
-    message: '이용약관과 개인정보처리방침에 모두 동의해야 합니다.',
-    path: ['terms'], // ✅ terms 필드에만 에러 표시
   });
 
 export type SignupFormData = z.infer<typeof SignUpSchema>;

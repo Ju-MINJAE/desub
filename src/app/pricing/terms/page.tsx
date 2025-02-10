@@ -1,14 +1,13 @@
-import Heading from '../components/ui/Heading';
-import SignupForm from '../components/signup/SignupForm';
+import Heading from '@/app/components/ui/Heading';
 
-export default function SignUp() {
+export default function Terms() {
   return (
     <div className="container mx-auto px-4 flex justify-center">
       <div className="w-full max-w-[98rem] flex flex-col items-center">
         <Heading tag="h1" className="mt-[9rem] mb-[13rem]">
-          join
+          일시정지/구독취소/환불 규정
         </Heading>
-        <SignupForm />
+        <div>규정 내용</div>
       </div>
     </div>
   );
