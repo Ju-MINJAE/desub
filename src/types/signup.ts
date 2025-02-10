@@ -28,3 +28,13 @@ export type AgreementItem = {
     text: string;
   };
 };
+
+export type SignupData = {
+  email: string;
+  password: string;
+  name: string;
+  phone: string;
+  terms_agreement: boolean;
+  privacy_agreement: boolean;
+  marketing_agreement: boolean;
+}

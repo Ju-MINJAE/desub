@@ -7,11 +7,12 @@ import { AgreementList } from './AgreementList';
 import { Button } from '../ui/Button';
 import { SignupFormData, SignUpSchema } from '@/app/auth/schemas/SignupSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signup } from '@/api/auth';
 
 const SignupForm = () => {
   const methods = useForm<SignupFormData>({
     resolver: zodResolver(SignUpSchema),
-    mode: 'onChange',
+    mode: 'all',
     defaultValues: {
       email: '',
       password: '',
@@ -19,8 +20,8 @@ const SignupForm = () => {
       username: '',
       phone_number: '',
       phone_auth: '',
-      isPhoneVerified: false,
-      isEmailAvailable: false,
+      isPhoneVerified: true,
+      isEmailAvailable: true,
       terms: false,
       privacy: false,
       marketing: false,
@@ -31,9 +32,32 @@ const SignupForm = () => {
     formState: { isValid },
   } = methods;
 
+  const onSubmit = async (data: SignupFormData) => {
+    const signupData = {
+      email: data.email,
+      password: data.password,
+      name: data.username,
+      phone: data.phone_number,
+      terms_agreement: data.terms,
+      privacy_agreement: data.privacy,
+      marketing_agreement: data.marketing ?? false,
+    };
+    console.log(signupData);
+    console.log('현재 입력값:', methods.watch());
+    try {
+      await signup(signupData); // signup 함수호출
+      alert('✅ 회원가입 성공!');
+    } catch (error) {
+      alert('오류 발생');
+    }
+  };
+
   return (
     <FormProvider {...methods}>
-      <form className="w-full space-y-[8rem]">
+      <form
+        className="w-full space-y-[8rem]"
+        onSubmit={isValid ? methods.handleSubmit(onSubmit) : undefined}
+      >
         {SIGNUP_FIELDS.map(field => (
           <FormField key={field.id} field={field}></FormField>
         ))}
