@@ -245,11 +245,13 @@ const Subscription = () => {
                 <Image src="/icons/workSpace.svg" alt="" width={24} height={24} />
               </Button>
             </div>
-            <button className="mt-[4rem] font-bold text-[1.5rem] text-[#878787]">logout</button>
+            <TextButton href="/HowToRequest" className="mt-[4rem] text-[1.5rem]">
+              <span className="font-bold">how to request</span>
+            </TextButton>
           </div>
-          <TextButton href="/HowToRequest" className="text-[1.5rem]">
-            <span className="font-bold">how to request</span>
-          </TextButton>
+          <div>
+            <button className="font-bold text-[1.5rem] text-[#878787]">logout</button>
+          </div>
         </div>
 
         {/* 구독현황 */}
