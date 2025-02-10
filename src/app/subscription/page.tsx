@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import type React from 'react';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '../components/ui/Button';
 import TextButton from '../components/ui/TextButton';
@@ -11,40 +11,46 @@ import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
 import { useAppSelector } from '@/hooks/redux/hooks';
 import Image from 'next/image';
-import { RootState } from '@/store/store';
+import type { RootState } from '@/store/store';
 import { Alert } from '../components/ui/Alert';
 import Rating from 'react-rating';
+import '../../styles/review.css';
+import { useRouter } from 'next/navigation';
+
+const example = [
+  {
+    logTime: '2025-01-15 15:30',
+    changeLog: '재개',
+  },
+  {
+    logTime: '2025-02-15 15:30',
+    changeLog: '일시정지',
+  },
+];
 
 const Subscription = () => {
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
-  // 구독현황 변경 및 결제이력
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
-  // 작업 요청하기 버튼 클릭
-  const [requestForWork, setrequestForWork] = useState(false);
-  // 리뷰 작성하기 클릭
   const [reviewModal, setReviewModal] = useState(false);
-  // 리뷰 내용
   const [review, setReview] = useState({
     rating: 0,
     contents: '',
   });
   const [reviewContents, setReviewContents] = useState('');
-  // 주의 문구
   const [warningMessage, setWarningMessage] = useState('');
-  // 마지막 확인 알럿
   const [lastCheckModal, setLastCheckModal] = useState(false);
+  const [isBlinking, setIsBlinking] = useState<boolean>(true);
+  const router = useRouter();
 
-  // 더미데이터
-  const example = [
-    {
-      logTime: '2025-01-15 15:30',
-      changeLog: '재개',
-    },
-    {
-      logTime: '2025-02-15 15:30',
-      changeLog: '일시정지',
-    },
-  ];
+  const handleStarHover = () => {
+    setIsBlinking(false);
+  };
+
+  const handleStarLeave = () => {
+    if (!reviewModal) {
+      setIsBlinking(true);
+    }
+  };
 
   const handleStatus = () => {
     switch (subscriptionStatus) {
@@ -69,8 +75,21 @@ const Subscription = () => {
     }
   };
 
+  const openReviewModal = () => {
+    setIsBlinking(false);
+    setReviewModal(true);
+  };
+
+  const closeReviewModal = () => {
+    resetReview();
+    if (!reviewModal) {
+      setIsBlinking(true);
+    }
+  };
+
   // 리뷰 리셋
   const resetReview = () => {
+    setIsBlinking(true);
     setReviewModal(false);
     setWarningMessage('');
     setReview({
@@ -126,7 +145,7 @@ const Subscription = () => {
           }
           size="normal"
           variant="green"
-          onClose={() => resetReview()}
+          onClose={closeReviewModal}
           onSubmit={handleReviewSubmit}
           className="w-[60rem] min-h-[60.4rem]"
         />
@@ -145,7 +164,7 @@ const Subscription = () => {
         <SimpleAlert
           contents={
             <div className="w-full h-[15rem] flex flex-col overflow-hidden">
-              <div className="flex pb-[1.9rem] text-[1.5rem] font-extrabold">
+              <div className="flex pb-[1.9rem] text-[1.5rem] font-bold">
                 <div className="w-3/4">
                   <p>일시</p>
                 </div>
@@ -155,7 +174,7 @@ const Subscription = () => {
               </div>
               <div className="flex flex-col gap-[1.5rem] text-[1.5rem] overflow-y-auto">
                 {example.map((item, index) => (
-                  <div key={index} className="flex items-center">
+                  <div key={index} className="flex items-center text-medium">
                     <div className="w-3/4">{item.logTime}</div>
                     <div className="w-1/4">{item.changeLog}</div>
                   </div>
@@ -168,21 +187,25 @@ const Subscription = () => {
           className="w-[50rem] max-h-[30.5rem]"
         />
       )}
-      {requestForWork && (
-        <SimpleAlert contents="" title="작업 요청하기" onClose={() => setrequestForWork(false)} />
-      )}
       <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
         <BackButton text="my subscription" />
         <div className="flex items-center">
           <Button
-            onClick={() => setReviewModal(true)}
-            className="w-[11.9rem] h-[3.3rem] text-[1.5rem]"
+            onClick={openReviewModal}
+            className={`w-[11.9rem] h-[3.3rem] text-[1.5rem] ${isBlinking ? 'blinking' : ''}`}
             size="small"
             variant="outline"
           >
             리뷰 작성하기
           </Button>
-          <Image src="/icons/review.svg" alt="" width={176.99} height={68} />
+          <div
+            onMouseEnter={handleStarHover}
+            onMouseLeave={handleStarLeave}
+            className="cursor-pointer"
+            onClick={openReviewModal}
+          >
+            <Image src="/icons/review.svg" alt="review_button" width={176.99} height={68} />
+          </div>
         </div>
       </div>
 
@@ -192,9 +215,11 @@ const Subscription = () => {
           <div className="mt-[5.5rem] flex flex-col items-center">
             <div className="w-[19.8rem] h-[19.8rem] bg-gray rounded-[100rem]"></div>
             <div className="mt-[2rem]">
-              <p className="text-[5rem] font-extrabold italic">wassup</p>
+              <p className="text-[5rem] font-bold italic">wassup!</p>
               <div className="flex gap-[1rem]">
-                <p className="text-[5rem] font-bold hover:underline hover:decoration-2">홍길동님</p>
+                <p className="text-[5rem] font-bold">
+                  <span className="underline">홍길동</span> 님
+                </p>
                 <button>
                   <Image src="/icons/setting.svg" alt="" width={24} height={24} />
                 </button>
@@ -206,7 +231,7 @@ const Subscription = () => {
                 className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem]"
                 size="small"
                 variant="green"
-                onClick={() => setrequestForWork(true)}
+                onClick={() => router.push('/workRequest')}
               >
                 작업 요청하기
               </Button>
@@ -220,23 +245,19 @@ const Subscription = () => {
                 <Image src="/icons/workSpace.svg" alt="" width={24} height={24} />
               </Button>
             </div>
-
-            <TextButton href="/HowToRequest" className="mt-[3.3rem] text-[1.5rem]">
-              how to request
-            </TextButton>
+            <button className="mt-[4rem] font-bold text-[1.5rem] text-[#878787]">logout</button>
           </div>
-
-          <button className="font-extrabold text-[1.5rem] self-start text-neutral-500">
-            logout
-          </button>
+          <TextButton href="/HowToRequest" className="text-[1.5rem]">
+            <span className="font-bold">how to request</span>
+          </TextButton>
         </div>
 
         {/* 구독현황 */}
         <div className="flex flex-col pl-[5.9rem] justify-center">
           <div className="flex justify-between mt-[0.9rem]">
-            <p>Status</p>
+            <p className="font-bold">Status</p>
             <button
-              className="font-extrabold hover:underline"
+              className="font-bold underline"
               onClick={() => setSubscriptionStatusModal(true)}
             >
               구독현황 변경 및 결제이력
