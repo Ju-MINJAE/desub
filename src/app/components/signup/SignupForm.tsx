@@ -40,7 +40,7 @@ const SignupForm = () => {
         <AgreementList />
         <div className="flex items-center justify-center mt-[14.4rem]">
           <Button
-            variant="green"
+            variant="black"
             type="submit"
             className="w-[54rem] h-[6.6rem] text-[2.5rem]"
             disabled={!isValid}

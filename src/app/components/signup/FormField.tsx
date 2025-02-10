@@ -3,8 +3,10 @@ import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { ChangeEvent, useState } from 'react';
 import { useEmailValidation } from '@/hooks/useEmailValidation';
+import { usePhoneAuth } from '@/hooks/usePhoneAuth';
 import { SignupFormData } from '@/app/auth/schemas/SignupSchema';
 import { formatPhoneNumber } from '@/utils/phone';
+import { formatTime } from '@/utils/time';
 import type { SignUpField } from '@/types/signup';
 
 interface FormFieldProps {
@@ -23,9 +25,16 @@ export const FormField = ({ field }: FormFieldProps) => {
 
   const errorMessage = errors[field.id]?.message?.toString() || '';
 
-  const { checkEmailForSignup } = useEmailValidation(watch, setValue);
+  const { checkEmailForSignup, emailMessage, isEmailAvailable } = useEmailValidation(
+    watch,
+    setValue,
+  );
+  const { handleRequestVerification, handleVerifyCode, timeLeft, successMessage } = usePhoneAuth(
+    watch,
+    setValue,
+    setError,
+  );
   const [isAuthFieldVisible, setIsAuthFieldVisible] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
 
   const handleButtonClick = () => {
     switch (field.id) {
@@ -33,28 +42,12 @@ export const FormField = ({ field }: FormFieldProps) => {
         checkEmailForSignup();
         break;
       case 'phone_number':
+        handleRequestVerification(); // 휴대폰번호 인증 api
         setIsAuthFieldVisible(true);
         setTimeout(() => {
           setIsAuthFieldVisible(false);
         }, 239000);
         break;
-    }
-  };
-
-  const handleVerifyCode = () => {
-    const code = watch('phone_auth');
-    if (!code) {
-      setError('phone_auth', { message: '인증번호를 입력해주세요.' });
-      setSuccessMessage('');
-      return;
-    }
-
-    if (code === '123456') {
-      setSuccessMessage('인증에 성공했습니다.');
-      setValue('isPhoneVerified', true, { shouldValidate: true });
-    } else {
-      setError('phone_auth', { message: '인증에 실패했습니다.' });
-      setSuccessMessage('');
     }
   };
 
@@ -91,8 +84,18 @@ export const FormField = ({ field }: FormFieldProps) => {
           id={field.id}
           type={field.type}
           placeholder={field.placeholder}
-          status={errors?.[field.id] ? 'error' : 'default'}
-          helperText={errorMessage}
+          status={
+            field.id === 'email'
+              ? isEmailAvailable === true
+                ? 'success'
+                : isEmailAvailable === false
+                ? 'error'
+                : 'default'
+              : errors?.[field.id]
+              ? 'error'
+              : 'default'
+          }
+          helperText={field.id === 'email' ? emailMessage || errorMessage : errorMessage}
           {...register(field.id, {
             onChange: e => handleChange(e),
           })}
@@ -114,7 +117,12 @@ export const FormField = ({ field }: FormFieldProps) => {
             id={field.authField.id}
             type={field.authField.type}
             placeholder={field.authField.placeholder}
-            helperText={successMessage || errors.phone_auth?.message}
+            status={errors.phone_auth ? 'error' : successMessage ? 'success' : 'default'}
+            helperText={
+              errors.phone_auth?.message ||
+              successMessage ||
+              (timeLeft ? `인증번호를 입력해주세요. ${formatTime(timeLeft)}` : '')
+            }
             {...register(field.authField.id, { onChange: e => handleChange(e) })}
           />
           <Button
