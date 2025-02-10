@@ -7,7 +7,14 @@ import { Button } from './Button';
 
 const Header = () => {
   const pathname = usePathname();
-  if (pathname === '/login' || pathname === '/pricing/subscribe') return null;
+  if (
+    pathname === '/login' ||
+    pathname === '/pricing/subscribe' ||
+    pathname === '/subscription' ||
+    pathname === '/workRequest' ||
+    pathname === '/howToRequest'
+  )
+    return null;
 
   if (pathname.startsWith('/signup') || pathname === '/pricing/terms') {
     return (
