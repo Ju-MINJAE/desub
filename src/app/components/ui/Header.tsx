@@ -12,7 +12,8 @@ const Header = () => {
     pathname === '/pricing/subscribe' ||
     pathname === '/subscription' ||
     pathname === '/workRequest' ||
-    pathname === '/howToRequest'
+    pathname === '/howToRequest' ||
+    pathname === '/myInfo'
   )
     return null;
 
