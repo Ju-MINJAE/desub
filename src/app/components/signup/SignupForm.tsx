@@ -7,7 +7,7 @@ import { AgreementList } from './AgreementList';
 import { Button } from '../ui/Button';
 import { SignupFormData, SignUpSchema } from '@/app/auth/schemas/SignupSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signup } from '@/api/auth';
+import { signUp } from '@/api/auth';
 
 const SignupForm = () => {
   const methods = useForm<SignupFormData>({
@@ -45,7 +45,7 @@ const SignupForm = () => {
     console.log(signupData);
     console.log('현재 입력값:', methods.watch());
     try {
-      await signup(signupData); // signup 함수호출
+      await signUp(signupData); // signUp 함수호출
       alert('✅ 회원가입 성공!');
     } catch (error) {
       alert('오류 발생');
