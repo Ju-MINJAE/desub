@@ -108,13 +108,12 @@ const WorkRequest = () => {
             </div>
           )}
         </div>
-        <div className="w-full bg-lightgray px-[6rem] py-[3rem] flex">
-          {selectedForm === '업무 종류를 선택하세요.' ? (
-            <WorkForm formConfig={WORK_FORM_CONFIG['로고(logo)']} formName={'로고(logo)'} />
-          ) : (
+
+        {selectedForm === '업무 종류를 선택하세요.' ? null : (
+          <div className="w-full bg-lightgray px-[6rem] py-[3rem] flex">
             <WorkForm formConfig={WORK_FORM_CONFIG[selectedForm]} formName={selectedForm} />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
