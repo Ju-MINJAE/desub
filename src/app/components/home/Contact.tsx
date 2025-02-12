@@ -14,7 +14,7 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setStatus('전송 중...');
+    setStatus('요청 중...');
 
     try {
       const result = await emailjs.send(
@@ -25,11 +25,11 @@ const Contact = () => {
       );
 
       console.log('이메일 전송 성공:', result.text);
-      setStatus('이메일이 성공적으로 전송되었습니다!');
+      setStatus('입력하신 이메일로 desub 포트폴리오 요청이 완료되었습니다!');
       setEmail('');
     } catch (error) {
       console.error('이메일 전송 실패:', error);
-      setStatus('이메일 전송에 실패했습니다. 다시 시도해 주세요.');
+      setStatus('이메일 전송에 실패했습니다. 네트워크 상태를 확인한 후 다시 시도해 주세요.');
     } finally {
       setIsLoading(false);
     }
