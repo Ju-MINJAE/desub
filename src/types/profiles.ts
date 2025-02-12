@@ -6,7 +6,7 @@ export type ProfilesField = {
   id: ProfilesFormKeys;
   label?: string;
   value?: string;
-  type: string;
+  type: 'text' | 'password' | 'email';
   placeholder?: string;
   disable?: boolean;
 };

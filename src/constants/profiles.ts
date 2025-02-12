@@ -16,7 +16,7 @@ export const USERNAME_FIELDS: ProfilesField[] = [
   {
     id: 'username',
     label: '이름',
-    type: 'test',
+    type: 'text',
     value: exampleData.username,
   },
 ] as const;
@@ -28,12 +28,12 @@ export const PASSWORD_FIELDS: ProfilesField[] = [
     placeholder: '이전 비밀번호',
   },
   {
-    id: 'password',
+    id: 'newPassword',
     type: 'password',
     placeholder: '신규 비밀번호',
   },
   {
-    id: 'password',
+    id: 'newPassword_confirm',
     type: 'password',
     placeholder: '신규 비밀번호 재입력',
   },
