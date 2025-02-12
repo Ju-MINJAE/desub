@@ -26,9 +26,8 @@ export const signUp = async (data: SignupData) => {
 
 export const loginWithGoogle = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/google/login/`, {
+    const response = await fetch(`${API_BASE_URL}/auth/google/login/?env=frontend_local`, {
       method: 'GET',
-      redirect: 'follow', // 리디렉트 자동처리
     });
 
     if (!response.ok) {
@@ -48,27 +47,24 @@ export const loginWithGoogle = async () => {
   }
 };
 
-export const handleGoogleCallback = async (): Promise<{ phone: boolean }> => {
+export const fetchGooglePost = async (code: string) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/google/callback/`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch(`${API_BASE_URL}/auth/google/login/?env=frontend_local`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ code }),
     });
 
-    console.log('🟢 응답 상태 코드:', response.status); // ✅ 응답 확인
-
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error('🚨 Google Callback 오류 응답:', errorData); // ✅ 오류 응답 확인
-      throw new Error(errorData.message || 'Google 인증 실패');
+      throw new Error(`서버 응답 실패: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log('🟢 Google Callback 응답 데이터:', data);
-
     return data;
   } catch (error) {
-    console.error('🚨 Google Callback 처리 실패:', error);
-    throw new Error('Google 인증 요청 실패');
+    console.error('구글 로그인 오류:', error);
+    alert('로그인 요청 중 문제가 발생했습니다. 다시 시도해주세요.');
   }
 };
