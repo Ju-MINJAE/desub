@@ -4,12 +4,12 @@ import MembersSection from '../components/about/Members';
 import RoleSection from '../components/about/Role';
 import VisionSection from '../components/about/Vision';
 
-export default function Home() {
+export default function About() {
   return (
     <main className="relative min-h-screen">
       <div className="absolute inset-0 w-full h-full">
         <Image
-          src="/images/Vector 1.png"
+          src="/images/AboutBackGround.png"
           alt="background"
           fill
           className="object-cover w-full h-full -z-10"

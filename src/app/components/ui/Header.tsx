@@ -7,9 +7,17 @@ import { Button } from './Button';
 
 const Header = () => {
   const pathname = usePathname();
-  if (pathname === '/login') return null;
+  if (
+    pathname === '/login' ||
+    pathname === '/pricing/subscribe' ||
+    pathname === '/subscription' ||
+    pathname === '/workRequest' ||
+    pathname === '/howToRequest' ||
+    pathname === '/myInfo'
+  )
+    return null;
 
-  if (pathname.startsWith('/signup')) {
+  if (pathname.startsWith('/signup') || pathname === '/pricing/terms') {
     return (
       <div className="w-full">
         <header className="px-[3.7rem] py-[2rem] flex items-center justify-center">

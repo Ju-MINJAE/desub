@@ -4,13 +4,35 @@ import { useState } from 'react';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import Image from 'next/image';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Email submitted:', email);
+    setIsLoading(true);
+    setStatus('요청 중...');
+
+    try {
+      const result = await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        { to_email: email },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
+      );
+
+      console.log('이메일 전송 성공:', result.text);
+      setStatus('입력하신 이메일로 desub 포트폴리오 요청이 완료되었습니다!');
+      setEmail('');
+    } catch (error) {
+      console.error('이메일 전송 실패:', error);
+      setStatus('이메일 전송에 실패했습니다. 네트워크 상태를 확인한 후 다시 시도해 주세요.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -44,22 +66,38 @@ const Contact = () => {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="relative pt-[10rem] flex items-center gap-4">
+            <form
+              onSubmit={handleSubmit}
+              className="relative pt-[10rem] flex items-center gap-4"
+              autoComplete="off"
+            >
+              <label htmlFor="email" className="sr-only">
+                이메일 주소
+              </label>
               <Input
+                id="email"
                 type="email"
                 placeholder="e-mail address"
                 className="w-[80rem] h-14 pl-4 pr-12 text-[2rem] border-b-2 border-black/10 rounded-none focus-visible:ring-0 focus-visible:border-black/30 transition-colors"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
+                required
+                aria-describedby="email-status"
               />
               <button
                 type="submit"
-                className="p-4 hover:opacity-70 transition-opacity"
-                aria-label="Submit email"
+                className="p-4 hover:opacity-70 transition-opacity disabled:opacity-50"
+                aria-label="이메일 제출"
+                disabled={isLoading}
               >
-                <Image src="/icons/send.svg" alt="send_icon" width={45} height={45} />
+                <Image src="/icons/send.svg" alt="" width={45} height={45} />
               </button>
             </form>
+            {status && (
+              <p id="email-status" className="mt-4 text-[2rem] text-center" aria-live="polite">
+                {status}
+              </p>
+            )}
           </div>
         </div>
       </div>
