@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import WorkForm from '../components/workRequest/WorkForm';
 
-const WorkRequest: React.FC = () => {
+const WorkRequest = () => {
   const [selectedForm, setSelectedForm] = useState('업무 종류를 선택하세요.');
   const [showFormList, setShowFormList] = useState(false);
 
