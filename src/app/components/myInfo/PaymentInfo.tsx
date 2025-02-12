@@ -9,10 +9,14 @@ const PaymentInfo = () => {
     },
     recurringPaymentDate: {
       date: '2026년 3월 10일',
-      price: '1250000',
+      price: 1250000,
     },
     billingEmail: 'gildong.hong@gmail.com',
   };
+
+  const formattedCardNum = `${exampleData.card.carNum.slice(0, 4)} **** **** ****`;
+
+  const formattedPrice = exampleData.recurringPaymentDate.price.toLocaleString('ko-KR');
 
   return (
     <div className="flex flex-col gap-[5rem]">
@@ -22,7 +26,7 @@ const PaymentInfo = () => {
           <div className="bg-gray w-[6.9rem] h-[4.2rem] rounded-[0.3rem]"></div>
           <p>
             {exampleData.card.cardIssuer}&nbsp;&nbsp;
-            {exampleData.card.carNum}
+            {formattedCardNum}
           </p>
         </div>
       </div>
@@ -32,7 +36,7 @@ const PaymentInfo = () => {
         <div className="w-3/4 flex items-center text-[1.6rem] font-medium">
           <p>
             {exampleData.recurringPaymentDate.date}&nbsp;/&nbsp;
-            {exampleData.recurringPaymentDate.price}원
+            {formattedPrice}원
           </p>
         </div>
       </div>
