@@ -42,7 +42,7 @@ const Password = ({ register, errors }: Props) => {
   return (
     <>
       {showPasswordInput ? (
-        <div className="w-full flex justify-between">
+        <div className="w-full flex justify-between ml-[2rem]">
           <p className="text-[1.6rem]">비밀번호 변경</p>
           <div className="flex flex-col gap-[2.8rem]">
             {PASSWORD_FIELDS.map(field => (

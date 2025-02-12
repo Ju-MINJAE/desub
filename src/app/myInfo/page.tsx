@@ -36,16 +36,16 @@ const MyInfo = () => {
       <div className="w-full flex flex-col gap-[9.5rem] items-center">
         <ProfilesImage />
         <div className="w-[35%] flex flex-col justify-between gap-[7rem]">
-          <p className="text-[2rem] font-extrabold">내 정보</p>
+          <p className="text-[2rem] font-extrabold ml-[2rem]">내 정보</p>
           <UserInfo register={register} errors={errors} />
           <Password register={register} errors={errors} />
         </div>
         <hr className="w-[70rem] border-lightgray" />
         <div className="w-[35%] flex flex-col gap-[5rem]">
-          <p className="text-[2rem] font-extrabold">결제정보</p>
+          <p className="text-[2rem] font-extrabold ml-[2rem]">결제정보</p>
           <PaymentInfo />
         </div>
-        <Button size="full" type="submit" variant="black" className="w-[40rem]">
+        <Button type="submit" variant="black">
           변경사항 저장
         </Button>
       </div>

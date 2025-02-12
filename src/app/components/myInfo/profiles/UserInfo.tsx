@@ -9,7 +9,7 @@ interface Props {
 
 const UserInfo = ({ register, errors }: Props) => {
   return (
-    <div className="w-full flex flex-col gap-[2.6rem]">
+    <div className="w-full flex flex-col gap-[2.6rem] ml-[2rem]">
       {USERNAME_FIELDS.map(field => (
         <div key={field.id as string} className="flex justify-between items-center">
           <p className="text-[1.6rem]">{field.label}</p>
