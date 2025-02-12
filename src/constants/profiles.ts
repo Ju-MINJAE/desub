@@ -10,7 +10,7 @@ export const USERNAME_FIELDS: ProfilesField[] = [
     id: 'email',
     label: '이메일',
     type: 'email',
-    value: exampleData.username,
+    value: exampleData.email,
     disable: true,
   },
   {

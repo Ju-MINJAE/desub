@@ -10,6 +10,7 @@ import UserInfo from '../components/myInfo/profiles/UserInfo';
 import Password from '../components/myInfo/profiles/Password';
 import PaymentInfo from '../components/myInfo/PaymentInfo';
 import { USERNAME_FIELDS } from '@/constants/profiles';
+import { Button } from '../components/ui/Button';
 
 const MyInfo = () => {
   const {
@@ -40,10 +41,13 @@ const MyInfo = () => {
           <Password register={register} errors={errors} />
         </div>
         <hr className="w-[70rem] border-lightgray" />
-        <PaymentInfo />
-        <button type="submit" className="mt-4 p-3 bg-blue-500 text-white rounded">
-          저장하기
-        </button>
+        <div className="w-[35%] flex flex-col gap-[5rem]">
+          <p className="text-[2rem] font-extrabold">결제정보</p>
+          <PaymentInfo />
+        </div>
+        <Button size="full" type="submit" variant="black" className="w-[40rem]">
+          변경사항 저장
+        </Button>
       </div>
     </form>
   );
