@@ -221,7 +221,13 @@ const Subscription = () => {
                   <span className="underline">홍길동</span> 님
                 </p>
                 <button>
-                  <Image src="/icons/setting.svg" alt="" width={24} height={24} />
+                  <Image
+                    src="/icons/setting.svg"
+                    alt=""
+                    width={24}
+                    height={24}
+                    onClick={() => router.push('/myInfo')}
+                  />
                 </button>
               </div>
             </div>

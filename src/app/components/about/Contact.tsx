@@ -4,7 +4,7 @@ const ContactSection: React.FC = () => {
   return (
     <section className="mt-[29.4rem]">
       <div className="mx-[7rem] relative aspect-[1.91/1]">
-        <div className="absolute w-[71rem] h-[15rem] top-[-20%] right-[2%] bg-[#8F0] shadow-lg flex items-center rotate-[-13.369deg] z-10">
+        <div className="absolute w-[71rem] h-[15rem] top-[-20%] right-[2%] bg-primary shadow-lg flex items-center rotate-[-13.369deg] z-10">
           <p className="text-[4rem] font-bold text-center">
             wassup? desub! wassup? desub! wassup? desub! wassup? desub!
           </p>
@@ -20,7 +20,7 @@ const ContactSection: React.FC = () => {
           />
         </div>
         <Image
-          src="/icons/vector.svg"
+          src="/icons/Vector.svg"
           alt="Vector"
           width={290}
           height={290}
