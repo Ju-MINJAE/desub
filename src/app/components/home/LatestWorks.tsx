@@ -12,19 +12,22 @@ const LatestWorks = () => {
     offset: ['start end', 'end start'],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-100%']);
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-120%']);
 
   return (
     <div className="flex flex-col overflow-hidden" ref={containerRef}>
-      <Heading tag="h1" className="px-[12rem] pt-36 mb-12">
+      <Heading tag="h1" className="mb-12 px-[6.2rem] md:px-[12rem] pt-20 md:pt-36">
         Check our
         <br />
         Latest works
       </Heading>
 
-      <motion.div className="flex flex-row gap-[3.6rem] pl-[12rem]" style={{ x }}>
+      <motion.div className="flex flex-row gap-8 md:gap-[3.6rem] pl-[12rem]" style={{ x }}>
         {[...Array(6)].map((_, index) => (
-          <div key={index} className="w-[51.3rem] h-[73.7rem] flex-shrink-0">
+          <div
+            key={index}
+            className="w-[24.1rem] h-[34.6rem] md:w-[51.3rem] md:h-[73.7rem] flex-shrink-0"
+          >
             <Image
               src={`/images/desub_project_${index + 1}.png`}
               alt={`Latest work ${index + 1}`}
