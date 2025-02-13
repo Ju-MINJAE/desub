@@ -4,6 +4,8 @@ import Heading from '@/app/components/ui/Heading';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { BackButton } from '../ui/BackButton';
+import { useRouter } from 'next/navigation';
 
 const PricingProcess = () => {
   const [pricingText] = useState([
@@ -13,6 +15,7 @@ const PricingProcess = () => {
     'product designer',
   ]);
   const [pricingTextCount, setPricingTextCount] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,13 +62,16 @@ const PricingProcess = () => {
         </div>
         필요하세요?
       </Heading>
-      <Image
-        src="/icons/arrow.svg"
-        alt="arrow_right"
-        width={401.001}
-        height={1}
-        className="rotate-180 mt-[7.153rem]"
-      />
+      <button>
+        <Image
+          src="/icons/arrow.svg"
+          alt="arrow_right"
+          width={401.001}
+          height={1}
+          className="rotate-180 mt-[7.153rem]"
+          onClick={() => router.push('/pricing')}
+        />
+      </button>
     </div>
   );
 };
