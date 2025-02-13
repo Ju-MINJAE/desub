@@ -3,7 +3,17 @@
 import Heading from '@/app/components/ui/Heading';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
+import * as PortOne from '@portone/browser-sdk/v2';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 const Subscribe = () => {
+  const handlePayment = async () => {
+    const response = await fetch(`${API_BASE_URL}/api/plans/`);
+    const { paymentData } = await response.json();
+    const portone = new PortOne(paymentData);
+    portone.open();
+  };
+
   return (
     <div className="h-full">
       <div className="pt-[4.7rem] pl-[4.7rem]">
@@ -46,6 +56,7 @@ const Subscribe = () => {
           variant="green"
           type="button"
           className="w-[40rem] h-[5.5rem] text-[1.6rem] mt-[9rem]"
+          onClick={handlePayment}
         >
           다음
         </Button>
