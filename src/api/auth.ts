@@ -1,5 +1,6 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 import type { SignupData } from '@/types/signup';
+import { setUserSession } from '@/app/actions/serverAction';
 
 export const signUp = async (data: SignupData) => {
   try {
@@ -21,6 +22,33 @@ export const signUp = async (data: SignupData) => {
   } catch (error) {
     console.error('회원가입 요청 실패:', error);
     throw error;
+  }
+};
+
+export const loginWithEmail = async (email: string, password: string) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/user/login/`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message || '로그인 실패');
+    }
+
+    const data = await response.json();
+    console.log('로그인 성공:', data);
+
+    setUserSession(data.access_token, data.refresh_token); // 토큰 쿠키에 저장
+
+    return data;
+  } catch (error) {
+    console.error(' 로그인 요청 실패:', error);
   }
 };
 
