@@ -3,7 +3,7 @@ import type { SignupData } from '@/types/signup';
 
 export const signUp = async (data: SignupData) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/user/signup/`, {
+    const response = await fetch(`${API_BASE_URL}/api/user/signup/`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -47,24 +47,21 @@ export const loginWithGoogle = async () => {
   }
 };
 
-export const fetchGooglePost = async (code: string) => {
+export const saveGoogleUserPhone = async (phone: string) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/google/login/?env=frontend_local`, {
+    const response = await fetch(`${API_BASE_URL}/api/user/g-phone`, {
       method: 'POST',
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ code }),
+      body: JSON.stringify(phone),
     });
 
     if (!response.ok) {
       throw new Error(`서버 응답 실패: ${response.status}`);
     }
-
-    const data = await response.json();
-    return data;
   } catch (error) {
-    console.error('구글 로그인 오류:', error);
-    alert('로그인 요청 중 문제가 발생했습니다. 다시 시도해주세요.');
+    console.error('구글 전화번호저장 오류:', error);
   }
 };

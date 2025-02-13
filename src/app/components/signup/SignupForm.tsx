@@ -2,6 +2,7 @@
 
 import { SIGNUP_FIELDS } from '@/constants/signup';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { FormField } from './FormField';
 import { AgreementList } from './AgreementList';
 import { Button } from '../ui/Button';
@@ -10,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signUp } from '@/api/auth';
 
 const SignupForm = () => {
+  const router = useRouter();
   const methods = useForm<SignupFormData>({
     resolver: zodResolver(SignUpSchema),
     mode: 'all',
@@ -46,7 +48,8 @@ const SignupForm = () => {
     console.log('현재 입력값:', methods.watch());
     try {
       await signUp(signupData); // signUp 함수호출
-      alert('✅ 회원가입 성공!');
+      // 완료화면으로 이동
+      router.push('/signup/complete');
     } catch (error) {
       alert('오류 발생');
     }

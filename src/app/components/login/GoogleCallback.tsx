@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { setUserSession } from '@/app/actions/serverAction';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -30,7 +31,10 @@ const GoogleCallback = () => {
         const data = await response.json();
         console.log('✅ 로그인 응답 데이터:', data);
 
-        if (data.phone) {
+        setUserSession(data.access_token, data.refresh_token); // 토큰 쿠키에 저장
+
+        // 구글 첫 로그인시 핸드폰번호 인증 필수
+        if (!data.phone) {
           router.push('/signup');
         } else {
           router.push('/');
