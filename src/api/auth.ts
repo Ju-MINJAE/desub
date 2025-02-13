@@ -38,6 +38,7 @@ export const loginWithEmail = async (email: string, password: string) => {
 
     if (!response.ok) {
       const data = await response.json();
+      console.log(response.status);
       throw new Error(data.message || '로그인 실패');
     }
 
