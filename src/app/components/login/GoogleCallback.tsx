@@ -3,10 +3,13 @@
 import React, { useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { setUserSession } from '@/app/actions/serverAction';
+import { useAppDispatch } from '@/hooks/redux/hooks';
+import { loginSuccess } from '@/store/authslice';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const GoogleCallback = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get('code');
@@ -16,7 +19,7 @@ const GoogleCallback = () => {
   useEffect(() => {
     if (!code || !API_BASE_URL || isCalled.current) return;
 
-    isCalled.current = true; // 첫 번째 호출 이후에는 다시 실행되지 않도록 설정
+    isCalled.current = true; // 첫번째 호출 이후에는 다시 실행되지 않도록 설정
 
     const fetchGoogleLogin = async () => {
       try {
@@ -29,14 +32,15 @@ const GoogleCallback = () => {
         });
 
         const data = await response.json();
-        console.log('✅ 로그인 응답 데이터:', data);
+        console.log('로그인 응답 데이터:', data);
 
         setUserSession(data.access_token, data.refresh_token); // 토큰 쿠키에 저장
 
         // 구글 첫 로그인시 핸드폰번호 인증 필수
         if (!data.phone) {
-          router.push('/signup');
+          router.push('/signup/social');
         } else {
+          dispatch(loginSuccess()); // 로그인 상태 true로 변경
           router.push('/');
         }
       } catch (error) {

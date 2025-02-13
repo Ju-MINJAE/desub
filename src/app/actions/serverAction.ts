@@ -23,8 +23,6 @@ export async function setUserSession(accessToken: string, refreshToken: string) 
     path: '/',
     maxAge: 60 * 60 * 24 * 7, // 7일 유지
   });
-
-  return { success: true };
 }
 
 // 토큰 가져오는 함수
