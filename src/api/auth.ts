@@ -76,15 +76,19 @@ export const loginWithGoogle = async () => {
   }
 };
 
-export const saveGoogleUserPhone = async (phone: string): Promise<GoogleResponse> => {
+export const saveGoogleUserPhone = async (
+  phone: string,
+  accessToken: string,
+): Promise<GoogleResponse> => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/user/g-phone`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({ phone }), 
+      body: JSON.stringify({ phone }),
     });
 
     const data = await response.json();
@@ -94,6 +98,7 @@ export const saveGoogleUserPhone = async (phone: string): Promise<GoogleResponse
     }
 
     console.log('전화번호 저장 성공:', data);
+    console.log('Response:', response);
     return data;
   } catch (error) {
     console.error('🚨 구글 전화번호 저장 오류:', error);

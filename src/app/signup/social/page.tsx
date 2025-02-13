@@ -15,6 +15,7 @@ import { useAppDispatch } from '@/hooks/redux/hooks';
 import { formatPhoneNumber } from '@/utils/phone';
 import { usePhoneAuth } from '@/hooks/usePhoneAuth';
 import { formatTime } from '@/utils/time';
+import { getUserSession } from '@/app/actions/serverAction';
 
 export default function Social() {
   const router = useRouter();
@@ -35,9 +36,12 @@ export default function Social() {
 
   // 폼제출
   const onSubmit = async (data: GoogleSignupValues) => {
-    console.log(data, 'data');
-
-    const result = await saveGoogleUserPhone(data.phone_number); // 구글 사용자 phone api 호출
+    const { accessToken } = await getUserSession();
+    console.log('Access Token:', accessToken);
+    if (!accessToken) {
+      throw new Error('🚨 유효한 액세스 토큰이 없습니다.');
+    }
+    const result = await saveGoogleUserPhone(data.phone_number, accessToken); // 구글 사용자 phone api 호출
 
     // 회원가입 완료시
     if (result && result.access_token && result.refresh_token) {
@@ -49,11 +53,20 @@ export default function Social() {
     }
   };
 
-  // const { handleRequestVerification, handleVerifyCode, timeLeft, successMessage } = usePhoneAuth(
-  //   watch,
-  //   setValue,
-  //   setError,
-  // );
+  const { handleRequestVerification, handleVerifyCode, timeLeft, successMessage } = usePhoneAuth(
+    watch,
+    setValue,
+    setError,
+  );
+
+  const handleButtonClick = () => {
+    handleRequestVerification(); // 휴대폰번호 인증 api
+    setIsAuthFieldVisible(true);
+    setTimeout(() => {
+      setIsAuthFieldVisible(false);
+    }, 239000);
+  };
+
   return (
     <div className="container mx-auto px-4 flex justify-center">
       <div className="w-full max-w-[98rem] flex flex-col items-center">
@@ -79,7 +92,7 @@ export default function Social() {
               type="button"
               variant="outline"
               className="!w-[14rem] h-[5rem] text-[2rem]"
-              onClick={() => setIsAuthFieldVisible(true)}
+              onClick={handleButtonClick}
             >
               휴대폰 인증
             </Button>
@@ -91,19 +104,33 @@ export default function Social() {
                 type="text"
                 placeholder="인증번호 입력"
                 {...register('phone_auth')}
-                helperText={errors.phone_auth?.message || ''}
-                status={errors.phone_auth ? 'error' : 'default'}
+                status={errors.phone_auth ? 'error' : successMessage ? 'success' : 'default'}
+                helperText={
+                  errors.phone_auth?.message ||
+                  successMessage ||
+                  (timeLeft ? `인증번호를 입력해주세요. ${formatTime(timeLeft)}` : '')
+                }
               />
               <Button
-                type="submit"
+                type="button"
                 variant="outline"
                 className="!w-[14rem] h-[5rem] text-[2rem]"
-                disabled={!isValid}
+                onClick={handleVerifyCode}
               >
                 인증 확인
               </Button>
             </div>
           )}
+          <div className="flex items-center justify-center mt-[14.4rem]">
+            <Button
+              variant="black"
+              type="submit"
+              className="w-[54rem] h-[6.6rem] text-[2.5rem]"
+              disabled={!isValid}
+            >
+              join
+            </Button>
+          </div>
         </form>
       </div>
     </div>
