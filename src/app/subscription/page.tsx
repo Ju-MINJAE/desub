@@ -109,6 +109,8 @@ const Subscription = () => {
     setLastCheckModal(true);
   };
 
+  const goToTrelloLink = () => (window.location.href = 'https://trello.com/b/8NZhWTI4/desub');
+
   return (
     <div className="h-full">
       {reviewModal && (
@@ -246,6 +248,7 @@ const Subscription = () => {
                 className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem] flex justify-center items-center gap-[1.7rem]"
                 size="small"
                 variant="outline"
+                onClick={goToTrelloLink}
               >
                 Workspace
                 <Image src="/icons/workSpace.svg" alt="" width={24} height={24} />
