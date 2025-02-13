@@ -5,6 +5,7 @@ import Heading from '@/app/components/ui/Heading';
 import { Button } from '@/app/components/ui/Button';
 import TextButton from '@/app/components/ui/TextButton';
 import Image from 'next/image';
+import { loginWithGoogle } from '@/api/auth';
 
 const Login = () => {
   const router = useRouter();
@@ -27,6 +28,7 @@ const Login = () => {
               size="default"
               type="button"
               variant="outline"
+              onClick={loginWithGoogle}
             >
               <span className="mr-[1rem]">
                 <Image src="/icons/google.png" alt="로그인" width={20} height={20} />

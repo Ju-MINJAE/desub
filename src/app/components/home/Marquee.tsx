@@ -21,8 +21,8 @@ const Marquee = () => {
   const repeatedText = marqueeText.repeat(20);
 
   return (
-    <div className="w-full h-[9.6rem] pt-[18rem]">
-      <div className="bg-[#F3F3F3] p-8 overflow-hidden">
+    <div className="w-full h-[5rem] md:h-[9.6rem] pt-[9rem] md:pt-[18rem]">
+      <div className="bg-[#F3F3F3] p-4 md:p-8 overflow-hidden">
         <motion.div
           className="whitespace-nowrap inline-block"
           variants={marqueeVariants}
