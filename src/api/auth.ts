@@ -36,20 +36,23 @@ export const loginWithEmail = async (email: string, password: string) => {
       body: JSON.stringify({ email, password }),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      const data = await response.json();
-      console.log(response.status);
-      throw new Error(data.message || '로그인 실패');
+      console.error('🚨 로그인 실패:', data);
+      return { success: false, error: data.message || '로그인 실패' };
     }
 
-    const data = await response.json();
-    console.log('로그인 성공:', data);
+    console.log('✅ 로그인 성공:', data);
 
-    setUserSession(data.access_token, data.refresh_token); // 토큰 쿠키에 저장
-
-    return data;
+    return {
+      success: true,
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+    };
   } catch (error) {
-    console.error(' 로그인 요청 실패:', error);
+    console.error('🚨 로그인 요청 실패:', error);
+    return { success: false, error: '서버 오류가 발생했습니다. 다시 시도해주세요.' };
   }
 };
 
@@ -92,5 +95,30 @@ export const saveGoogleUserPhone = async (phone: string) => {
     }
   } catch (error) {
     console.error('구글 전화번호저장 오류:', error);
+  }
+};
+
+export const logoutUser = async (refreshToken: string) => {
+  try {
+    if (!refreshToken) {
+      console.warn('🚨 로그아웃 실패: refresh_token 없음');
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/user/logout/`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ refreshToken }),
+    });
+
+    if (!response.ok) {
+      throw new Error('로그아웃 실패');
+    }
+
+    console.log('✅ 로그아웃 성공');
+  } catch (error) {
+    console.error('🚨 로그아웃 요청 실패:', error);
   }
 };

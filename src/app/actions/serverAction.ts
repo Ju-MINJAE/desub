@@ -26,3 +26,15 @@ export async function setUserSession(accessToken: string, refreshToken: string) 
 
   return { success: true };
 }
+
+// 토큰 가져오는 함수
+export async function getUserSession() {
+  const accessToken = cookies().get('access_token')?.value || null;
+  const refreshToken = cookies().get('refresh_token')?.value || null;
+
+  if (!accessToken) {
+    return { accessToken: null, refreshToken };
+  }
+
+  return { accessToken, refreshToken };
+}
