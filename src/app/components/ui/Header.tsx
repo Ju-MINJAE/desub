@@ -4,8 +4,11 @@ import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './Button';
+import { useState } from 'react';
+import MobileMenu from './MobileMenu';
 
 const Header = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
   if (
     pathname === '/login' ||
@@ -30,15 +33,30 @@ const Header = () => {
   }
 
   return (
-    <div className="w-full border-b">
-      <header className="px-[3.7rem] py-[2rem] flex items-center justify-between">
+    <div className="w-full fixed top-0 left-0 z-50 bg-white border-b">
+      <header className="px-[2rem] md:px-[3.7rem] py-[2rem] flex items-center justify-between">
         <div className="flex items-center">
-          <Link href="/" className="relative">
-            <Image src="/images/desub_logo.png" alt="header_logo" width={170} height={40} />
+          <Button
+            variant="outline"
+            size="small"
+            className="w-[7.3rem] h-[3.3rem] md:hidden text-[1.5rem]"
+            onClick={() => setIsMobileMenuOpen(true)}
+          >
+            Menu
+          </Button>
+
+          <Link href="/" className="relative hidden md:block">
+            <Image
+              src="/images/desub_logo.png"
+              alt="header_logo"
+              width={170}
+              height={40}
+              className="w-[130px] h-auto lg:w-[170px]"
+            />
           </Link>
 
-          <nav className="pl-[4rem] text-[2rem]">
-            <ul className="flex gap-[4rem]">
+          <nav className="hidden md:block pl-[2rem] lg:pl-[4rem] text-[1.6rem] lg:text-[2rem]">
+            <ul className="flex gap-[2rem] lg:gap-[4rem]">
               <li>
                 <Link href="/about">about</Link>
               </li>
@@ -57,15 +75,21 @@ const Header = () => {
 
         <div className="flex items-center">
           <Link href="/subscription">
-            <Button variant="green" size="small" className="w-[14.2rem] h-[5rem] text-[2rem]">
+            <Button
+              variant="green"
+              size="small"
+              className="!w-[10.7rem] md:!w-[14.2rem] !h-[3.3rem] md:!h-[5rem] text-[1.5rem] md:text-[2rem]"
+            >
               subscribe
             </Button>
           </Link>
-          <Link href="/login">
-            <button className="ml-[3.9rem] text-[2rem]">login</button>
+
+          <Link href="/login" className="hidden md:block">
+            <button className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem]">login</button>
           </Link>
         </div>
       </header>
+      <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
     </div>
   );
 };
