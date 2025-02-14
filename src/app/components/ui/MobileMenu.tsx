@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -10,6 +10,7 @@ interface MobileMenuProps {
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (isOpen) {
@@ -24,6 +25,14 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+  const menuItems = [
+    { href: '/about', label: 'About' },
+    { href: '/service', label: 'Service' },
+    { href: '/pricing', label: 'Pricing' },
+    { href: '/book', label: 'Book a call' },
+    { href: '/pricing/subscribe', label: 'Subscribe', className: 'pt-[3.5rem]' },
+  ];
+
   return (
     <div className="fixed inset-0 bg-black z-50 text-white overflow-y-auto flex flex-col">
       <div className="flex justify-center items-center py-[3.4rem]">
@@ -37,38 +46,29 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
         </Link>
       </div>
 
-      <nav className="flex-1 px-[5rem] pt-[11.6rem]">
+      <nav className="flex-1 px-[5rem] pt-[5.6rem]">
         <ul className="space-y-[2.7rem] text-[3rem]">
-          <li>
-            <Link href="/about" onClick={onClose}>
-              About
-            </Link>
-          </li>
-          <li>
-            <Link href="/service" onClick={onClose}>
-              Service
-            </Link>
-          </li>
-          <li>
-            <Link href="/pricing" onClick={onClose}>
-              Pricing
-            </Link>
-          </li>
-          <li>
-            <Link href="/book" onClick={onClose}>
-              Book a call
-            </Link>
-          </li>
-          <li className="pt-[5.8rem]">
-            <Link href="/subscribe" onClick={onClose}>
-              Subscribe
-            </Link>
-          </li>
+          {menuItems.map(item => (
+            <li key={item.href} className={item.className}>
+              <Link
+                href={item.href}
+                onClick={onClose}
+                className={`${
+                  pathname === item.href ? 'text-primary' : 'text-white hover:text-gray-300'
+                }`}
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
 
       <div className="flex flex-row justify-between px-[2.4rem] pb-[2.6rem]">
-        <button className="w-[7.3rem] h-[3.3rem] bg-transparent text-white border border-white rounded-[2rem]">
+        <button
+          className="w-[7.3rem] h-[3.3rem] bg-transparent text-white border border-white rounded-[2rem]"
+          onClick={onClose}
+        >
           Menu
         </button>
         <button

@@ -1,6 +1,7 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 import type { SignupData } from '@/types/signup';
-import { setUserSession } from '@/app/actions/serverAction';
+import { LoginResponse } from '@/types/signup';
+import { GoogleResponse } from '@/types/signup';
 
 export const signUp = async (data: SignupData) => {
   try {
@@ -13,19 +14,21 @@ export const signUp = async (data: SignupData) => {
       body: JSON.stringify(data),
     });
 
+    const responseData = await response.json();
+
     if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.message || '회원가입 실패');
+      throw new Error(responseData.message || '회원가입 실패');
     }
 
-    console.log('회원가입 성공');
+    console.log('회원가입 성공:', responseData);
+    return responseData;
   } catch (error) {
     console.error('회원가입 요청 실패:', error);
     throw error;
   }
 };
 
-export const loginWithEmail = async (email: string, password: string) => {
+export const loginWithEmail = async (email: string, password: string): Promise<LoginResponse> => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/user/login/`, {
       method: 'POST',
@@ -39,20 +42,19 @@ export const loginWithEmail = async (email: string, password: string) => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error('🚨 로그인 실패:', data);
-      return { success: false, error: data.message || '로그인 실패' };
+      // 400 에러일 경우
+      if (response.status === 400 && data.message) {
+        return data;
+      }
+
+      throw new Error('로그인 실패');
     }
 
-    console.log('✅ 로그인 성공:', data);
-
-    return {
-      success: true,
-      access_token: data.access_token,
-      refresh_token: data.refresh_token,
-    };
+    console.log('로그인 성공:', data);
+    return data;
   } catch (error) {
-    console.error('🚨 로그인 요청 실패:', error);
-    return { success: false, error: '서버 오류가 발생했습니다. 다시 시도해주세요.' };
+    console.error('로그인 요청 실패:', error);
+    throw error;
   }
 };
 
@@ -75,33 +77,67 @@ export const loginWithGoogle = async () => {
     }
   } catch (error) {
     console.error('구글 로그인 오류:', error);
-    alert('로그인 요청 중 문제가 발생했습니다. 다시 시도해주세요.');
   }
 };
 
-export const saveGoogleUserPhone = async (phone: string) => {
+export const saveGoogleUserPhone = async (
+  phone: string,
+  accessToken: string,
+): Promise<GoogleResponse> => {
+  console.log(phone, accessToken);
   try {
-    const response = await fetch(`${API_BASE_URL}/api/user/g-phone`, {
+    const response = await fetch(`${API_BASE_URL}/api/user/g-phone/`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(phone),
+      body: JSON.stringify({ phone }),
     });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`🚨 서버 응답 실패: ${response.status}`);
+    }
+
+    console.log('전화번호 저장 성공:', data);
+    return data;
+  } catch (error) {
+    console.error('🚨 구글 전화번호 저장 오류:', error);
+    throw error;
+  }
+};
+
+export const fetchRefreshedToken = async (refreshToken: string): Promise<LoginResponse> => {
+  console.log(refreshToken);
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/user/refresh_token/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ refreshToken }),
+    });
+
+    const data = await response.json();
 
     if (!response.ok) {
       throw new Error(`서버 응답 실패: ${response.status}`);
     }
+
+    return data;
   } catch (error) {
-    console.error('구글 전화번호저장 오류:', error);
+    console.error('리프레시 토큰 발급 오류:', error);
+    throw error;
   }
 };
 
-export const logoutUser = async (refreshToken: string) => {
+export const logoutUser = async (accessToken: string, refreshToken: string) => {
   try {
     if (!refreshToken) {
-      console.warn('🚨 로그아웃 실패: refresh_token 없음');
+      throw new Error('로그아웃 실패: refresh_token 없음');
     }
 
     const response = await fetch(`${API_BASE_URL}/api/user/logout/`, {
@@ -109,6 +145,7 @@ export const logoutUser = async (refreshToken: string) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ refreshToken }),
     });
@@ -117,8 +154,9 @@ export const logoutUser = async (refreshToken: string) => {
       throw new Error('로그아웃 실패');
     }
 
-    console.log('✅ 로그아웃 성공');
+    console.log('로그아웃 성공');
   } catch (error) {
-    console.error('🚨 로그아웃 요청 실패:', error);
+    console.error('로그아웃 요청 실패:', error);
+    throw error;
   }
 };
