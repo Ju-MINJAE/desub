@@ -4,7 +4,7 @@ import type React from 'react';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '../components/ui/Button';
 import TextButton from '../components/ui/TextButton';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SubscriptionInactive from '../components/subscription/SubscriptionInactive';
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
@@ -41,6 +41,23 @@ const Subscription = () => {
   const [lastCheckModal, setLastCheckModal] = useState(false);
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
   const router = useRouter();
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const response = await fetch('/api/user');
+        if (!response.ok) {
+          throw new Error('사용자 데이터를 가져오는데 실패했습니다.');
+        }
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUserData();
+  }, []);
 
   const handleStarHover = () => {
     setIsBlinking(false);
@@ -108,6 +125,8 @@ const Subscription = () => {
     resetReview();
     setLastCheckModal(true);
   };
+
+  const goToTrelloLink = () => (window.location.href = 'https://trello.com/b/8NZhWTI4/desub');
 
   return (
     <div className="h-full">
@@ -246,6 +265,7 @@ const Subscription = () => {
                 className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem] flex justify-center items-center gap-[1.7rem]"
                 size="small"
                 variant="outline"
+                onClick={goToTrelloLink}
               >
                 Workspace
                 <Image src="/icons/workSpace.svg" alt="" width={24} height={24} />

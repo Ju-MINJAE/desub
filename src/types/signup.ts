@@ -37,4 +37,11 @@ export type SignupData = {
   terms_agreement: boolean;
   privacy_agreement: boolean;
   marketing_agreement: boolean;
-}
+};
+
+export type GoogleResponse = {
+  message: string;
+  access_token: string;
+  refresh_token: string;
+  phone: boolean;
+};

@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import Heading from '@/app/components/ui/Heading';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
+<<<<<<< HEAD
 import * as PortOne from '@portone/browser-sdk/v2';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -12,6 +14,23 @@ const Subscribe = () => {
     const { paymentData } = await response.json();
     const portone = new PortOne(paymentData);
     portone.open();
+=======
+
+const Subscribe = () => {
+  const [userName, setUserName] = useState(null);
+
+  const handlePayment = async () => {
+    try {
+      const response = await fetch('/api/user');
+      if (!response.ok) {
+        throw new Error('사용자 데이터를 가져오는데 실패했습니다.');
+      }
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+>>>>>>> develop
   };
 
   return (

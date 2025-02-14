@@ -2,14 +2,16 @@
 
 import { SIGNUP_FIELDS } from '@/constants/signup';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { FormField } from './FormField';
 import { AgreementList } from './AgreementList';
 import { Button } from '../ui/Button';
 import { SignupFormData, SignUpSchema } from '@/app/auth/schemas/SignupSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signup } from '@/api/auth';
+import { signUp } from '@/api/auth';
 
 const SignupForm = () => {
+  const router = useRouter();
   const methods = useForm<SignupFormData>({
     resolver: zodResolver(SignUpSchema),
     mode: 'all',
@@ -45,8 +47,9 @@ const SignupForm = () => {
     console.log(signupData);
     console.log('현재 입력값:', methods.watch());
     try {
-      await signup(signupData); // signup 함수호출
-      alert('✅ 회원가입 성공!');
+      await signUp(signupData); // signUp 함수호출
+      // 완료화면으로 이동
+      router.push('/signup/complete');
     } catch (error) {
       alert('오류 발생');
     }
