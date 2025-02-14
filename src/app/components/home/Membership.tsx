@@ -1,8 +1,13 @@
+'use client';
+
 import Image from 'next/image';
 import { priceText } from '@/constants/price';
 import { Button } from '../ui/Button';
+import { useRouter } from 'next/navigation';
 
 const Membership = () => {
+  const router = useRouter();
+
   return (
     <div className="flex flex-col justify-center items-center text-center pt-[12rem] md:pt-[20rem] pb-16 md:pb-[13.3rem]">
       <h2 className="ml-[4rem] md:ml-[13.5rem] mb-10 md:mb-20 font-normal text-[1.8rem] md:text-[4rem] self-start text-left">
@@ -53,7 +58,11 @@ const Membership = () => {
             </p>
           </div>
 
-          <Button variant="green" className="text-[2.5rem]">
+          <Button
+            variant="green"
+            className="max-w-[29rem] md:max-w-[40rem] text-[1.6rem] md:text-[2.5rem]"
+            onClick={() => router.push('/pricing/subscribe')}
+          >
             check design option
           </Button>
           <p className="pt-[4.3rem] font-bold text-[1.5rem]">Book a call</p>
