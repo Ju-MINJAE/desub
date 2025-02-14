@@ -53,7 +53,10 @@ const Membership = () => {
             </p>
           </div>
 
-          <Button variant="green" className="text-[2.5rem]">
+          <Button
+            variant="green"
+            className="max-w-[29rem] md:max-w-[40rem] text-[1.6rem] md:text-[2.5rem]"
+          >
             check design option
           </Button>
           <p className="pt-[4.3rem] font-bold text-[1.5rem]">Book a call</p>
