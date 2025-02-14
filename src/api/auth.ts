@@ -2,7 +2,6 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 import type { SignupData } from '@/types/signup';
 import { LoginResponse } from '@/types/signup';
 import { GoogleResponse } from '@/types/signup';
-import { access } from 'fs';
 
 export const signUp = async (data: SignupData) => {
   try {
@@ -103,6 +102,30 @@ export const saveGoogleUserPhone = async (
     return data;
   } catch (error) {
     console.error('🚨 구글 전화번호 저장 오류:', error);
+    throw error;
+  }
+};
+
+export const fetchRefreshedToken = async (refreshToken: string): Promise<LoginResponse> => {
+  console.log(refreshToken);
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/user/refresh_token/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ refreshToken }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`서버 응답 실패: ${response.status}`);
+    }
+
+    return data;
+  } catch (error) {
+    console.error('리프레시 토큰 발급 오류:', error);
     throw error;
   }
 };
