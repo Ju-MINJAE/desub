@@ -24,11 +24,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           className={`
           w-full
+          h-[3rem]
+          md:h-[6.6rem]
+          text-[1.6rem]
+          md:text-[3.5rem]
           border-b border-black
           placeholder:text-gray
           focus:outline-none 
-          text-[3.5rem]
-          h-[6.6rem]
           ${className}
         `}
           {...props}
