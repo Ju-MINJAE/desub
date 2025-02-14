@@ -4,17 +4,6 @@ import { useState } from 'react';
 import Heading from '@/app/components/ui/Heading';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
-<<<<<<< HEAD
-import * as PortOne from '@portone/browser-sdk/v2';
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-const Subscribe = () => {
-  const handlePayment = async () => {
-    const response = await fetch(`${API_BASE_URL}/api/plans/`);
-    const { paymentData } = await response.json();
-    const portone = new PortOne(paymentData);
-    portone.open();
-=======
 
 const Subscribe = () => {
   const [userName, setUserName] = useState(null);
@@ -30,7 +19,6 @@ const Subscribe = () => {
     } catch (error) {
       console.log(error);
     }
->>>>>>> develop
   };
 
   return (
