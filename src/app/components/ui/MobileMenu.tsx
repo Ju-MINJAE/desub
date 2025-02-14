@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { Button } from './Button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -69,24 +68,18 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
       </nav>
 
       <div className="flex flex-row justify-between px-[2.4rem] pb-[2.6rem]">
-        <Button
-          variant="outline"
-          size="small"
-          className="!w-[7.3rem] !h-[3.3rem] bg-transparent text-white border-white"
-        >
+        <button className="w-[7.3rem] h-[3.3rem] bg-transparent text-white border border-white rounded-[2rem]">
           Menu
-        </Button>
-        <Button
-          variant="outline"
-          size="small"
-          className="!w-[7.3rem] !h-[3.3rem] bg-transparent text-white border-white"
+        </button>
+        <button
+          className="w-[7.3rem] h-[3.3rem] bg-transparent text-white border border-white rounded-[2rem]"
           onClick={() => {
             router.push('/login');
             onClose;
           }}
         >
           login
-        </Button>
+        </button>
       </div>
     </div>
   );
