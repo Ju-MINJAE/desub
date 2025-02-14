@@ -1,11 +1,18 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './Button';
+import { useAppSelector } from '@/hooks/redux/hooks';
+import type { RootState } from '@/store/store';
 
 const Header = () => {
+  const router = useRouter();
+  const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated);
+  const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
+  console.log(isAuthenticated, subscriptionStatus);
   const pathname = usePathname();
   if (
     pathname === '/login' ||
@@ -56,14 +63,52 @@ const Header = () => {
         </div>
 
         <div className="flex items-center">
-          <Link href="/subscription">
-            <Button variant="green" size="small" className="w-[14.2rem] h-[5rem] text-[2rem]">
-              subscribe
-            </Button>
-          </Link>
-          <Link href="/login">
-            <button className="ml-[3.9rem] text-[2rem]">login</button>
-          </Link>
+          {isAuthenticated ? (
+            subscriptionStatus === 'subscribed' ? (
+              // 로그인 후 구독중
+              <>
+                <Button
+                  variant="green"
+                  size="small"
+                  className="w-[14.2rem] h-[5rem] text-[2rem]"
+                  onClick={() => router.push('/pricing/subscribe')}
+                >
+                  subscribe
+                </Button>
+                <Link href="/subscription" className="ml-[3.9rem] text-[2rem]">
+                  my subscription
+                </Link>
+              </>
+            ) : (
+              //  로그인 후 미구독
+              <>
+                <Link
+                  href="https://trello.com/b/8NZhWTI4/desub"
+                  className="ml-[3.9rem] text-[2rem]"
+                >
+                  workspace
+                </Link>
+                <Link href="/subscription" className="ml-[3.9rem] text-[2rem]">
+                  my subscription
+                </Link>
+              </>
+            )
+          ) : (
+            // 기본
+            <>
+              <Button
+                variant="green"
+                size="small"
+                className="w-[14.2rem] h-[5rem] text-[2rem]"
+                onClick={() => router.push('/pricing/subscribe')}
+              >
+                subscribe
+              </Button>
+              <Link href="/login" className="ml-[3.9rem] text-[2rem]">
+                login
+              </Link>
+            </>
+          )}
         </div>
       </header>
     </div>
