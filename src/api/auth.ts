@@ -130,7 +130,7 @@ export const fetchRefreshedToken = async (refreshToken: string): Promise<LoginRe
   }
 };
 
-export const logoutUser = async (refreshToken: string) => {
+export const logoutUser = async (accessToken: string, refreshToken: string) => {
   try {
     if (!refreshToken) {
       throw new Error('로그아웃 실패: refresh_token 없음');
@@ -141,8 +141,9 @@ export const logoutUser = async (refreshToken: string) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({ refresh_token: refreshToken }),
+      body: JSON.stringify({ refreshToken }),
     });
 
     if (!response.ok) {
