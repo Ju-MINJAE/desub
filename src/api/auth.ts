@@ -2,6 +2,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 import type { SignupData } from '@/types/signup';
 import { LoginResponse } from '@/types/signup';
 import { GoogleResponse } from '@/types/signup';
+import { access } from 'fs';
 
 export const signUp = async (data: SignupData) => {
   try {
@@ -80,8 +81,9 @@ export const saveGoogleUserPhone = async (
   phone: string,
   accessToken: string,
 ): Promise<GoogleResponse> => {
+  console.log(phone, accessToken);
   try {
-    const response = await fetch(`${API_BASE_URL}/api/user/g-phone`, {
+    const response = await fetch(`${API_BASE_URL}/api/user/g-phone/`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -98,7 +100,6 @@ export const saveGoogleUserPhone = async (
     }
 
     console.log('전화번호 저장 성공:', data);
-    console.log('Response:', response);
     return data;
   } catch (error) {
     console.error('🚨 구글 전화번호 저장 오류:', error);

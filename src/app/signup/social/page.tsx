@@ -36,20 +36,22 @@ export default function Social() {
 
   // 폼제출
   const onSubmit = async (data: GoogleSignupValues) => {
-    const { accessToken } = await getUserSession();
-    console.log('Access Token:', accessToken);
+    const session = await getUserSession();
+    const accessToken = session?.accessToken ?? ''; // 기본값 설정
+    const refreshToken = session?.refreshToken ?? ''; // 기본값 설정
+
+    setUserSession(accessToken, refreshToken); // 토큰저장
     if (!accessToken) {
       throw new Error('🚨 유효한 액세스 토큰이 없습니다.');
     }
     const result = await saveGoogleUserPhone(data.phone_number, accessToken); // 구글 사용자 phone api 호출
 
     // 회원가입 완료시
-    if (result && result.access_token && result.refresh_token) {
-      setUserSession(result.access_token, result.refresh_token);
-      dispatch(loginSuccess());
+    if (result?.message === '전화번호가 저장되었습니다.') {
+      dispatch(loginSuccess()); // login true
       router.push('/signup/complete'); // 회원가입 완료 페이지로 이동
     } else {
-      throw new Error('🚨 서버 응답이 올바르지 않음');
+      throw new Error('🚨 전화번호 저장 실패: 서버 응답이 예상과 다릅니다.');
     }
   };
 
