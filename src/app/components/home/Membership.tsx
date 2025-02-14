@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { priceText } from '@/constants/price';
 import { Button } from '../ui/Button';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Membership = () => {
   const router = useRouter();
@@ -65,18 +66,22 @@ const Membership = () => {
           >
             check design option
           </Button>
-          <p className="pt-[4.3rem] font-bold text-[1.5rem]">Book a call</p>
+          <Link href="/book">
+            <p className="pt-[4.3rem] font-bold text-[1.5rem]">Book a call</p>
+          </Link>
         </div>
 
         <div className="flex flex-col items-end pt-[5rem]">
-          <p className="font-bold text-[2rem] md:text-[5rem] leading-[7.5rem]">자세히 보기</p>
-          <Image
-            width={200}
-            height={0}
-            alt="detail_arrow"
-            src="/icons/Arrow_right.svg"
-            className="w-[56px] md:w-[200px] h-auto"
-          />
+          <Link href="/pricing">
+            <p className="font-bold text-[2rem] md:text-[5rem] leading-[7.5rem]">자세히 보기</p>
+            <Image
+              width={200}
+              height={0}
+              alt="detail_arrow"
+              src="/icons/Arrow_right.svg"
+              className="w-[56px] md:w-[200px] h-auto"
+            />
+          </Link>
         </div>
       </div>
     </div>
