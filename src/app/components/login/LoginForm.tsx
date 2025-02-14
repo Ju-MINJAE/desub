@@ -1,6 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { Input } from '@/app/components/ui/Input';
 import { Button } from '@/app/components/ui/Button';
 import TextButton from '@/app/components/ui/TextButton';
@@ -15,10 +16,12 @@ import { setUserSession } from '@/app/actions/serverAction';
 const LoginForm = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [serverErrorMsg, setSeverErrorMsg] = useState<string>('');
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isValid },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -28,12 +31,17 @@ const LoginForm = () => {
   // 로그인 api 함수 호출
   const onSubmit = async (data: LoginFormValues) => {
     try {
+      setSeverErrorMsg('');
       const result = await loginWithEmail(data.email, data.password);
+
       if (result && result.access_token && result.refresh_token) {
         await setUserSession(result.access_token, result.refresh_token);
         dispatch(loginSuccess()); // 로그인 상태 변경
         router.push('/'); // 홈으로 이동
       } else {
+        // 400에러 떴을때 (로그인 실패시)
+        console.log(result.message);
+        setError('password', { message: result.message || '' });
       }
     } catch (error) {
       console.error('🚨 로그인 실패:', error);
@@ -52,7 +60,7 @@ const LoginForm = () => {
           {...register('email')}
         />
         <Input
-          helperText={errors.password?.message || ''}
+          helperText={errors.password?.message || serverErrorMsg}
           placeholder="password"
           status={errors.password ? 'error' : 'default'}
           type="password"
