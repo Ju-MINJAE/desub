@@ -32,6 +32,13 @@ const Header = () => {
     );
   }
 
+  const navItems = [
+    { href: '/about', label: 'about' },
+    { href: '/service', label: 'service' },
+    { href: '/pricing', label: 'pricing' },
+    { href: '/book', label: 'book a call' },
+  ];
+
   return (
     <div className="w-full fixed top-0 left-0 z-50 bg-white border-b">
       <header className="px-[2rem] md:px-[3.7rem] py-[2rem] flex items-center justify-between">
@@ -57,18 +64,20 @@ const Header = () => {
 
           <nav className="hidden md:block pl-[2rem] lg:pl-[4rem] text-[1.6rem] lg:text-[2rem]">
             <ul className="flex gap-[2rem] lg:gap-[4rem]">
-              <li>
-                <Link href="/about">about</Link>
-              </li>
-              <li>
-                <Link href="/service">service</Link>
-              </li>
-              <li>
-                <Link href="/pricing">pricing</Link>
-              </li>
-              <li>
-                <Link href="/book">book a call</Link>
-              </li>
+              {navItems.map(item => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={`transition-all duration-300 ${
+                      pathname === item.href
+                        ? 'font-bold underline underline-offset-4 decoration-2'
+                        : ''
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>
