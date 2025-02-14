@@ -89,7 +89,7 @@ const Contact = () => {
                 aria-label="이메일 제출"
                 disabled={isLoading}
               >
-                <div className="relative w-[25px] h-[25px] sm:w-[45px] sm:h-[45px]">
+                <div className="relative w-[25px] h-[25px] md:w-[45px] md:h-[45px]">
                   <Image fill alt="email_send" src="/icons/send.svg" className="object-contain" />
                 </div>
               </button>
