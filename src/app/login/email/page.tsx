@@ -18,7 +18,7 @@ const Email = () => {
         </div>
       </div>
 
-      <div className="relative w-1/2">
+      <div className="relative w-1/2 [z-index:-11]">
         <Image
           src="/login_intro.png"
           alt="로그인"
