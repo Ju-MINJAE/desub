@@ -4,7 +4,7 @@ import type React from 'react';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '../components/ui/Button';
 import TextButton from '../components/ui/TextButton';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SubscriptionInactive from '../components/subscription/SubscriptionInactive';
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
@@ -41,6 +41,23 @@ const Subscription = () => {
   const [lastCheckModal, setLastCheckModal] = useState(false);
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
   const router = useRouter();
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const response = await fetch('/api/user');
+        if (!response.ok) {
+          throw new Error('사용자 데이터를 가져오는데 실패했습니다.');
+        }
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUserData();
+  }, []);
 
   const handleStarHover = () => {
     setIsBlinking(false);
