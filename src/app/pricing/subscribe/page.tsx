@@ -4,17 +4,20 @@ import { useState } from 'react';
 import Heading from '@/app/components/ui/Heading';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
+import { fetchUserData } from '@/app/actions/userDataAction';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import * as PortOne from '@portone/browser-sdk/v2';
 
 const Subscribe = () => {
   const [userName, setUserName] = useState(null);
 
   const handlePayment = async () => {
     try {
-      const response = await fetch('/api/user');
-      if (!response.ok) {
-        throw new Error('사용자 데이터를 가져오는데 실패했습니다.');
-      }
-      const data = await response.json();
+      const response = await fetchUserData();
+      setUserName(response);
+
+      const response2 = await fetch(`${API_BASE_URL}/api/payment/billing-key/`);
+      const data = await response2.json();
       console.log(data);
     } catch (error) {
       console.log(error);

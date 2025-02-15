@@ -16,6 +16,7 @@ import { Alert } from '../components/ui/Alert';
 import Rating from 'react-rating';
 import '../../styles/review.css';
 import { useRouter } from 'next/navigation';
+import { fetchUserData } from '../actions/userDataAction';
 
 const example = [
   {
@@ -45,12 +46,8 @@ const Subscription = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const response = await fetch('/api/user');
-        if (!response.ok) {
-          throw new Error('사용자 데이터를 가져오는데 실패했습니다.');
-        }
-        const data = await response.json();
-        console.log(data);
+        const response = await fetchUserData();
+        console.log(response);
       } catch (error) {
         console.log(error);
       }
