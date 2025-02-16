@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { getUserSession } from './serverAction';
+import { revalidateTag } from 'next/cache';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // 유저 데이터 받아오는 함수
@@ -28,7 +29,6 @@ export const fetchUserData = async () => {
   }
 
   const data = await response.json();
-
   return data;
 };
 

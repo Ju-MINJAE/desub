@@ -1,47 +1,41 @@
 'use client';
 
-import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useEffect } from 'react';
 import Heading from '@/app/components/ui/Heading';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
-import { fetchUserData } from '@/app/actions/userDataAction';
-import { createBillingKey } from '@/app/actions/paymentAction';
 import { priceText } from '@/constants/price';
+import { useUserDataFetch } from '@/hooks/useUserDataFetch';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 import * as PortOne from '@portone/browser-sdk/v2';
 
 const Subscribe = () => {
-  const [userName, setUserName] = useState(null);
   const urlParams = new URLSearchParams(window.location.search);
   const billingKey = urlParams.get('billingKey');
+  const { userData, getUserData } = useUserDataFetch();
 
   if (billingKey) {
     console.log('서버에서 받은 Billing Key:', billingKey);
   }
 
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   const handlePayment = async () => {
     try {
-      const userData = await fetchUserData();
-      const userName = userData?.name ?? '';
-      setUserName(userName);
+      const issueResponse = await PortOne.requestIssueBillingKey({
+        storeId: 'store-c25c9523-5081-4aae-a882-ce7e52479c59',
+        channelKey: 'channel-key-8bc12c40-b958-4151-ae85-98c129a80099',
+        billingKeyMethod: 'CARD',
+        issueId: `ISSUE${Date.now()}`,
+        customer: {
+          fullName: userData?.name,
+        },
+      });
 
-      const response = await createBillingKey();
-
-      console.log(response);
-
-      // const issueResponse = await PortOne.requestIssueBillingKey({
-      //   storeId: 'store-c25c9523-5081-4aae-a882-ce7e52479c59',
-      //   channelKey: 'channel-key-8bc12c40-b958-4151-ae85-98c129a80099',
-      //   billingKeyMethod: 'CARD',
-      //   issueId: `ISSUE${Date.now()}`,
-      //   customer: {
-      //     fullName: 'gkdl',
-      //   },
-      // });
-
-      // console.log(issueResponse);
+      console.log(issueResponse);
 
       // const response = await fetch(`${API_BASE_URL}/api/payment/billing-key/`, {
       //   method: 'GET',

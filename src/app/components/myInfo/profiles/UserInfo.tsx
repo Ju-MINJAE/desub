@@ -1,6 +1,8 @@
-import { USERNAME_FIELDS } from '@/constants/profiles';
-import { UseFormRegister, UseFormSetValue, FieldErrors } from 'react-hook-form';
+import { useEffect } from 'react';
+import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { ProfilesFormData } from '@/app/profiles/schemas/ProfilesSchema';
+import { ProfilesField } from '@/types/profiles';
+import { useUserDataFetch } from '@/hooks/useUserDataFetch';
 
 interface Props {
   register: UseFormRegister<ProfilesFormData>;
@@ -8,6 +10,28 @@ interface Props {
 }
 
 const UserInfo = ({ register, errors }: Props) => {
+  const { userData, getUserData } = useUserDataFetch();
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const USERNAME_FIELDS: ProfilesField[] = [
+    {
+      id: 'email',
+      label: '이메일',
+      type: 'email',
+      value: userData?.email,
+      disable: true,
+    },
+    {
+      id: 'username',
+      label: '이름',
+      type: 'text',
+      value: userData?.name,
+    },
+  ];
+
   return (
     <div className="w-full flex flex-col gap-[2.6rem] ml-[2rem]">
       {USERNAME_FIELDS.map(field => (
@@ -35,3 +59,5 @@ const UserInfo = ({ register, errors }: Props) => {
 };
 
 export default UserInfo;
+
+export const revalidate = 3600;
