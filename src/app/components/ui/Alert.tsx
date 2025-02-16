@@ -52,7 +52,7 @@ export const Alert = ({
   };
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-60">
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-[9999]">
       <div
         className={`min-w-[45.6rem] min-h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center bg-white ${className}`}
       >

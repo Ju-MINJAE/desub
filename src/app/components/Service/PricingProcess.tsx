@@ -4,7 +4,6 @@ import Heading from '@/app/components/ui/Heading';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { BackButton } from '../ui/BackButton';
 import { useRouter } from 'next/navigation';
 
 const PricingProcess = () => {
@@ -20,25 +19,25 @@ const PricingProcess = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setPricingTextCount(prevIndex => (prevIndex + 1) % 4);
-    }, 2100);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="mt-[45.274rem] mb-[30.793rem] w-[80rem] flex flex-col translate-x-[37rem]">
+    <div className="flex flex-col w-[80%] mt-[45.274rem] pl-[25rem] md:pl-[35rem]">
       <Image
         src="/icons/ellipses.svg"
-        alt=""
+        alt="Ellipses_Service"
         width={318}
-        height={99.572}
-        className="mb-[2.947rem]"
+        height={99}
+        className="mb-[2.947rem] w-[11rem] md:w-[35rem] h-auto"
       />
-      <Heading tag="h1">
-        <div className="h-[1.2em] relative mb-[2rem]">
+      <Heading tag="h1" className="flex flex-col">
+        <div className="min-h-[1.5em] md:min-h-[1.2em] relative mb-[1rem] md:mb-[2rem]">
           <AnimatePresence mode="wait">
             <motion.div
               key={pricingTextCount}
-              className="absolute"
+              className="absolute text-[2rem] md:text-[5rem] whitespace-nowrap"
               initial={{ opacity: 0, y: 20 }}
               animate={{
                 opacity: 1,
@@ -60,15 +59,15 @@ const PricingProcess = () => {
             </motion.div>
           </AnimatePresence>
         </div>
-        필요하세요?
+        <span className="text-[2rem] md:text-[5rem]">필요하세요?</span>
       </Heading>
       <button>
         <Image
           src="/icons/arrow.svg"
           alt="arrow_right"
-          width={401.001}
+          width={400}
           height={1}
-          className="rotate-180 mt-[7.153rem]"
+          className="w-[14rem] md:w-[40rem] rotate-180 mt-[2rem] md:mt-[7rem]"
           onClick={() => router.push('/pricing')}
         />
       </button>

@@ -1,38 +1,56 @@
 'use client';
+
 import Heading from '@/app/components/ui/Heading';
 import { Button } from '@/app/components/ui/Button';
 import TextButton from '@/app/components/ui/TextButton';
-import PricingTooltip from '../components/ui/pricing/PricingTooltip';
 import { useRouter } from 'next/navigation';
-import '@/styles/pricing.css';
+import { priceText } from '@/constants/price';
+import Image from 'next/image';
+import { useState } from 'react';
+import Link from 'next/link';
+// import '@/styles/pricing.css';
 
 const Pricing = () => {
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const router = useRouter();
+
+  const handleTooltipToggle = () => {
+    setIsTooltipOpen(prev => !prev);
+  };
 
   const handleNavigateSubscribe = () => {
     router.push('/pricing/subscribe');
   };
+
   return (
     <div className="flex flex-col justify-center items-center text-center pt-[12.2rem] pb-[13.3rem]">
-      <Heading tag="h1" className="mb-[9.9rem]">
+      <Heading tag="h1" className="mb-[1.6rem] md:mb-[9.9rem]">
         are you ready to
         <br /> join us?
       </Heading>
-      <Heading tag="h2" className="mb-[4.8rem]">
+      <Heading tag="h2" className="mb-[4.8rem] !font-bold">
         당신이 준비할 것은 단 하나, 아이디어 입니다.
       </Heading>
+
       <div className="relative">
-        <div className="price-box rounded-[4rem] border pt-[4.1rem] px-[19.1rem] pb-[3.8rem]">
-          <p className="text-[5rem] font-bold leading-[7.5rem]">standard</p>
-          <p className="text-[1.8rem] font-bold mb-[7.2rem]">monthly</p>
-          <p className="mb-[2.3rem]">
-            <strong className="text-[5rem] font-bold">1,750,000원</strong>
-            <span className="text-[3rem] font-light month"> / Month</span>
+        <div className="max-w-[33rem] md:max-w-[79rem] pt-[5.8rem] md:pt-[4.1rem] px-[2rem] md:px-[10rem] pb-[3.8rem] rounded-[4rem] border">
+          <p className="text-[4rem] md:text-[5rem] font-bold leading-[6rem] md:leading-[7.5rem]">
+            standard
           </p>
+          <p className="text-[1.8rem] font-medium mb-[1.5rem] md:mb-[7.2rem]">monthly</p>
+          <div className="flex flex-col items-end mb-[2.3rem]">
+            <p className="w-full">
+              <strong className="text-[3rem] md:text-[5rem] font-bold">
+                {priceText.toLocaleString()}원
+              </strong>
+              <span className="text-[1.6rem] md:text-[3rem] font-light month"> / Month</span>
+            </p>
+            <p className="hidden md:block text-[1.5rem] mt-1">(VAT 포함)</p>
+          </div>
 
           <div className="text-left mb-[1.5rem]">
-            <p className="text-[1.5rem] font-light mb-[2.5rem]">Free 1 week trial</p>
-            <ul className="text-[2rem]">
+            <p className="text-[1.5rem] mb-[2.5rem]">Free 1 week trial</p>
+            <ul className="text-[1.8rem] md:text-[2rem]">
               <li>1일 최대 1건 요청 가능</li>
               <li>48시간 이내 작업물 전달</li>
               <li>(작업 범위에 따라 순차적 확장 추가 작업 진행)</li>
@@ -41,16 +59,116 @@ const Pricing = () => {
             </ul>
           </div>
 
-          <ul className="task-list text-left text-[2.5rem] mb-[9.2rem]">
-            <li>UIUX</li>
-            <li>E-commerce</li>
-            <li>Branding</li>
-            <li>Printing</li>
-            <li>Social contents</li>
-            <li>Prduct design</li>
-            <li>3D contents</li>
-            <li>
-              All design assets from <PricingTooltip />
+          <ul className="text-left text-[1.8rem] md:text-[2.5rem] mb-[9.2rem]">
+            <li className="flex items-center">
+              <Image
+                src="/icons/check.svg"
+                alt="Check"
+                width={14}
+                height={9}
+                className="mr-[1.5rem] md:w-[20px] md:h-[13px]"
+              />
+              UIUX
+            </li>
+            <li className="flex items-center">
+              <Image
+                src="/icons/check.svg"
+                alt="Check"
+                width={14}
+                height={9}
+                className="mr-[1.5rem] md:w-[20px] md:h-[13px]"
+              />
+              E-commerce
+            </li>
+            <li className="flex items-center">
+              <Image
+                src="/icons/check.svg"
+                alt="Check"
+                width={14}
+                height={9}
+                className="mr-[1.5rem] md:w-[20px] md:h-[13px]"
+              />
+              Branding
+            </li>
+            <li className="flex items-center">
+              <Image
+                src="/icons/check.svg"
+                alt="Check"
+                width={14}
+                height={9}
+                className="mr-[1.5rem] md:w-[20px] md:h-[13px]"
+              />
+              Printing
+            </li>
+            <li className="flex items-center">
+              <Image
+                src="/icons/check.svg"
+                alt="Check"
+                width={14}
+                height={9}
+                className="mr-[1.5rem] md:w-[20px] md:h-[13px]"
+              />
+              Social contents
+            </li>
+            <li className="flex items-center">
+              <Image
+                src="/icons/check.svg"
+                alt="Check"
+                width={14}
+                height={9}
+                className="mr-[1.5rem] md:w-[20px] md:h-[13px]"
+              />
+              Product design
+            </li>
+            <li className="flex items-center">
+              <Image
+                src="/icons/check.svg"
+                alt="Check"
+                width={14}
+                height={9}
+                className="mr-[1.5rem] md:w-[20px] md:h-[13px]"
+              />
+              3D contents
+            </li>
+            <li className="flex items-center">
+              <Image
+                src="/icons/check.svg"
+                alt="Check"
+                width={14}
+                height={9}
+                className="mr-[1.5rem] md:w-[20px] md:h-[13px]"
+              />
+              <span className="flex items-center">
+                All design assets from
+                <span className="relative inline-flex items-center ml-2">
+                  <span
+                    className="font-bold underline cursor-pointer"
+                    onClick={handleTooltipToggle}
+                  >
+                    dshop
+                  </span>
+                  <Image
+                    src="/icons/tooltip.svg"
+                    alt=""
+                    width={16}
+                    height={16}
+                    className="absolute -top-2 -right-5"
+                  />
+                  {isTooltipOpen && (
+                    <div className="absolute top-60 md:top-[-90%] right-[30rem] md:right-0 transform translate-x-[97%] translate-y-[-80%] bg-black rounded-[2.3rem] text-white text-[1.5rem] px-[3.6rem] py-[3rem] min-w-[37.8rem]">
+                      dshop은 dbre의 design asset을 구매 가능한 온라인몰입니다. <br />
+                      <Link
+                        href="https://www.dbre.co.kr/dshop"
+                        className="underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        dshop 바로가기
+                      </Link>
+                    </div>
+                  )}
+                </span>
+              </span>
             </li>
           </ul>
 
@@ -59,12 +177,16 @@ const Pricing = () => {
             size="default"
             type="button"
             variant="green"
-            className="w-[48.1rem] h-[8.5rem] text-[3rem]"
+            className="text-[1.6rem]"
           >
             check-in
           </Button>
         </div>
-        <TextButton href="/pricing/terms" className="link-btn">
+
+        <TextButton
+          href="/pricing/terms"
+          className="absolute w-full bottom-[-2.6rem] md:bottom-[-3rem] md:right-0 left-1/2 transform -translate-x-1/2 md:translate-x-0 text-[1.3rem]"
+        >
           일시정지/구독취소/환불 규정 확인하기
         </TextButton>
       </div>
