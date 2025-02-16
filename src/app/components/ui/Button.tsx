@@ -31,7 +31,7 @@ export const Button: React.FC<ButtonProps> = ({
       case 'small':
         return 'w-[15.3rem] h-[3.3rem] text-[1.3rem]';
       default:
-        return 'w-[40rem] h-[5.5rem]';
+        return 'w-[28rem] md:w-[40rem] h-[5.5rem]';
     }
   };
 

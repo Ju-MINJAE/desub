@@ -1,1 +1,1 @@
-export const priceText = 1250000;
+export const priceText = 1750000;
