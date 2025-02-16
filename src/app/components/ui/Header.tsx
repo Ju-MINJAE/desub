@@ -19,7 +19,7 @@ const Header = () => {
 
   const pathname = usePathname();
   if (
-    pathname === '/login' ||
+    pathname.startsWith('/login') ||
     pathname === '/pricing/subscribe' ||
     pathname === '/subscription' ||
     pathname === '/workRequest' ||
@@ -132,12 +132,13 @@ const Header = () => {
               >
                 subscribe
               </Button>
-            <Link href="/login" className="hidden md:block">
-            <button className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem]">login</button>
-          </Link>
+              <Link href="/login" className="hidden md:block">
+                <button className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem]">
+                  login
+                </button>
+              </Link>
             </>
           )}
-
         </div>
       </header>
       <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />

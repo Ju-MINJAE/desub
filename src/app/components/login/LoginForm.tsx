@@ -18,9 +18,12 @@ const LoginForm = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [serverErrorMsg, setSeverErrorMsg] = useState<string>('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [isSignupPromptOpen, setIsSignupPromptOpen] = useState(false);
+  const [isGoogleSignupAlertOpen, setIsGoogleSignupAlertOpen] = useState(false);
+
   const handleClosePopup = () => {
-    setIsOpen(false);
+    setIsSignupPromptOpen(false);
+    setIsGoogleSignupAlertOpen(false);
   };
   const handleNavigateJoin = () => {
     router.push('/signup'); // 회원가입 페이지로 이동
@@ -48,11 +51,19 @@ const LoginForm = () => {
       } else {
         // 400에러 떴을때 (로그인 실패시)
         console.log(result.message);
-        setError('password', { message: result.message || '' });
-
+        // 비밀번호 틀렸을때
+        if (result.message === '비밀번호를 다시 확인해주세요.') {
+          setError('password', { message: result.message || '' });
+        }
         // 입력된 정보 없을때 팝업 띄우기
         if (result.message === '입력된 정보로 가입된 이력이 없습니다.') {
-          setIsOpen(true);
+          setIsSignupPromptOpen(true);
+        }
+        // 구글로 가입한 계정일때
+        if (
+          result.message === '구글 소셜 로그인으로 가입된 계정입니다. 구글 로그인을 이용해주세요.'
+        ) {
+          setIsGoogleSignupAlertOpen(true);
         }
       }
     } catch (error) {
@@ -94,7 +105,7 @@ const LoginForm = () => {
           </Button>
         </form>
       </div>
-      {isOpen && (
+      {isSignupPromptOpen && (
         <Alert
           buttonText="Join 하기"
           textButton="나중에 할게요"
@@ -109,6 +120,22 @@ const LoginForm = () => {
           variant="green"
           onClose={() => handleClosePopup()}
           onSubmit={() => handleNavigateJoin()}
+        />
+      )}
+      {isGoogleSignupAlertOpen && (
+        <Alert
+          buttonText="확인"
+          size="full"
+          title={
+            <>
+              구글 소셜 로그인으로 가입된 계정입니다.
+              <br />
+              구글 로그인을 이용해주세요
+            </>
+          }
+          variant="green"
+          onClose={() => handleClosePopup()}
+          onSubmit={() => handleClosePopup()}
         />
       )}
     </>

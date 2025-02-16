@@ -18,7 +18,7 @@ export const AccountNotFound = () => {
       <div className="pt-[4.7rem] pl-[4.7rem]">
         <BackButton text="forgot account" />
       </div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center pt-[9rem]">
         <Heading tag="h1" className="mb-[4.4rem]">
           forgot account?
         </Heading>
