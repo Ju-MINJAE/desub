@@ -71,8 +71,8 @@ const Membership = () => {
           </Link>
         </div>
 
-        <div className="flex flex-col items-end pt-[5rem]">
-          <Link href="/pricing">
+        <div className="flex flex-col pt-[5rem]">
+          <Link href="/pricing" className="flex flex-col items-end">
             <p className="font-bold text-[2rem] md:text-[5rem] leading-[7.5rem]">자세히 보기</p>
             <Image
               width={200}
