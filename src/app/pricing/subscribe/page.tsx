@@ -1,11 +1,27 @@
 'use client';
 
+import { useState } from 'react';
 import Heading from '@/app/components/ui/Heading';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
 import { priceText } from '@/constants/price';
 
 const Subscribe = () => {
+  const [userName, setUserName] = useState(null);
+
+  const handlePayment = async () => {
+    try {
+      const response = await fetch('/api/user');
+      if (!response.ok) {
+        throw new Error('사용자 데이터를 가져오는데 실패했습니다.');
+      }
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="h-full">
       <div className="pt-[4.7rem] pl-[4.7rem]">
