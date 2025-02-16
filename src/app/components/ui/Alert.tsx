@@ -7,6 +7,7 @@ interface AlertProps {
   title: React.ReactNode;
   contents?: React.ReactNode;
   buttonText: string;
+  textButton?: string; // 추가
   variant?: 'green' | 'black' | 'outline';
   size: 'full' | 'normal' | 'small';
   className?: string;
@@ -18,6 +19,7 @@ export const Alert = ({
   title,
   contents,
   buttonText,
+  textButton,
   variant = 'black',
   size = 'full',
   className = '',
@@ -75,6 +77,15 @@ export const Alert = ({
         >
           {buttonText}
         </button>
+        {textButton && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-[1.3rem] leading-[1.6rem] font-medium underline"
+          >
+            {textButton}
+          </button>
+        )}
       </div>
     </div>
   );

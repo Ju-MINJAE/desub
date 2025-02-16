@@ -1,8 +1,10 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { Input } from '@/app/components/ui/Input';
 import { Button } from '@/app/components/ui/Button';
+import { Alert } from '../ui/Alert';
 import TextButton from '@/app/components/ui/TextButton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginFormValues } from '@/app/auth/schemas/loginSchema';
@@ -15,10 +17,18 @@ import { setUserSession } from '@/app/actions/serverAction';
 const LoginForm = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-
+  const [serverErrorMsg, setSeverErrorMsg] = useState<string>('');
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClosePopup = () => {
+    setIsOpen(false);
+  };
+  const handleNavigateJoin = () => {
+    router.push('/signup'); // 회원가입 페이지로 이동
+  };
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isValid },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -27,52 +37,81 @@ const LoginForm = () => {
 
   // 로그인 api 함수 호출
   const onSubmit = async (data: LoginFormValues) => {
-    const result = await loginWithEmail(data.email, data.password);
+    try {
+      setSeverErrorMsg('');
+      const result = await loginWithEmail(data.email, data.password);
 
-    // 성공시
-    if (result.success) {
-      const { access_token, refresh_token } = result; // 반환값(토큰들)
-      await setUserSession(access_token, refresh_token);
-      dispatch(loginSuccess()); // 로그인 상태 true로 변경
-      router.push('/'); // 로그인 성공시 홈으로 이동
-    } else {
-      console.error('로그인 실패:', result.error);
-      alert('로그인실패'); // 로그인실패시 서버에서 문구받아서 적용해야함 (비번틀렸을때)
+      if (result && result.access_token && result.refresh_token) {
+        await setUserSession(result.access_token, result.refresh_token);
+        dispatch(loginSuccess()); // 로그인 상태 변경
+        router.push('/'); // 홈으로 이동
+      } else {
+        // 400에러 떴을때 (로그인 실패시)
+        console.log(result.message);
+        setError('password', { message: result.message || '' });
+
+        // 입력된 정보 없을때 팝업 띄우기
+        if (result.message === '입력된 정보로 가입된 이력이 없습니다.') {
+          setIsOpen(true);
+        }
+      }
+    } catch (error) {
+      console.error('🚨 로그인 실패:', error);
     }
   };
+
   return (
-    <div className="flex flex-col justify-center items-center mb-[1.6rem] w-[40rem] mx-auto">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-full">
-        <Input
-          helperText={errors.email?.message || ''}
-          placeholder="email address"
-          status={errors.email ? 'error' : 'default'}
-          type="email"
-          className="!text-[2rem]"
-          {...register('email')}
-        />
-        <Input
-          helperText={errors.password?.message || ''}
-          placeholder="password"
-          status={errors.password ? 'error' : 'default'}
-          type="password"
-          className="!text-[2rem] mt-[4.5rem]"
-          {...register('password')}
-        />
-        <TextButton href="/login/forgot" className="self-end mt-[4.5rem]">
-          로그인에 문제가 있으신가요?
-        </TextButton>
-        <Button
-          size="default"
-          type="submit"
+    <>
+      <div className="flex flex-col justify-center items-center mb-[1.6rem] w-[40rem] mx-auto">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-full">
+          <Input
+            helperText={errors.email?.message || ''}
+            placeholder="email address"
+            status={errors.email ? 'error' : 'default'}
+            type="email"
+            className="!text-[2rem]"
+            {...register('email')}
+          />
+          <Input
+            helperText={errors.password?.message || serverErrorMsg}
+            placeholder="password"
+            status={errors.password ? 'error' : 'default'}
+            type="password"
+            className="!text-[2rem] mt-[4.5rem]"
+            {...register('password')}
+          />
+          <TextButton href="/login/forgot" className="self-end mt-[4.5rem]">
+            로그인에 문제가 있으신가요?
+          </TextButton>
+          <Button
+            size="default"
+            type="submit"
+            variant="green"
+            className="mt-[4.5rem]"
+            disabled={!isValid}
+          >
+            login
+          </Button>
+        </form>
+      </div>
+      {isOpen && (
+        <Alert
+          buttonText="Join 하기"
+          textButton="나중에 할게요"
+          size="full"
+          title={
+            <>
+              입력된 정보로 가입된 이력이 없습니다.
+              <br />
+              신규 멤버로 join 하시겠습니까?
+            </>
+          }
           variant="green"
-          className="mt-[4.5rem]"
-          disabled={!isValid}
-        >
-          login
-        </Button>
-      </form>
-    </div>
+          onClose={() => handleClosePopup()}
+          onSubmit={() => handleNavigateJoin()}
+        />
+      )}
+    </>
   );
 };
 
