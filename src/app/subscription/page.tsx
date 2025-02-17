@@ -40,7 +40,7 @@ const Subscription = () => {
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
   const router = useRouter();
   const { userData, getUserData } = useUserDataFetch();
-
+  console.log(userData);
   useEffect(() => {
     getUserData();
   }, []);
@@ -59,7 +59,7 @@ const Subscription = () => {
     switch (userData?.sub_status) {
       case 'none':
         return <SubscriptionInactive />;
-      case 'subscribed':
+      case 'active':
         return <SubscriptionActive />;
       case 'paused':
         return <SubscriptionPaused />;
