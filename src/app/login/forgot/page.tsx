@@ -21,7 +21,7 @@ const Forgot = () => {
           forgot account?
         </Heading>
         <Heading tag="h2" className="mb-[13.3rem]">
-          가입 시 입력한 휴대폰번호를 입력해주세요.
+          입력한 휴대폰번호를 입력해주세요.
         </Heading>
 
         <FindAccountForm />
