@@ -9,7 +9,7 @@ export const requestPayment = async (billingKey: string) => {
 
   if (!accessToken) {
     console.log('엑세스 토큰이 없습니다.');
-    return;
+    return '엑세스 토큰이 없습니다.';
   }
 
   // 백엔드에 빌링키 저장
@@ -60,11 +60,14 @@ export const requestPayment = async (billingKey: string) => {
     }),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response}`);
+    if (data.error?.includes('이미 Plans object')) {
+      return '이미 구독중입니다.';
+    }
+    return `HTTP error! Status: ${response.status}, Message: ${data.error}`;
   }
 
-  const data = await response.json();
-  console.log('확인확인확인', data);
-  return data;
+  return '구독결제가 완료되었습니다';
 };
