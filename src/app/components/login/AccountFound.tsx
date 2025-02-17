@@ -8,6 +8,7 @@ import { BackButton } from '@/app/components/ui/BackButton';
 import TextButton from '@/app/components/ui/TextButton';
 import Image from 'next/image';
 import { loginWithGoogle } from '@/api/auth';
+import { maskEmail } from '@/utils/maskEmail';
 
 interface AccountData {
   email: string;
@@ -29,7 +30,7 @@ export const AccountFound = () => {
       setAccount(JSON.parse(data));
     }
   }, [router]);
-
+  const maskedEmail = maskEmail(account?.email)
   return (
     <div className="h-full">
       <div className="pt-[4.7rem] pl-[4.7rem]">
@@ -51,7 +52,7 @@ export const AccountFound = () => {
             '이미 desub 계정이 있습니다.'
           )}
         </p>
-        <p className="mb-[10.6rem] text-[2.5rem]">{account?.email}</p>
+        <p className="mb-[10.6rem] text-[2.5rem]">{maskedEmail}</p>
 
         {account?.provider === 'google' ? (
           <>
