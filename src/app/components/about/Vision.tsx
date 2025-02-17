@@ -1,11 +1,14 @@
 const VisionSection: React.FC = () => {
   return (
-    <section className="mt-[28.35rem] mx-auto lg:mx-[11.1rem]">
-      <div className="flex text-[3rem]">
-        <span className="inline-block -rotate-90 transform origin-top-left translate-y-[15rem] font-bold">
+    <section className="mt-[13.6rem] md:mt-[28.35rem] mx-auto lg:mx-[11.1rem] pl-[4.5rem] md:pl-0">
+      <div className="flex text-[1.8rem] sm:text-[2.4rem] md:text-[3rem]">
+        <span className="-rotate-90 text-[3rem] transform origin-top-left translate-y-[15rem] font-bold hidden md:inline-block">
           our vision
         </span>
         <div className="space-y-[3rem] font-bold">
+          <h3 className="text-[3rem] sm:text-[4rem] font-bold mt-[8rem] mb-[4rem] md:hidden">
+            our vision
+          </h3>
           <p>
             우리는
             <br />
