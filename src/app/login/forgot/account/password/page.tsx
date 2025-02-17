@@ -20,11 +20,11 @@ const Password = () => {
         <Heading tag="h1" className="mb-[4.4rem]">
           forgot account?
         </Heading>
-        <Heading tag="h2" className="mb-[13.3rem] text-center">
+        <p className="text-[2rem] text-center pb-[8rem]">
           비밀번호 재설정을 위해
           <br />
           계정(이메일)을 입력하세요.
-        </Heading>
+        </p>
 
         <ResetPasswordForm />
       </div>
