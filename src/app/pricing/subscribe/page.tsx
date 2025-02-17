@@ -7,10 +7,13 @@ import { Button } from '@/app/components/ui/Button';
 import { priceText } from '@/constants/price';
 import { useUserDataFetch } from '@/hooks/useUserDataFetch';
 import { requestPayment } from '@/app/actions/paymentAction';
+const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
+const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
 
 import * as PortOne from '@portone/browser-sdk/v2';
 
 const Subscribe = () => {
+  console.log(STORE_ID);
   const urlParams = new URLSearchParams(window.location.search);
   const billingKey = urlParams.get('billingKey');
   const { userData, getUserData } = useUserDataFetch();
@@ -27,8 +30,8 @@ const Subscribe = () => {
     try {
       // 빌링키 발급
       const issueResponse = await PortOne.requestIssueBillingKey({
-        storeId: 'store-c25c9523-5081-4aae-a882-ce7e52479c59',
-        channelKey: 'channel-key-8bc12c40-b958-4151-ae85-98c129a80099',
+        storeId: STORE_ID,
+        channelKey: CHANNEL_KEY,
         billingKeyMethod: 'CARD',
         issueId: `ISSUE${Date.now()}`,
         customer: {
