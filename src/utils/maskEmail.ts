@@ -1,4 +1,6 @@
 export const maskEmail = (email: string): string => {
+  if (!email) return '이메일 정보 없음';
+
   const [local, domain] = email.split('@'); // 로컬 부분과 도메인 부분 분리
   const domainParts = domain.split('.'); // 도메인에서 `.com` 앞 부분을 분리
 

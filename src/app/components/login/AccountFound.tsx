@@ -30,7 +30,8 @@ export const AccountFound = () => {
       setAccount(JSON.parse(data));
     }
   }, [router]);
-  const maskedEmail = maskEmail(account?.email)
+  const maskedEmail = maskEmail(account?.email ?? ''); //  null 또는 undefined일 때 기본값 ""을 설정
+
   return (
     <div className="h-full">
       <div className="pt-[4.7rem] pl-[4.7rem]">
