@@ -8,7 +8,6 @@ import { priceText } from '@/constants/price';
 import Image from 'next/image';
 import { useState } from 'react';
 import Link from 'next/link';
-// import '@/styles/pricing.css';
 
 const Pricing = () => {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
@@ -130,15 +129,15 @@ const Pricing = () => {
               />
               3D contents
             </li>
-            <li className="flex items-center">
+            <li className="flex items-start">
               <Image
                 src="/icons/check.svg"
                 alt="Check"
                 width={14}
                 height={9}
-                className="mr-[1.5rem] md:w-[20px] md:h-[13px]"
+                className="mr-[1.5rem] md:w-[20px] md:h-[13px] mt-[1rem]"
               />
-              <span className="flex items-center">
+              <span className="flex flex-wrap items-center">
                 All design assets from
                 <span className="relative inline-flex items-center ml-2">
                   <span
@@ -155,7 +154,7 @@ const Pricing = () => {
                     className="absolute -top-2 -right-5"
                   />
                   {isTooltipOpen && (
-                    <div className="absolute top-60 md:top-[-90%] right-[30rem] md:right-0 transform translate-x-[97%] translate-y-[-80%] bg-black rounded-[2.3rem] text-white text-[1.5rem] px-[3.6rem] py-[3rem] min-w-[37.8rem]">
+                    <div className="fixed md:absolute top-1/2 left-1/2 md:-top-52 md:-left-28 transform -translate-x-1/2 -translate-y-1/2 md:translate-x-2 md:translate-y-0 bg-black rounded-[2.3rem] text-white text-[1.5rem] px-[3.6rem] py-[3rem] min-w-[37.8rem] z-50">
                       dshop은 dbre의 design asset을 구매 가능한 온라인몰입니다. <br />
                       <Link
                         href="https://www.dbre.co.kr/dshop"
@@ -183,12 +182,11 @@ const Pricing = () => {
           </Button>
         </div>
 
-        <TextButton
-          href="/pricing/terms"
-          className="absolute w-full bottom-[-2.6rem] md:bottom-[-3rem] md:right-0 left-1/2 transform -translate-x-1/2 md:translate-x-0 text-[1.3rem]"
-        >
-          일시정지/구독취소/환불 규정 확인하기
-        </TextButton>
+        <div className="float-end pt-[2.6rem]">
+          <TextButton href="/pricing/terms" className="text-[1.3rem]">
+            일시정지/구독취소/환불 규정 확인하기
+          </TextButton>
+        </div>
       </div>
     </div>
   );
