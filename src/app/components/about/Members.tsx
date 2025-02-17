@@ -30,15 +30,17 @@ const MembersSection: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="mt-[48.4rem] mx-auto lg:mx-[21.1rem]">
-      <Heading tag="h1">These people will join you</Heading>
-      <p className="text-[6rem] mt-[2.5rem] font-bold">
+    <section className="mt-[23.4rem] md:mt-[48.4rem] mx-auto md:mx-[21.1rem]">
+      <Heading tag="h1" className="pl-[4.5rem] sm:text-[4.5rem] md:pl-0">
+        These people will join you
+      </Heading>
+      <p className="text-[2.4rem] sm:text-[4rem] md:text-[6rem] pl-[4.5rem] md:pl-0 mt-[2.5rem] font-bold">
         이 사람들과
         <br />
         함께 일하실 거에요.
       </p>
 
-      <div className="grid grid-cols-1 gap-2 lg:flex justify-between mt-[9.3rem]">
+      <div className="grid grid-cols-1 gap-[9rem] lg:gap-2 lg:flex justify-between mt-[9.3rem]">
         {teamMembers.map((member, index) => (
           <div
             key={index}
@@ -51,6 +53,7 @@ const MembersSection: React.FC = () => {
               alt={member.name}
               width={510}
               height={510}
+              quality={75}
               className="rounded-[4rem]"
               style={{
                 maxWidth: '31.6rem',
