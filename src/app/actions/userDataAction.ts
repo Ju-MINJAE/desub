@@ -14,6 +14,9 @@ export const fetchUserData = async () => {
     return;
   }
 
+  // 유저별 캐시를 위한 고유한 키 생성 (accessToken을 기반으로)
+  const cacheKey = `user-${accessToken}`;
+
   const response = await fetch(`${API_BASE_URL}/api/user/`, {
     method: 'GET',
     headers: {
@@ -21,7 +24,7 @@ export const fetchUserData = async () => {
       Authorization: `Bearer ${accessToken}`,
     },
     credentials: 'include',
-    cache: 'force-cache',
+    next: { tags: [cacheKey] }, // 사용자별 캐시 키로 태깅
   });
 
   if (!response.ok) {
@@ -29,6 +32,10 @@ export const fetchUserData = async () => {
   }
 
   const data = await response.json();
+
+  // 캐시 무효화 태그 (사용자 데이터 관련 캐시만 무효화)
+  revalidateTag(cacheKey);
+
   return data;
 };
 

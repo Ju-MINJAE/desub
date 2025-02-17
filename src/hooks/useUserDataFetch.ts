@@ -10,7 +10,6 @@ export const useUserDataFetch = () => {
     try {
       const response = await fetchUserData();
       setUserData(response);
-      console.log(userData);
     } catch (error) {
       console.error(error);
     }
