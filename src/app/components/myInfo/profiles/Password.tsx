@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PASSWORD_FIELDS } from '@/constants/profiles';
+import { PASSWORD_FIELDS } from '@/constants/PasswordInput';
 import { Button } from '../../ui/Button';
 import Image from 'next/image';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';

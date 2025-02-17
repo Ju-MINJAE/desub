@@ -4,18 +4,17 @@ import type React from 'react';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '../components/ui/Button';
 import TextButton from '../components/ui/TextButton';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SubscriptionInactive from '../components/subscription/SubscriptionInactive';
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
-import { useAppSelector } from '@/hooks/redux/hooks';
 import Image from 'next/image';
-import type { RootState } from '@/store/store';
 import { Alert } from '../components/ui/Alert';
 import Rating from 'react-rating';
 import '../../styles/review.css';
 import { useRouter } from 'next/navigation';
+import { useUserDataFetch } from '@/hooks/useUserDataFetch';
 
 const example = [
   {
@@ -29,7 +28,6 @@ const example = [
 ];
 
 const Subscription = () => {
-  const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
   const [reviewModal, setReviewModal] = useState(false);
   const [review, setReview] = useState({
@@ -41,6 +39,11 @@ const Subscription = () => {
   const [lastCheckModal, setLastCheckModal] = useState(false);
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
   const router = useRouter();
+  const { userData, getUserData } = useUserDataFetch();
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const handleStarHover = () => {
     setIsBlinking(false);
@@ -53,8 +56,8 @@ const Subscription = () => {
   };
 
   const handleStatus = () => {
-    switch (subscriptionStatus) {
-      case 'unsubscribed':
+    switch (userData?.sub_status) {
+      case 'none':
         return <SubscriptionInactive />;
       case 'subscribed':
         return <SubscriptionActive />;
@@ -220,7 +223,7 @@ const Subscription = () => {
               <p className="text-[5rem] font-bold italic">wassup!</p>
               <div className="flex gap-[1rem]">
                 <p className="text-[5rem] font-bold">
-                  <span className="underline">홍길동</span> 님
+                  <span className="underline">{userData?.name}</span> 님
                 </p>
                 <button>
                   <Image

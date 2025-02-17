@@ -9,7 +9,6 @@ import ProfilesImage from '../components/myInfo/profiles/ProfilesImage';
 import UserInfo from '../components/myInfo/profiles/UserInfo';
 import Password from '../components/myInfo/profiles/Password';
 import PaymentInfo from '../components/myInfo/PaymentInfo';
-import { USERNAME_FIELDS } from '@/constants/profiles';
 import { Button } from '../components/ui/Button';
 
 const MyInfo = () => {
@@ -20,10 +19,6 @@ const MyInfo = () => {
   } = useForm<ProfilesFormData>({
     resolver: zodResolver(ProfilesSchema),
     mode: 'onBlur',
-    defaultValues: {
-      username: USERNAME_FIELDS.find(field => field.id === 'username')?.value,
-      email: USERNAME_FIELDS.find(field => field.id === 'email')?.value,
-    },
   });
 
   const onSubmit = (data: object) => {
