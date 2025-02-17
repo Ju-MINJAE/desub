@@ -6,12 +6,8 @@ import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
 import { priceText } from '@/constants/price';
 import { useUserDataFetch } from '@/hooks/useUserDataFetch';
-import { createBillingKey } from '@/app/actions/paymentAction';
-import { Currency } from 'node_modules/@portone/browser-sdk/dist/v2/entity';
-const PORTONE_API_SECRET = process.env.NEXT_PUBLIC_PORTONE_API_SECRET;
-import { loadPaymentUI } from '@portone/browser-sdk/v2';
+import { requestPayment } from '@/app/actions/paymentAction';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 import * as PortOne from '@portone/browser-sdk/v2';
 
 const Subscribe = () => {
@@ -29,6 +25,7 @@ const Subscribe = () => {
 
   const handlePayment = async () => {
     try {
+      // 빌링키 발급
       const issueResponse = await PortOne.requestIssueBillingKey({
         storeId: 'store-c25c9523-5081-4aae-a882-ce7e52479c59',
         channelKey: 'channel-key-8bc12c40-b958-4151-ae85-98c129a80099',
@@ -39,55 +36,8 @@ const Subscribe = () => {
         },
       });
 
-      const paymentData = await createBillingKey(issueResponse?.billingKey as string);
-
-      const billing_key = paymentData?.billing_key.billing_key;
-      const paymentId = `${Date.now()}`;
-
-      // const paymentResponse = await fetch(
-      //   `https://api.portone.io/payments/${encodeURIComponent(paymentId)}/billing-key`,
-      //   {
-      //     method: 'POST',
-      //     headers: {
-      //       Authorization: `PortOne ${PORTONE_API_SECRET}`,
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify({
-      //       billingKey: billing_key,
-      //       orderName: '월간 이용권 정기결제',
-      //       customer: {
-      //         fullName: userData?.name,
-      //       },
-      //       amount: {
-      //         total: paymentData?.planData[0].price,
-      //       },
-      //       currency: 'KRW',
-      //     }),
-      //   },
-      // );
-      // if (!paymentResponse.ok) {
-      //   const errorResponse = await paymentResponse.json();
-      //   throw new Error(`paymentResponse: ${JSON.stringify(errorResponse)}`);
-      // }
-
-      const paymentResponse = await PortOne.requestPayment({
-        storeId: 'store-c25c9523-5081-4aae-a882-ce7e52479c59',
-        channelKey: 'channel-key-8bc12c40-b958-4151-ae85-98c129a80099',
-        paymentId: paymentId,
-        orderName: paymentData?.planData[0].plan_name,
-        totalAmount: paymentData?.planData[0].price,
-        currency: 'CURRENCY_KRW',
-        payMethod: 'CARD',
-        billingKey: billing_key,
-        extra: {
-          pg: 'kpn',
-          method: 'card',
-          name: 'KPN 정기결제',
-          showResult: true,
-        },
-      });
-
-      console.log(paymentResponse);
+      const paymentData = await requestPayment(issueResponse?.billingKey as string);
+      console.log(paymentData);
     } catch (error) {
       console.log(error);
     }
