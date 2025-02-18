@@ -55,53 +55,47 @@ export default function Social() {
     }
   };
 
-  const { handleRequestVerification, handleVerifyCode, timeLeft, successMessage } = usePhoneAuth(
-    watch,
-    setValue,
-    setError,
-  );
+  const { handleRequestVerification, handleVerifyCode, timeLeft, successMessage, isRequested } =
+    usePhoneAuth(watch, setValue, setError);
 
   const handleButtonClick = () => {
     handleRequestVerification(); // 휴대폰번호 인증 api
     setIsAuthFieldVisible(true);
     setTimeout(() => {
       setIsAuthFieldVisible(false);
-    }, 239000);
+    }, 240000);
   };
-
+  const phoneNumber = watch('phone_number') || ''; // 입력 값 실시간 감지
   return (
     <div className="container mx-auto px-4 flex justify-center">
       <div className="w-full max-w-[98rem] flex flex-col items-center">
         <Heading tag="h1" className="mt-[9rem] mb-[13rem]">
-          join
+          google login
         </Heading>
 
         <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col items-center">
-          <div className="grid grid-cols-[30rem_54rem_14rem] gap-x-8 items-center">
-            <label className="text-[3rem]">phone</label>
+          <div className="grid grid-cols-[54rem_14rem] gap-x-8 items-center">
             <Input
               type="tel"
               placeholder="010-1234-5678"
               {...register('phone_number')}
               helperText={errors.phone_number?.message || ''}
               status={errors.phone_number ? 'error' : 'default'}
-              onChange={e => {
-                const formatted = formatPhoneNumber(e.target.value);
-                e.target.value = formatted;
-              }}
+              value={formatPhoneNumber(phoneNumber)} // 실시간으로 포맷 적용
             />
             <Button
               type="button"
               variant="outline"
               className="!w-[14rem] h-[5rem] text-[2rem]"
               onClick={handleButtonClick}
+              disabled={Boolean(successMessage)}
             >
-              휴대폰 인증
+              {isRequested ? '인증 재발송' : '휴대폰 인증'}
             </Button>
           </div>
 
           {isAuthFieldVisible && (
-            <div className="!mt-[3rem] pl-[32rem] grid grid-cols-[54rem_14rem] gap-x-8">
+            <div className="grid grid-cols-[54rem_14rem] gap-x-8 items-center mt-[3rem]">
               <Input
                 type="text"
                 placeholder="인증번호 입력"
@@ -127,10 +121,10 @@ export default function Social() {
             <Button
               variant="black"
               type="submit"
-              className="w-[54rem] h-[6.6rem] text-[2.5rem]"
+              className="w-[40rem] h-[5.5rem] text-[1.6rem]"
               disabled={!isValid}
             >
-              join
+              확인
             </Button>
           </div>
         </form>
