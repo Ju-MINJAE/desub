@@ -1,5 +1,6 @@
 'use client';
 
+const FRONTEND_ENV = process.env.NEXT_PUBLIC_FRONTEND_ENV;
 import React, { useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { setUserSession } from '@/app/actions/serverAction';
@@ -23,7 +24,7 @@ const GoogleCallback = () => {
 
     const fetchGoogleLogin = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/auth/google/login/?env=frontend_local`, {
+        const response = await fetch(`${API_BASE_URL}/auth/google/login/?env=${FRONTEND_ENV}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
