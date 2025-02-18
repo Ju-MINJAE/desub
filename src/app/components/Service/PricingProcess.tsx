@@ -24,53 +24,55 @@ const PricingProcess = () => {
   }, []);
 
   return (
-    <div className="flex flex-col w-[80%] mt-[45.274rem] pl-[25rem] md:pl-[35rem]">
-      <Image
-        src="/icons/ellipses.svg"
-        alt="Ellipses_Service"
-        width={318}
-        height={99}
-        className="mb-[2.947rem] w-[11rem] md:w-[35rem] h-auto"
-      />
-      <Heading tag="h1" className="flex flex-col">
-        <div className="min-h-[1.5em] md:min-h-[1.2em] relative mb-[1rem] md:mb-[2rem]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={pricingTextCount}
-              className="absolute text-[2rem] md:text-[5rem] whitespace-nowrap"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                transition: {
-                  duration: 0.3,
-                },
-              }}
-              exit={{
-                opacity: 0,
-                y: -20,
-                transition: {
-                  duration: 0.3,
-                  delay: 1.5,
-                },
-              }}
-            >
-              {pricingText[pricingTextCount] + '가'}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-        <span className="text-[2rem] md:text-[5rem]">필요하세요?</span>
-      </Heading>
-      <button>
+    <div className="flex justify-end w-full mt-[45.274rem]">
+      <div className="flex flex-col items-start pr-[8rem] md:pr-[15rem]">
         <Image
-          src="/icons/arrow.svg"
-          alt="arrow_right"
-          width={400}
-          height={1}
-          className="w-[14rem] md:w-[40rem] rotate-180 mt-[2rem] md:mt-[7rem]"
-          onClick={() => router.push('/pricing')}
+          src="/icons/ellipses.svg"
+          alt="Ellipses_Service"
+          width={318}
+          height={99}
+          className="mb-[1rem] md:mb-[2.9rem] w-[11rem] md:w-[35rem] h-auto"
         />
-      </button>
+        <Heading tag="h1" className="flex flex-col items-start">
+          <div className="min-h-[1.5em] md:min-h-[1.2em] relative mb-[1rem] md:mb-[2rem]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={pricingTextCount}
+                className="absolute left-0 text-[2rem] md:text-[5rem] whitespace-nowrap"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.3,
+                  },
+                }}
+                exit={{
+                  opacity: 0,
+                  y: -20,
+                  transition: {
+                    duration: 0.3,
+                    delay: 1.5,
+                  },
+                }}
+              >
+                {pricingText[pricingTextCount] + '가'}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <span className="text-[2rem] md:text-[5rem]">필요하세요?</span>
+        </Heading>
+        <button className="mt-[2rem] md:mt-[7rem]">
+          <Image
+            src="/icons/arrow.svg"
+            alt="arrow_right"
+            width={400}
+            height={1}
+            className="w-[14rem] md:w-[40rem] rotate-180"
+            onClick={() => router.push('/pricing')}
+          />
+        </button>
+      </div>
     </div>
   );
 };

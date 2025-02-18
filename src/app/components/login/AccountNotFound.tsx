@@ -19,16 +19,17 @@ export const AccountNotFound = () => {
         <BackButton text="forgot account" />
       </div>
       <div className="flex flex-col justify-center items-center pt-[9rem]">
-        <Heading tag="h1" className="mb-[4.4rem]">
+        <Heading tag="h1" className="mb-[7rem]">
           forgot account?
         </Heading>
-        <Heading tag="h2" className="pb-[40.6rem] text-center">
+        <p className="text-[2rem] text-center pb-[25rem]">
           가입된 이력이 없습니다.
           <br />
           신규 멤버로 가입하시겠습니까?
-        </Heading>
+        </p>
+
         <Button
-          className="text-[3rem] h-[8.5rem] w-[54rem]"
+          className="text-[1.6rem] h-[5.5rem] !w-[40rem]"
           size="full"
           type="button"
           variant="black"

@@ -22,7 +22,7 @@ const Service = () => {
 
       <div
         id="text"
-        className="w-full mt-[18rem] md:mt-[40rem] flex flex-col gap-3 md:gap-14 justify-start pl-[3.1rem] md:pl-[40rem]"
+        className="w-full mt-[18rem] md:mt-[40rem] flex flex-col gap-3 md:gap-14 justify-start pl-[3.1rem] md:pl-[40rem] pr-8"
       >
         <div className="text-[3rem] md:text-[5rem]">
           And with these tools,

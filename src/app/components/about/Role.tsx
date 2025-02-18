@@ -25,23 +25,31 @@ const designerRoles: RoleType[] = [
 const RoleSection: React.FC = () => {
   return (
     <section className="relative">
-      <span className="absolute -rotate-90 top-[108.2rem] pl-[7.7rem] text-[3rem] font-bold">
+      <span className="absolute -rotate-90 top-[108.2rem] pl-[7.7rem] text-[3rem] font-bold hidden md:block">
         about role
       </span>
-      <div className="container mx-auto max-w-[140rem] pt-[22.6rem]">
-        <div className="flex flex-col text-center space-y-[1.6rem]">
-          <span className="text-[9rem]">wassup?!</span>
-          <span className="text-[9rem]">desub is ready to join 👋 you!</span>
+
+      <div className="container mx-auto max-w-[140rem] pt-[22.6rem] px-[2rem] md:px-0">
+        <div className="flex flex-col text-center space-y-[1rem] md:space-y-[1.6rem]">
+          <span className="text-[3rem] sm:text-[6rem] md:text-[9rem]">wassup?!</span>
+          <span className="text-[3rem] sm:text-[6rem] md:hidden">desub is ready</span>
+          <span className="text-[3rem] sm:text-[6rem] md:hidden">to join 👋 you!</span>
+          <span className="text-[9rem] hidden md:block">desub is ready to join 👋 you!</span>
         </div>
-        <div className="grid md:grid-cols-24">
+
+        <div className="grid md:grid-cols-24 pl-[2.5rem] md:pl-0">
           <div className="col-span-full md:col-start-10 md:col-span-15">
-            <p className="text-[3rem] max-w-[38.5rem] ml-[11rem] mt-[14.6rem] font-bold">
+            <h3 className="text-[3rem] sm:text-[4rem] font-bold mt-[8rem] mb-[4rem] md:hidden">
+              about role
+            </h3>
+
+            <p className="text-[1.8rem] sm:text-[2.4rem] md:text-[3rem] max-w-[38.5rem] mt-[3.2rem] md:mt-[14.6rem] md:ml-[11rem] font-bold">
               우리는 당신의 비전을 실현하는
               <br />
               디자인 전문가 팀입니다.
             </p>
 
-            <div className="mt-[7.9rem]">
+            <div className="mt-[4rem] md:mt-[7.9rem]">
               {designerRoles.map((role, index) => (
                 <RoleDescription key={index} role={role} />
               ))}
