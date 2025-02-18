@@ -8,7 +8,7 @@ const ResetPasswordForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     watch,
   } = useForm<FindPasswordValue>({
     resolver: zodResolver(FindPasswordSchema),
@@ -38,7 +38,6 @@ const ResetPasswordForm = () => {
         size="full"
         type="submit"
         variant="black"
-        disabled={!isValid}
       >
         비밀번호 재설정
       </Button>

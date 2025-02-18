@@ -13,7 +13,7 @@ const FindAccountForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     watch,
   } = useForm<FindAccountValue>({
     resolver: zodResolver(FindAccountSchema),
@@ -55,13 +55,7 @@ const FindAccountForm = () => {
         type="tel"
       />
 
-      <Button
-        size="default"
-        type="submit"
-        variant="black"
-        className="mt-[12rem]"
-        disabled={!isValid}
-      >
+      <Button size="default" type="submit" variant="black" className="mt-[12rem]">
         계정찾기
       </Button>
     </form>
