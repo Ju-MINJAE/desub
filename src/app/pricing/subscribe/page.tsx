@@ -1,11 +1,51 @@
 'use client';
 
+import { useEffect } from 'react';
 import Heading from '@/app/components/ui/Heading';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
 import { priceText } from '@/constants/price';
+import { useUserDataFetch } from '@/hooks/useUserDataFetch';
+import { requestPayment } from '@/app/actions/paymentAction';
+const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
+const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
+
+import * as PortOne from '@portone/browser-sdk/v2';
 
 const Subscribe = () => {
+  console.log(STORE_ID);
+  const urlParams = new URLSearchParams(window.location.search);
+  const billingKey = urlParams.get('billingKey');
+  const { userData, getUserData } = useUserDataFetch();
+
+  if (billingKey) {
+    console.log('서버에서 받은 Billing Key:', billingKey);
+  }
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const handlePayment = async () => {
+    try {
+      // 빌링키 발급
+      const issueResponse = await PortOne.requestIssueBillingKey({
+        storeId: STORE_ID,
+        channelKey: CHANNEL_KEY,
+        billingKeyMethod: 'CARD',
+        issueId: `ISSUE${Date.now()}`,
+        customer: {
+          fullName: userData?.name,
+        },
+      });
+
+      const paymentData = await requestPayment(issueResponse?.billingKey as string);
+      console.log(paymentData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="h-full">
       <div className="pt-[4.7rem] pl-[4.7rem]">
@@ -45,7 +85,12 @@ const Subscribe = () => {
           </p>
         </div>
 
-        <Button variant="green" type="button" size="default" className="mt-[6.4rem] md:mt-[9rem]">
+        <Button
+          variant="green"
+          type="button"
+          className="w-[40rem] h-[5.5rem] text-[1.6rem] mt-[9rem]"
+          onClick={handlePayment}
+        >
           다음
         </Button>
       </div>
