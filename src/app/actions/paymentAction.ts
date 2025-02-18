@@ -46,6 +46,8 @@ export const requestPayment = async (billingKey: string) => {
 
   const planData = await searchPlan.json();
 
+  // const activePlan = console.log(activePlan);
+
   // 결제 요청
   const response = await fetch(`${API_BASE_URL}/api/payment/subscribe/`, {
     method: 'POST',
@@ -56,6 +58,7 @@ export const requestPayment = async (billingKey: string) => {
     },
     credentials: 'include',
     body: JSON.stringify({
+      // 플랜들 중 is_active가 true인 애만 적용
       plan_id: planData[0].id,
     }),
   });

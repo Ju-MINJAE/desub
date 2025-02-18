@@ -40,11 +40,11 @@ const Subscription = () => {
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
   const router = useRouter();
   const { userData, getUserData } = useUserDataFetch();
-  console.log(userData);
+
   useEffect(() => {
     getUserData();
   }, []);
-
+  console.log(userData);
   const handleStarHover = () => {
     setIsBlinking(false);
   };

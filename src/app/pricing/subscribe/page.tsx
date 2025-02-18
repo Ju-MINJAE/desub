@@ -13,14 +13,7 @@ const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
 import * as PortOne from '@portone/browser-sdk/v2';
 
 const Subscribe = () => {
-  console.log(STORE_ID);
-  const urlParams = new URLSearchParams(window.location.search);
-  const billingKey = urlParams.get('billingKey');
   const { userData, getUserData } = useUserDataFetch();
-
-  if (billingKey) {
-    console.log('서버에서 받은 Billing Key:', billingKey);
-  }
 
   useEffect(() => {
     getUserData();
@@ -38,7 +31,6 @@ const Subscribe = () => {
           fullName: userData?.name,
         },
       });
-
       const paymentData = await requestPayment(issueResponse?.billingKey as string);
       console.log(paymentData);
     } catch (error) {
