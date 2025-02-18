@@ -14,6 +14,7 @@ export default function About() {
           fill
           className="object-cover w-full h-full -z-10"
           priority
+          sizes="100vw"
         />
       </div>
       <div className="relative">

@@ -1,26 +1,52 @@
+'use client';
 import { Input } from '@/app/components/ui/Input';
 import { Button } from '@/app/components/ui/Button';
+import { FindPasswordSchema, FindPasswordValue } from '@/app/auth/schemas/FindPasswordSchema';
+import { requestPasswordReset } from '@/api/account';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 
-interface ResetPasswordFormProps {
-  onReset?: () => void;
-}
+const ResetPasswordForm = () => {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<FindPasswordValue>({
+    resolver: zodResolver(FindPasswordSchema),
+    mode: 'onChange',
+  });
 
-const ResetPasswordForm = ({ onReset }: ResetPasswordFormProps) => {
+  const onSubmit = async (data: FindPasswordValue) => {
+    try {
+      const result = await requestPasswordReset(data.email); // api 호출
+      // 성공시 완료페이지로 이동
+      if (result.status === 200) {
+        router.push('/login/forgot/account/password/sent');
+      }
+    } catch (error) {
+      console.error('비밀번호 리셋요청 실패:', error);
+    }
+  };
+
+  const email = watch('email') || '';
   return (
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-      }}
-      className="flex flex-col items-center w-[54rem]"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-[54rem]">
       <Input
-        helperText=""
+        {...register('email')}
+        helperText={errors.email?.message || ''}
+        status={errors.email ? 'error' : 'default'}
         placeholder="e-mail address"
-        status="default"
         type="email"
-        className="mb-[13.2rem]"
       />
-      <Button className="text-[3rem] h-[8.5rem] w-full" size="full" type="submit" variant="black">
+      <Button
+        className="text-[1.6rem] h-[5.5rem] !w-[40rem] mt-[14rem]"
+        size="full"
+        type="submit"
+        variant="black"
+      >
         비밀번호 재설정
       </Button>
     </form>

@@ -29,11 +29,8 @@ export const FormField = ({ field }: FormFieldProps) => {
     watch,
     setValue,
   );
-  const { handleRequestVerification, handleVerifyCode, timeLeft, successMessage } = usePhoneAuth(
-    watch,
-    setValue,
-    setError,
-  );
+  const { handleRequestVerification, handleVerifyCode, timeLeft, successMessage, isRequested } =
+    usePhoneAuth(watch, setValue, setError);
   const [isAuthFieldVisible, setIsAuthFieldVisible] = useState(false);
 
   const handleButtonClick = () => {
@@ -46,7 +43,7 @@ export const FormField = ({ field }: FormFieldProps) => {
         setIsAuthFieldVisible(true);
         setTimeout(() => {
           setIsAuthFieldVisible(false);
-        }, 239000);
+        }, 240000);
         break;
     }
   };
@@ -73,6 +70,14 @@ export const FormField = ({ field }: FormFieldProps) => {
         setValue(id, value, { shouldValidate: true });
     }
   };
+
+  const buttonText =
+    field.id === 'phone_number'
+      ? isRequested
+        ? '인증 재발송'
+        : '휴대폰 인증'
+      : field.button?.text;
+  const buttonDisabled = field.id === 'phone_number' && Boolean(successMessage);
 
   return (
     <>
@@ -106,8 +111,9 @@ export const FormField = ({ field }: FormFieldProps) => {
             variant="outline"
             className="!w-[14rem] h-[5rem] text-[2rem]"
             onClick={handleButtonClick}
+            disabled={buttonDisabled} // 인증 성공시 버튼 비활성화
           >
-            {field.button.text}
+            {buttonText}
           </Button>
         )}
       </div>

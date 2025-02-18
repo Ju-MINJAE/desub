@@ -1,19 +1,19 @@
+'use client';
 import { Input } from '@/app/components/ui/Input';
 import { Button } from '@/app/components/ui/Button';
 import { FindAccountSchema, FindAccountValue } from '@/app/auth/schemas/FindAccountSchema';
 import { formatPhoneNumber } from '@/utils/phone';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { findAccount } from '@/api/account';
+import { useRouter } from 'next/navigation';
 
-interface FindAccountFormProps {
-  onFindAccount?: () => void;
-}
-
-const FindAccountForm = ({ onFindAccount }: FindAccountFormProps) => {
+const FindAccountForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     watch,
   } = useForm<FindAccountValue>({
     resolver: zodResolver(FindAccountSchema),
@@ -21,7 +21,26 @@ const FindAccountForm = ({ onFindAccount }: FindAccountFormProps) => {
   });
 
   const onSubmit = async (data: FindAccountValue) => {
-    console.log('계정찾기 api 호출');
+    try {
+      const result = await findAccount(data.phone_number); // api 호출
+      // 계정찾기 성공
+      if (result && result.email) {
+        // 데이터 전달
+        sessionStorage.setItem(
+          'foundAccount',
+          JSON.stringify({
+            email: result.email,
+            provider: result.provider,
+          }),
+        );
+
+        router.push('/login/forgot/account');
+      } else {
+        router.push('/login/forgot/not-account');
+      }
+    } catch (error) {
+      console.error('계정 찾기 실패:', error);
+    }
   };
 
   const phoneNumber = watch('phone_number') || ''; // 입력 값 실시간 감지
@@ -36,13 +55,7 @@ const FindAccountForm = ({ onFindAccount }: FindAccountFormProps) => {
         type="tel"
       />
 
-      <Button
-        size="default"
-        type="submit"
-        variant="black"
-        className="mt-[12rem]"
-        disabled={!isValid}
-      >
+      <Button size="default" type="submit" variant="black" className="mt-[12rem]">
         계정찾기
       </Button>
     </form>

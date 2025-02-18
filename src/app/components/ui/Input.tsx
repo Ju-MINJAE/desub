@@ -14,7 +14,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         case 'success':
           return 'text-green';
         default:
-          return 'text-gray';
+          return 'text-darkgray';
       }
     };
 

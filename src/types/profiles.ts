@@ -10,3 +10,12 @@ export type ProfilesField = {
   placeholder?: string;
   disable?: boolean;
 };
+
+export type UserData = {
+  email: string;
+  img_url: string | null;
+  name: string;
+  phone: string;
+  sub_status: string;
+  subscription_info: string | null;
+};
