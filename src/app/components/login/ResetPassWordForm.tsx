@@ -1,10 +1,14 @@
+'use client';
 import { Input } from '@/app/components/ui/Input';
 import { Button } from '@/app/components/ui/Button';
 import { FindPasswordSchema, FindPasswordValue } from '@/app/auth/schemas/FindPasswordSchema';
+import { requestPasswordReset } from '@/api/account';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 
 const ResetPasswordForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -17,9 +21,13 @@ const ResetPasswordForm = () => {
 
   const onSubmit = async (data: FindPasswordValue) => {
     try {
-      console.log('api 호출로직');
+      const result = await requestPasswordReset(data.email); // api 호출
+      // 성공시 완료페이지로 이동
+      if (result.status === 200) {
+        router.push('/login/forgot/account/password/sent');
+      }
     } catch (error) {
-      console.error('비밀번호전송 실패', error);
+      console.error('비밀번호 리셋요청 실패:', error);
     }
   };
 
