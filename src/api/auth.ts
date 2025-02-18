@@ -1,4 +1,5 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const FRONTEND_ENV = process.env.NEXT_PUBLIC_FRONTEND_ENV;
 import type { SignupData } from '@/types/signup';
 import { LoginResponse } from '@/types/signup';
 import { GoogleResponse } from '@/types/signup';
@@ -60,7 +61,7 @@ export const loginWithEmail = async (email: string, password: string): Promise<L
 
 export const loginWithGoogle = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/google/login/?env=frontend_local`, {
+    const response = await fetch(`${API_BASE_URL}/auth/google/login/?env=${FRONTEND_ENV}`, {
       method: 'GET',
     });
 

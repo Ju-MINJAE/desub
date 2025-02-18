@@ -32,7 +32,7 @@ const LoginForm = () => {
     register,
     handleSubmit,
     setError,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     mode: 'onChange', //입력할때마다 즉시 유효성검사
@@ -94,13 +94,7 @@ const LoginForm = () => {
           <TextButton href="/login/forgot" className="self-end mt-[4.5rem]">
             로그인에 문제가 있으신가요?
           </TextButton>
-          <Button
-            size="default"
-            type="submit"
-            variant="green"
-            className="mt-[4.5rem]"
-            disabled={!isValid}
-          >
+          <Button size="default" type="submit" variant="green" className="mt-[4.5rem]">
             login
           </Button>
         </form>

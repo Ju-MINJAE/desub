@@ -24,3 +24,27 @@ export const findAccount = async (phone: string) => {
     throw error;
   }
 };
+
+export const requestPasswordReset = async (email: string) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/user/password/reset/`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || '임시비밀번호를 발급받는데 실패했습니다.');
+    }
+
+    return { status: response.status, data };
+  } catch (error) {
+    console.error('임시비밀번호 요청 실패:', error);
+    throw error;
+  }
+};
