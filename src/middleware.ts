@@ -14,7 +14,10 @@ export const middleware = (req: NextRequest) => {
     return NextResponse.redirect(new URL('/login', req.url));
   }
 
-  if (isAuthenticated && (pathname.startsWith('/signup') || pathname.startsWith('/login'))) {
+  if (
+    (isAuthenticated && pathname.startsWith('/signup') && pathname !== '/signup/social') ||
+    pathname.startsWith('/login')
+  ) {
     return NextResponse.redirect(new URL('/myInfo', req.url));
   }
 
