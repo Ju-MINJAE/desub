@@ -20,6 +20,7 @@ const Header = () => {
   const pathname = usePathname();
   if (
     pathname.startsWith('/login') ||
+    pathname.includes('/social') ||
     pathname === '/pricing/subscribe' ||
     pathname === '/subscription' ||
     pathname === '/workRequest' ||
