@@ -2,6 +2,7 @@
 
 import { getUserSession } from './serverAction';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { Plan } from '@/types/plan';
 
 // 유저 데이터 받아오는 함수
 export const requestPayment = async (billingKey: string) => {
@@ -41,14 +42,16 @@ export const requestPayment = async (billingKey: string) => {
   });
 
   if (!searchPlan.ok) {
-    throw new Error(`확인확인HTTP error! Status: ${searchPlan.status}`);
+    throw new Error(`HTTP error! Status: ${searchPlan.status}`);
   }
 
-  const planData = await searchPlan.json();
+  const planData: Plan[] = await searchPlan.json();
 
-  const activePlan = planData.find(plan => plan.is_active === true);
+  const activePlan = planData.find((plan: Plan) => plan.is_active === true);
 
-  console.log(activePlan);
+  if (!activePlan) {
+    throw new Error(`error! : 결제 가능한 구독 플랜이 없습니다.`);
+  }
 
   // 결제 요청
   const response = await fetch(`${API_BASE_URL}/api/payment/subscribe/`, {
@@ -60,7 +63,6 @@ export const requestPayment = async (billingKey: string) => {
     },
     credentials: 'include',
     body: JSON.stringify({
-      // 플랜들 중 is_active가 true인 애만 적용
       plan_id: activePlan.id,
     }),
   });
