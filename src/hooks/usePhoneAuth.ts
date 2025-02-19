@@ -50,7 +50,7 @@ export const usePhoneAuth = <T extends PhoneFormFields>(
         setIsRequested(true);
       } else {
         setError('phone_number' as Path<T>, {
-          message: data.message || '인증번호 요청에 실패했습니다.',
+          message: data.error,
         });
       }
     } catch (error) {
