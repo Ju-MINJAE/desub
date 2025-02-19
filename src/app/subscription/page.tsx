@@ -5,7 +5,7 @@ import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '../components/ui/Button';
 import TextButton from '../components/ui/TextButton';
 import { useState, useEffect } from 'react';
-import SubscriptionInactive from '../components/subscription/SubscriptionInactive';
+import SubscriptionsStatus from '../components/subscription/SubscriptionsStatus';
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
@@ -44,7 +44,7 @@ const Subscription = () => {
   useEffect(() => {
     getUserData();
   }, []);
-  console.log(userData);
+  // console.log(userData);
   const handleStarHover = () => {
     setIsBlinking(false);
   };
@@ -57,14 +57,12 @@ const Subscription = () => {
 
   const handleStatus = () => {
     switch (userData?.sub_status) {
-      case 'none':
-        return <SubscriptionInactive />;
       case 'active':
         return <SubscriptionActive />;
       case 'paused':
         return <SubscriptionPaused />;
       default:
-        return <SubscriptionInactive />;
+        return <SubscriptionsStatus />;
     }
   };
 
