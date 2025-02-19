@@ -13,6 +13,7 @@ interface AlertProps {
   className?: string;
   onClose: () => void;
   onSubmit?: () => void;
+  onTextButtonClick?: () => void;
 }
 
 export const Alert = ({
@@ -25,6 +26,7 @@ export const Alert = ({
   className = '',
   onClose,
   onSubmit,
+  onTextButtonClick,
   ...props
 }: AlertProps) => {
   const getVariantStyles = (variant?: AlertProps['variant']) => {
@@ -80,7 +82,7 @@ export const Alert = ({
         {textButton && (
           <button
             type="button"
-            onClick={onClose}
+            onClick={onTextButtonClick ?? onClose} // onTextButtonClick 이 있으면 실행 없으면 onClose 실행
             className="text-[1.3rem] leading-[1.6rem] font-medium underline"
           >
             {textButton}

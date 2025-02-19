@@ -17,6 +17,7 @@ export const usePhoneAuth = <T extends PhoneFormFields>(
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isRequested, setIsRequested] = useState(false);
+  const [isLoginPromptOpen, setIsLoginPromptOpen] = useState(false);
 
   useEffect(() => {
     if (timeLeft === null) return;
@@ -48,10 +49,11 @@ export const usePhoneAuth = <T extends PhoneFormFields>(
       if (response.ok) {
         setTimeLeft(240); // 4분 타이머
         setIsRequested(true);
-      } else {
+      } else { // 실패시
         setError('phone_number' as Path<T>, {
           message: data.error,
         });
+        setIsLoginPromptOpen(true)
       }
     } catch (error) {
       console.error('🚨 인증번호 요청 실패:', error);
@@ -114,5 +116,7 @@ export const usePhoneAuth = <T extends PhoneFormFields>(
     timeLeft,
     successMessage,
     isRequested,
+    isLoginPromptOpen,
+    setIsLoginPromptOpen,
   };
 };
