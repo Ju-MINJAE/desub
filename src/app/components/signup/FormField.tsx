@@ -102,12 +102,16 @@ export const FormField = ({ field }: FormFieldProps) => {
                 ? 'error'
                 : 'default'
               : successMessage
-              ? 'success' 
+              ? 'success'
               : errors?.[field.id]
               ? 'error'
               : 'default'
           }
-          helperText={errors?.[field.id]?.message || (successMessage ? successMessage : '')}
+          helperText={
+            field.id === 'email'
+              ? emailMessage || errorMessage 
+              : errors?.[field.id]?.message || (successMessage ? successMessage : '')
+          }
           {...register(field.id, {
             onChange: e => handleChange(e),
           })}

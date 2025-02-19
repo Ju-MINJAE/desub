@@ -10,7 +10,7 @@ export const AccountNotFound = () => {
   const router = useRouter();
 
   const handleNavigateJoin = () => {
-    router.push('/join');
+    router.push('/signup');
   };
 
   return (

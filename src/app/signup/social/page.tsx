@@ -16,12 +16,24 @@ import { formatPhoneNumber } from '@/utils/phone';
 import { usePhoneAuth } from '@/hooks/usePhoneAuth';
 import { formatTime } from '@/utils/time';
 import { getUserSession } from '@/app/actions/serverAction';
+import { Alert } from '@/app/components/ui/Alert';
 
 export default function Social() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [isAuthFieldVisible, setIsAuthFieldVisible] = useState(false);
 
+  const handleClosePopup = () => {
+    setIsLoginPromptOpen(false);
+  };
+  const handleNavigateLogin = () => {
+    router.push('/login/email'); // 로그인 페이지로 이동
+  };
+
+  const handleNavigateFindAccount = () => {
+    router.push('/login/forgot'); // 계정찾기 페이지로 이동
+    console.log('이동 왜안됌');
+  };
   const {
     register,
     handleSubmit,
@@ -55,8 +67,15 @@ export default function Social() {
     }
   };
 
-  const { handleRequestVerification, handleVerifyCode, timeLeft, successMessage, isRequested } =
-    usePhoneAuth(watch, setValue, setError);
+  const {
+    handleRequestVerification,
+    handleVerifyCode,
+    timeLeft,
+    successMessage,
+    isRequested,
+    isLoginPromptOpen,
+    setIsLoginPromptOpen,
+  } = usePhoneAuth(watch, setValue, setError);
 
   const handleButtonClick = () => {
     handleRequestVerification(); // 휴대폰번호 인증 api
@@ -128,6 +147,24 @@ export default function Social() {
             </Button>
           </div>
         </form>
+        {isLoginPromptOpen && (
+          <Alert
+            buttonText="로그인 하기"
+            textButton="계정 찾기"
+            size="full"
+            title={
+              <>
+                입력된 정보로 가입된 이력이 있습니다.
+                <br />
+                로그인 또는 계정찾기를 진행해주세요.
+              </>
+            }
+            variant="green"
+            onClose={() => handleClosePopup()}
+            onSubmit={() => handleNavigateLogin()}
+            onTextButtonClick={() => handleNavigateFindAccount()}
+          />
+        )}
       </div>
     </div>
   );
