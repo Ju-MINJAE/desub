@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { priceText } from '@/constants/price';
+import { STANDARD_PRICE } from '@/constants/price';
 import { Button } from '../ui/Button';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -35,7 +35,7 @@ const Membership = () => {
             <div className="inline-block">
               <div className="flex justify-end items-baseline mb-2">
                 <span className="font-bold text-[3rem] md:text-[5rem]">
-                  {priceText.toLocaleString()}원{' '}
+                  {STANDARD_PRICE.toLocaleString()}원{' '}
                 </span>
                 <span className="text-[1.5rem] md:text-[3rem]">/ Month</span>
               </div>
