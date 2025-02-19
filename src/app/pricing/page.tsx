@@ -4,7 +4,7 @@ import Heading from '@/app/components/ui/Heading';
 import { Button } from '@/app/components/ui/Button';
 import TextButton from '@/app/components/ui/TextButton';
 import { useRouter } from 'next/navigation';
-import { priceText } from '@/constants/price';
+import { STANDARD_PRICE } from '@/constants/price';
 import Image from 'next/image';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -40,7 +40,7 @@ const Pricing = () => {
           <div className="flex flex-col items-end mb-[2.3rem]">
             <p className="w-full">
               <strong className="text-[3rem] md:text-[5rem] font-bold">
-                {priceText.toLocaleString()}원
+                {STANDARD_PRICE.toLocaleString()}원
               </strong>
               <span className="text-[1.6rem] md:text-[3rem] font-light month"> / Month</span>
             </p>

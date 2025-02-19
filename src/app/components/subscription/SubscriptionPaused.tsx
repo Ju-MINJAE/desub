@@ -5,8 +5,9 @@ import { setSubscriptionStatus } from '../../../store/subscriptionStatusSlice';
 import Image from 'next/image';
 import { Alert } from '../ui/Alert';
 import { Confirm } from '../ui/Confirm';
+import { UnSubscriptionReason, unSubscriptionReasons } from '@/constants/unSubscription';
 
-const Unsubscribed = () => {
+const SubscriptionPaused = () => {
   const dispatch = useAppDispatch();
   // 구독취소 클릭 시
   const [firstCheckModal, setFirstCheckModal] = useState(false);
@@ -26,21 +27,6 @@ const Unsubscribed = () => {
   const handleSubscriptionStatus = () => {
     dispatch(setSubscriptionStatus('subscribed'));
   };
-
-  type UnSubscriptionReason = {
-    id: string;
-    label: string;
-    contents?: string;
-  };
-
-  const unSubscriptionReasons: UnSubscriptionReason[] = [
-    { id: 'expensive', label: '가격이 비싸서' },
-    { id: 'quality', label: '퀄리티가 마음에 들지 않아서' },
-    { id: 'communication', label: '소통이 느려서' },
-    { id: 'hiring', label: '정직원을 구하는 것이 더 편해서' },
-    { id: 'budget', label: '회사예산이 줄어들어서' },
-    { id: 'etc', label: '기타' },
-  ];
 
   // 첫번째 모달
   const handleFirstCheck = () => {
@@ -130,7 +116,7 @@ const Unsubscribed = () => {
             buttonText2="구독취소"
             contents={
               <p className="mt-[1.6rem]">
-                구독을 취소하면 YYYY년 MM월 DD에
+                {/* 구독을 취소하면 YYYY년 MM월 DD에 */}
                 <br />
                 결제되지 않습니다.
               </p>
@@ -220,4 +206,4 @@ const Unsubscribed = () => {
   );
 };
 
-export default Unsubscribed;
+export default SubscriptionPaused;
