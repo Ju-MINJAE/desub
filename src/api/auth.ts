@@ -119,7 +119,7 @@ export const fetchRefreshedToken = async (refreshToken: string): Promise<LoginRe
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ refreshToken }),
+      body: JSON.stringify({ refresh_token: refreshToken }),
     });
 
     const data = await response.json();

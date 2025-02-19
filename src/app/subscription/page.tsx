@@ -4,8 +4,8 @@ import type React from 'react';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '../components/ui/Button';
 import TextButton from '../components/ui/TextButton';
-import { useState, useEffect } from 'react';
-import SubscriptionInactive from '../components/subscription/SubscriptionInactive';
+import { useState, useEffect, useMemo } from 'react';
+import SubscriptionsStatus from '../components/subscription/SubscriptionsStatus';
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
@@ -15,17 +15,9 @@ import Rating from 'react-rating';
 import '../../styles/review.css';
 import { useRouter } from 'next/navigation';
 import { useUserDataFetch } from '@/hooks/useUserDataFetch';
-
-const example = [
-  {
-    logTime: '2025-01-15 15:30',
-    changeLog: '재개',
-  },
-  {
-    logTime: '2025-02-15 15:30',
-    changeLog: '일시정지',
-  },
-];
+import { getUserSession } from '../actions/serverAction';
+import { getSubscriptionHistory, SubscriptionHistoryItem } from '@/api/subscription';
+import { formatDate } from '../../utils/dateUtils';
 
 const Subscription = () => {
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
@@ -40,14 +32,46 @@ const Subscription = () => {
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
   const router = useRouter();
   const { userData, getUserData } = useUserDataFetch();
+  const [history, setHistory] = useState<SubscriptionHistoryItem[]>([]);
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const { accessToken } = await getUserSession();
+        if (!accessToken) return;
+        const response = await getSubscriptionHistory(accessToken);
+
+        if (response.status === 'success' && response.data) {
+          setHistory(response.data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchHistory();
+  }, []);
 
   useEffect(() => {
     getUserData();
   }, []);
-  console.log(userData);
+  // console.log(userData);
   const handleStarHover = () => {
     setIsBlinking(false);
   };
+
+  const translateStatus = (status: string) => {
+    switch (status) {
+      case 'renewal':
+        return '결제';
+      case 'cancel':
+        return '취소';
+      default:
+        return status;
+    }
+  };
+
+  const reversedHistory = useMemo(() => [...history].reverse(), [history]);
 
   const handleStarLeave = () => {
     if (!reviewModal) {
@@ -57,14 +81,12 @@ const Subscription = () => {
 
   const handleStatus = () => {
     switch (userData?.sub_status) {
-      case 'none':
-        return <SubscriptionInactive />;
       case 'active':
         return <SubscriptionActive />;
       case 'paused':
         return <SubscriptionPaused />;
       default:
-        return <SubscriptionInactive />;
+        return <SubscriptionsStatus />;
     }
   };
 
@@ -178,10 +200,10 @@ const Subscription = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-[1.5rem] text-[1.5rem] overflow-y-auto">
-                {example.map((item, index) => (
+                {reversedHistory.map((item, index) => (
                   <div key={index} className="flex items-center text-medium">
-                    <div className="w-3/4">{item.logTime}</div>
-                    <div className="w-1/4">{item.changeLog}</div>
+                    <div className="w-3/4">{formatDate(item.change_date)}</div>
+                    <div className="w-1/4">{translateStatus(item.status)}</div>
                   </div>
                 ))}
               </div>
