@@ -19,17 +19,6 @@ import { getUserSession } from '../actions/serverAction';
 import { getSubscriptionHistory, SubscriptionHistoryItem } from '@/api/subscription';
 import { formatDate } from '../../utils/dateUtils';
 
-const example = [
-  {
-    logTime: '2025-01-15 15:30',
-    changeLog: '재개',
-  },
-  {
-    logTime: '2025-02-15 15:30',
-    changeLog: '일시정지',
-  },
-];
-
 const Subscription = () => {
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
   const [reviewModal, setReviewModal] = useState(false);
