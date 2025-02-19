@@ -4,7 +4,7 @@ import type React from 'react';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '../components/ui/Button';
 import TextButton from '../components/ui/TextButton';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import SubscriptionsStatus from '../components/subscription/SubscriptionsStatus';
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
@@ -17,8 +17,7 @@ import { useRouter } from 'next/navigation';
 import { useUserDataFetch } from '@/hooks/useUserDataFetch';
 import { getUserSession } from '../actions/serverAction';
 import { getSubscriptionHistory, SubscriptionHistoryItem } from '@/api/subscription';
-import { format, parseISO } from 'date-fns';
-import { ko } from 'date-fns/locale';
+import { formatDate } from '../../utils/dateUtils';
 
 const example = [
   {
@@ -72,10 +71,6 @@ const Subscription = () => {
     setIsBlinking(false);
   };
 
-  const formatDate = (dateString: string) => {
-    return format(parseISO(dateString), 'yyyy년 MM월 dd일 HH:mm', { locale: ko });
-  };
-
   const translateStatus = (status: string) => {
     switch (status) {
       case 'renewal':
@@ -86,6 +81,8 @@ const Subscription = () => {
         return status;
     }
   };
+
+  const reversedHistory = useMemo(() => [...history].reverse(), [history]);
 
   const handleStarLeave = () => {
     if (!reviewModal) {
@@ -214,7 +211,7 @@ const Subscription = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-[1.5rem] text-[1.5rem] overflow-y-auto">
-                {[...history].reverse().map((item, index) => (
+                {reversedHistory.map((item, index) => (
                   <div key={index} className="flex items-center text-medium">
                     <div className="w-3/4">{formatDate(item.change_date)}</div>
                     <div className="w-1/4">{translateStatus(item.status)}</div>
