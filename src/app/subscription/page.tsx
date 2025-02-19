@@ -15,6 +15,10 @@ import Rating from 'react-rating';
 import '../../styles/review.css';
 import { useRouter } from 'next/navigation';
 import { useUserDataFetch } from '@/hooks/useUserDataFetch';
+import { getUserSession } from '../actions/serverAction';
+import { getSubscriptionHistory, SubscriptionHistoryItem } from '@/api/subscription';
+import { format, parseISO } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 const example = [
   {
@@ -40,6 +44,25 @@ const Subscription = () => {
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
   const router = useRouter();
   const { userData, getUserData } = useUserDataFetch();
+  const [history, setHistory] = useState<SubscriptionHistoryItem[]>([]);
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const { accessToken } = await getUserSession();
+        if (!accessToken) return;
+        const response = await getSubscriptionHistory(accessToken);
+
+        if (response.status === 'success' && response.data) {
+          setHistory(response.data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchHistory();
+  }, []);
 
   useEffect(() => {
     getUserData();
@@ -47,6 +70,21 @@ const Subscription = () => {
   // console.log(userData);
   const handleStarHover = () => {
     setIsBlinking(false);
+  };
+
+  const formatDate = (dateString: string) => {
+    return format(parseISO(dateString), 'yyyy년 MM월 dd일 HH:mm', { locale: ko });
+  };
+
+  const translateStatus = (status: string) => {
+    switch (status) {
+      case 'renewal':
+        return '결제';
+      case 'cancel':
+        return '취소';
+      default:
+        return status;
+    }
   };
 
   const handleStarLeave = () => {
@@ -176,10 +214,10 @@ const Subscription = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-[1.5rem] text-[1.5rem] overflow-y-auto">
-                {example.map((item, index) => (
+                {[...history].reverse().map((item, index) => (
                   <div key={index} className="flex items-center text-medium">
-                    <div className="w-3/4">{item.logTime}</div>
-                    <div className="w-1/4">{item.changeLog}</div>
+                    <div className="w-3/4">{formatDate(item.change_date)}</div>
+                    <div className="w-1/4">{translateStatus(item.status)}</div>
                   </div>
                 ))}
               </div>
