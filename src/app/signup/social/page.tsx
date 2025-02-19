@@ -79,8 +79,8 @@ export default function Social() {
               type="tel"
               placeholder="010-1234-5678"
               {...register('phone_number')}
-              helperText={errors.phone_number?.message || ''}
-              status={errors.phone_number ? 'error' : 'default'}
+              helperText={errors.phone_number?.message || successMessage || ''}
+              status={errors.phone_number ? 'error' : successMessage ? 'success' : 'default'}
               value={formatPhoneNumber(phoneNumber)} // 실시간으로 포맷 적용
             />
             <Button
@@ -94,7 +94,7 @@ export default function Social() {
             </Button>
           </div>
 
-          {isAuthFieldVisible && (
+          {isAuthFieldVisible && !successMessage && (
             <div className="grid grid-cols-[54rem_14rem] gap-x-8 items-center mt-[3rem]">
               <Input
                 type="text"
