@@ -45,15 +45,24 @@ export const usePhoneAuth = <T extends PhoneFormFields>(
       );
 
       const data = await response.json();
+      // 휴대폰 번호 입력 안했을시
+      if (!phoneNumber) {
+        setError('phone_number' as Path<T>, {
+          message: '휴대폰번호를 입력해주세요.',
+        });
+        return;
+      }
 
+      // 성공시
       if (response.ok) {
         setTimeLeft(240); // 4분 타이머
         setIsRequested(true);
-      } else { // 실패시
+      } else if (data.error === '동일한 전화번호로 가입된 계정이 있습니다.') {
+        setIsLoginPromptOpen(true);
+      } else {
         setError('phone_number' as Path<T>, {
           message: data.error,
         });
-        setIsLoginPromptOpen(true)
       }
     } catch (error) {
       console.error('🚨 인증번호 요청 실패:', error);
