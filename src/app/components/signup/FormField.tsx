@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useEmailValidation } from '@/hooks/useEmailValidation';
 import { usePhoneAuth } from '@/hooks/usePhoneAuth';
 import { SignupFormData } from '@/app/auth/schemas/SignupSchema';
@@ -33,6 +33,11 @@ export const FormField = ({ field }: FormFieldProps) => {
     usePhoneAuth(watch, setValue, setError);
   const [isAuthFieldVisible, setIsAuthFieldVisible] = useState(false);
 
+  useEffect(() => {
+    if (successMessage) {
+      setIsAuthFieldVisible(false); // 인증 성공시 인증번호 입력 필드 숨기기
+    }
+  });
   const handleButtonClick = () => {
     switch (field.id) {
       case 'email':
@@ -96,11 +101,13 @@ export const FormField = ({ field }: FormFieldProps) => {
                 : isEmailAvailable === false
                 ? 'error'
                 : 'default'
+              : successMessage
+              ? 'success' 
               : errors?.[field.id]
               ? 'error'
               : 'default'
           }
-          helperText={field.id === 'email' ? emailMessage || errorMessage : errorMessage}
+          helperText={errors?.[field.id]?.message || (successMessage ? successMessage : '')}
           {...register(field.id, {
             onChange: e => handleChange(e),
           })}
@@ -117,7 +124,7 @@ export const FormField = ({ field }: FormFieldProps) => {
           </Button>
         )}
       </div>
-      {field.authField && isAuthFieldVisible && (
+      {field.authField && isAuthFieldVisible && !successMessage && (
         <div className="pl-[32rem] !mt-[3rem] grid grid-cols-[54rem_14rem] gap-x-8">
           <Input
             id={field.authField.id}
