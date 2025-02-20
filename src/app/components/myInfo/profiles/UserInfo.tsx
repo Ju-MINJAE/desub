@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { ProfilesFormData } from '@/app/profiles/schemas/ProfilesSchema';
 import { ProfilesField } from '@/types/profiles';
-import { useUserDataFetch } from '@/hooks/useUserDataFetch';
+import { useAppSelector } from '@/hooks/redux/hooks';
 import { Input } from '@/app/components/ui/Input';
 
 interface Props {
@@ -11,11 +10,7 @@ interface Props {
 }
 
 const UserInfo = ({ register, errors }: Props) => {
-  const { userData, getUserData } = useUserDataFetch();
-
-  useEffect(() => {
-    getUserData();
-  }, []);
+  const userData = useAppSelector(state => state.userData);
 
   const USERNAME_FIELDS: ProfilesField[] = [
     {

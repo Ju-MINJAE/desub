@@ -29,8 +29,8 @@ const RotatingWorkingProcess = () => {
             src="/icons/arrow.svg"
             alt="arrow_right"
             width={88}
-            height={0}
-            className="ml-[2rem] rotate-180"
+            height={88}
+            className="ml-[2rem] rotate-180 w-auto"
           />
         </Link>
       </div>

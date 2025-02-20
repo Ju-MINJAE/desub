@@ -12,15 +12,33 @@ const UniqueProcess = () => {
       </div>
 
       <div className="absolute right-[40%] top-[3%] md:right-[25%] md:top-0 w-[8.3rem] h-[8.8rem] md:w-[25rem] md:h-[25rem]">
-        <Image src="/icons/j.svg" alt="J icon" layout="fill" objectFit="contain" />
+        <Image
+          src="/icons/j.svg"
+          alt="J icon"
+          fill
+          sizes="(min-width: 768px) 25rem, 8.3rem"
+          style={{ objectFit: 'contain' }}
+        />
       </div>
 
       <div className="absolute right-0 top-[5%] md:top-[15%] w-[14rem] h-[11rem] md:w-[41rem] md:h-[32rem]">
-        <Image src="/icons/star.svg" alt="Star icon" layout="fill" objectFit="contain" />
+        <Image
+          src="/icons/star.svg"
+          alt="Star icon"
+          fill
+          sizes="(min-width: 768px) 41rem, 14rem"
+          style={{ objectFit: 'contain' }}
+        />
       </div>
 
       <div className="absolute -left-4 top-[25%] md:top-[45%] w-[6.4rem] h-[6.4rem] md:w-[19rem] md:h-[19rem]">
-        <Image src="/icons/s.svg" alt="S icon" layout="fill" objectFit="contain" />
+        <Image
+          src="/icons/s.svg"
+          alt="S icon"
+          fill
+          sizes="(min-width: 768px) 19rem, 6.4rem"
+          style={{ objectFit: 'contain' }}
+        />
       </div>
 
       <div className="flex flex-col md:items-start md:flex-row md:space-x-8 md:absolute md:left-[20%] md:-bottom-10 z-30 ml-[5.3rem] mt-[-1rem] md:mt-0">

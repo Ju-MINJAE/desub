@@ -8,7 +8,13 @@ interface LoadingSpinnerProps {
 export default function LoadingSpinner({ width = 200, height = 100 }: LoadingSpinnerProps) {
   return (
     <div className="flex justify-center items-center">
-      <Image src="/images/loadingspinner.gif" alt="Loading..." width={width} height={height} />
+      <Image
+        src="/images/loadingspinner.gif"
+        alt="Loading..."
+        width={width}
+        height={height}
+        priority
+      />
     </div>
   );
 }

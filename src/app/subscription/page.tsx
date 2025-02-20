@@ -14,25 +14,26 @@ import { Alert } from '../components/ui/Alert';
 import Rating from 'react-rating';
 import '../../styles/review.css';
 import { useRouter } from 'next/navigation';
-import { useUserDataFetch } from '@/hooks/useUserDataFetch';
+import { useAppSelector } from '@/hooks/redux/hooks';
 import { getUserSession } from '../actions/serverAction';
 import { getSubscriptionHistory, SubscriptionHistoryItem } from '@/api/subscription';
 import { formatDate } from '../../utils/dateUtils';
+import { postReview } from '@/api/review';
 
 const Subscription = () => {
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
   const [reviewModal, setReviewModal] = useState(false);
   const [review, setReview] = useState({
     rating: 0,
-    contents: '',
+    content: '',
   });
   const [reviewContents, setReviewContents] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
   const [lastCheckModal, setLastCheckModal] = useState(false);
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
-  const router = useRouter();
-  const { userData, getUserData } = useUserDataFetch();
   const [history, setHistory] = useState<SubscriptionHistoryItem[]>([]);
+  const router = useRouter();
+  const userData = useAppSelector(state => state.userData);
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -52,10 +53,6 @@ const Subscription = () => {
     fetchHistory();
   }, []);
 
-  useEffect(() => {
-    getUserData();
-  }, []);
-  // console.log(userData);
   const handleStarHover = () => {
     setIsBlinking(false);
   };
@@ -100,7 +97,7 @@ const Subscription = () => {
     setReviewContents(e.target.value);
     if (content.trim() !== '') {
       setWarningMessage('');
-      setReview(prev => ({ ...prev, contents: content }));
+      setReview(prev => ({ ...prev, content: content }));
     }
   };
 
@@ -123,19 +120,25 @@ const Subscription = () => {
     setWarningMessage('');
     setReview({
       rating: 0,
-      contents: '',
+      content: '',
     });
   };
 
   // 최종 제출
-  const handleReviewSubmit = () => {
-    if (reviewContents.trim() === '') {
-      setWarningMessage('후기 내용을 입력해주세요.');
-      return;
+  const handleReviewSubmit = async () => {
+    try {
+      if (reviewContents.trim() === '') {
+        setWarningMessage('후기 내용을 입력해주세요.');
+        return;
+      }
+
+      await postReview(review);
+
+      resetReview();
+      setLastCheckModal(true);
+    } catch (error) {
+      console.error('리뷰 제출 실패:', error);
     }
-    console.log(review);
-    resetReview();
-    setLastCheckModal(true);
   };
 
   const goToTrelloLink = () => (window.location.href = 'https://trello.com/b/8NZhWTI4/desub');
@@ -157,7 +160,7 @@ const Subscription = () => {
               <textarea
                 className="w-full h-[20.7rem] border border-black p-[1rem]"
                 onChange={handleReviewContents}
-                value={review.contents}
+                value={review.content}
                 placeholder="여기에 솔직한 후기를 작성해주세요."
               ></textarea>
               {warningMessage && (

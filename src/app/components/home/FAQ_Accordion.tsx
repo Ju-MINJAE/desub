@@ -36,6 +36,7 @@ const FAQAccordion = () => {
                 <div className="relative w-[3rem] h-[3rem] md:w-[6.4rem] md:h-[6.4rem]">
                   <Image
                     fill
+                    sizes="(min-width: 768px) 6.4rem, 3rem"
                     alt="accordion_open_close"
                     src="/icons/chevron-down.svg"
                     className={`object-contain transition-transform duration-200 ${

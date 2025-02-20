@@ -35,11 +35,11 @@ const Membership = () => {
         <div className="w-full pt-[4.8rem] md:pt-[7.5rem] px-[2.2rem] pb-12 md:pb-16 rounded-[4rem] border">
           <div className="w-[10rem] h-[10rem] md:w-[17.2rem] md:h-[17.2rem] mx-auto mb-[1.4rem] md:mb-[5rem]">
             <Image
-              width={172}
-              height={172}
-              objectFit="contain"
+              fill
+              sizes="(min-width: 768px) 17.2rem, 10rem"
               alt="desub_membership"
               src="/images/desub_membership.png"
+              style={{ objectFit: 'contain' }}
             />
           </div>
           <h3 className="font-bold text-[3rem] md:text-[5rem] mb-0 md:mb-4 leading-[7.5rem]">
@@ -107,10 +107,11 @@ const Membership = () => {
             </p>
             <Image
               width={200}
-              height={0}
+              height={56}
               alt="detail_arrow"
               src="/icons/Arrow_right.svg"
               className="w-[56px] md:w-[200px] h-auto"
+              sizes="(min-width: 768px) 200px, 56px"
             />
           </Link>
         </div>
