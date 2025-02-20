@@ -79,7 +79,7 @@ const Header = () => {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className={`transition-all duration-300 ${
+                    className={`transition-all duration-300 whitespace-nowrap ${
                       pathname === item.href
                         ? 'font-bold underline underline-offset-4 decoration-2'
                         : ''
@@ -114,13 +114,13 @@ const Header = () => {
                 <Button
                   variant="green"
                   size="small"
-                  className="w-[10.7rem] h-[3.3rem] md:hidden text-[1.5rem]"
+                  className="!w-[10.7rem] h-[3.3rem] md:hidden text-[1.5rem]"
                   onClick={() => router.push('/subscription')}
                 >
                   subscribe
                 </Button>
 
-                <div className="hidden md:block">
+                <div className="hidden md:flex items-center">
                   <Button
                     variant="green"
                     size="small"
@@ -131,7 +131,7 @@ const Header = () => {
                   </Button>
                   <Link
                     href="/subscription"
-                    className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem]"
+                    className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem] whitespace-nowrap"
                   >
                     my subscription
                   </Link>
@@ -149,11 +149,17 @@ const Header = () => {
               >
                 subscribe
               </Button>
-              <Link href="/login" className="hidden md:block">
+              {/* <Link href="/login" className="hidden md:block">
                 <button className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem]">
                   login
                 </button>
-              </Link>
+              </Link> */}
+              <button
+                className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem] hidden md:block"
+                onClick={() => router.push('/login')}
+              >
+                login
+              </button>
             </>
           )}
         </div>
