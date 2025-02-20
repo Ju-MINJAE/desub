@@ -34,9 +34,10 @@ const SubscriptionsStatus = () => {
 
   const statusText = {
     loading: '로딩 중...',
-    subscribed: '구독중',
+    active: '구독중',
     unsubscribed: '미구독',
     cancelled: '미구독',
+    paused: '일시정지',
     error: '오류 발생',
   }[status];
 

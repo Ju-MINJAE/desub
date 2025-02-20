@@ -1,6 +1,12 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export type SubscriptionStatus = 'subscribed' | 'unsubscribed' | 'cancelled' | 'loading' | 'error';
+export type SubscriptionStatus =
+  | 'active'
+  | 'unsubscribed'
+  | 'cancelled'
+  | 'paused'
+  | 'loading'
+  | 'error';
 
 interface SubscriptionItem {
   id: number;
