@@ -15,9 +15,14 @@ const SubscriptionsStatus = () => {
       try {
         const { accessToken } = await getUserSession();
         if (!accessToken) return;
+
         const response = await statusSubscriptions(accessToken);
 
-        setStatus(response.status);
+        if (Array.isArray(response) && response.length > 0) {
+          setStatus(response[0].sub_status);
+        } else if ('error' in response) {
+          setStatus('error');
+        }
       } catch (err) {
         console.error(err);
         setStatus('error');
@@ -29,8 +34,10 @@ const SubscriptionsStatus = () => {
 
   const statusText = {
     loading: '로딩 중...',
-    subscribed: '구독중',
+    active: '구독중',
     unsubscribed: '미구독',
+    cancelled: '미구독',
+    paused: '일시정지',
     error: '오류 발생',
   }[status];
 
@@ -39,16 +46,17 @@ const SubscriptionsStatus = () => {
       <div className="w-full max-w-[40.1rem] flex justify-between">
         <p className="text-[5rem] font-bold">{statusText}</p>
       </div>
-      {status === 'unsubscribed' && (
-        <Button
-          className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem] mt-[6.7rem]"
-          size="small"
-          variant="green"
-          onClick={() => router.push('/pricing')}
-        >
-          구독하기
-        </Button>
-      )}
+      {status === 'unsubscribed' ||
+        (status === 'cancelled' && (
+          <Button
+            className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem] mt-[6.7rem]"
+            size="small"
+            variant="green"
+            onClick={() => router.push('/pricing')}
+          >
+            구독하기
+          </Button>
+        ))}
     </div>
   );
 };

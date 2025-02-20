@@ -5,16 +5,15 @@ import { Button } from '../ui/Button';
 import { useAppDispatch } from '@/hooks/redux/hooks';
 import { setSubscriptionStatus } from '../../../store/subscriptionStatusSlice';
 import Image from 'next/image';
-import { format, differenceInDays } from 'date-fns';
 import { getUserSession } from '@/app/actions/serverAction';
 import { statusSubscriptions } from '@/api/subscription';
 import Unsubscription from './Unsubscription';
+import { calculateRemainingDays, formatDate, formatDateShort } from '@/utils/dateUtils';
 
 const SubscriptionActive = () => {
   const dispatch = useAppDispatch();
   const [subscriptionInfo, setSubscriptionInfo] = useState<string>('');
   const [nextBillDate, setNextBillDate] = useState<string>('');
-  const [error, setError] = useState<string>('');
 
   const handleSubscriptionStatus = () => {
     dispatch(setSubscriptionStatus('paused'));
@@ -27,23 +26,21 @@ const SubscriptionActive = () => {
         if (!accessToken) return;
         const response = await statusSubscriptions(accessToken);
 
-        if (response.status === 'subscribed' && response.data && response.data.length > 0) {
-          const subscription = response.data[0];
-          const endDate = new Date(subscription.end_date);
-          const now = new Date();
-          const daysRemaining = differenceInDays(endDate, now);
+        if (Array.isArray(response) && response.length > 0) {
+          const subscription = response[0];
 
-          const formattedEndDate = format(endDate, 'yyyy.MM.dd');
-          setSubscriptionInfo(`~${formattedEndDate} / D-${daysRemaining}일 남음`);
+          if (subscription.sub_status === 'active') {
+            const formattedEndDate = formatDateShort(subscription.end_date);
+            const daysRemaining = calculateRemainingDays(subscription.end_date);
+            setSubscriptionInfo(`~${formattedEndDate} / D-${daysRemaining}일 남음`);
 
-          if (subscription.next_bill_date) {
-            const nextBillDate = new Date(subscription.next_bill_date);
-            setNextBillDate(format(nextBillDate, 'yyyy년 MM월 dd일'));
+            if (subscription.next_bill_date) {
+              setNextBillDate(formatDate(subscription.next_bill_date));
+            }
           }
         }
       } catch (err) {
         console.error(err);
-        setError('구독 상태를 가져오는 데 실패했습니다.');
       }
     };
 
@@ -51,7 +48,7 @@ const SubscriptionActive = () => {
   }, []);
 
   const handleUnsubscribe = () => {
-    // 구독 취소 로직
+    // 구독 취소 로직 - util 함수로 만들어서 SubscriptionActive와 SubscriptionPaused에 함께 쓸지 고민해보기
     console.log('구독 취소 로직');
   };
 
@@ -70,7 +67,6 @@ const SubscriptionActive = () => {
         </Button>
       </div>
       <p className="text-[1.8rem] font-bold mt-[1.8rem]">{subscriptionInfo}</p>
-      {error && <p className="text-red-500">{error}</p>}
       <div className="mt-[9.3rem]">
         <Unsubscription onUnsubscribe={handleUnsubscribe} nextBillDate={nextBillDate} />
       </div>

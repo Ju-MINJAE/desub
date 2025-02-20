@@ -66,6 +66,10 @@ const Subscription = () => {
         return '결제';
       case 'cancel':
         return '취소';
+      case 'pause':
+        return '일시정지';
+      case 'restarted':
+        return '재개';
       default:
         return status;
     }
@@ -288,7 +292,6 @@ const Subscription = () => {
           </div>
         </div>
 
-        {/* 구독현황 */}
         <div className="flex flex-col pl-[5.9rem] justify-center">
           <div className="flex justify-between mt-[0.9rem]">
             <p className="font-bold">Status</p>

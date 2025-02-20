@@ -19,10 +19,10 @@ const PaymentInfo = () => {
   const formattedPrice = exampleData.recurringPaymentDate.price.toLocaleString('ko-KR');
 
   return (
-    <div className="flex flex-col gap-[5rem]">
-      <div className="flex justify-between items-center ml-[2rem]">
-        <p className="text-[1.6rem]">결제카드</p>
-        <div className="w-3/4 flex items-center gap-[1.5rem] text-[1.6rem] font-medium">
+    <div className="flex flex-col gap-[5rem] w-[57.4rem] ">
+      <div className="flex items-center">
+        <p className="text-[1.6rem] min-w-[13.9rem]">결제카드</p>
+        <div className="flex items-center gap-[1.5rem] text-[1.6rem] font-medium">
           <div className="bg-gray w-[6.9rem] h-[4.2rem] rounded-[0.3rem]"></div>
           <p>
             {exampleData.card.cardIssuer}&nbsp;&nbsp;
@@ -31,9 +31,9 @@ const PaymentInfo = () => {
         </div>
       </div>
 
-      <div className="flex justify-between items-center ml-[2rem]">
-        <p className="text-[1.6rem]">다음 정기 결제일</p>
-        <div className="w-3/4 flex items-center text-[1.6rem] font-medium">
+      <div className="flex items-center">
+        <p className="text-[1.6rem] min-w-[13.9rem]">다음 정기 결제일</p>
+        <div className="flex items-center text-[1.6rem] font-medium">
           <p>
             {exampleData.recurringPaymentDate.date}&nbsp;/&nbsp;
             {formattedPrice}원
@@ -41,8 +41,8 @@ const PaymentInfo = () => {
         </div>
       </div>
 
-      <div className="flex justify-between items-center ml-[2rem]">
-        <p className="text-[1.6rem]">결제 이메일</p>
+      <div className="flex items-center">
+        <p className="text-[1.6rem] min-w-[13.9rem]">결제 이메일</p>
         <div className="w-3/4 flex items-center text-[1.6rem] font-medium">
           <p>{exampleData.billingEmail}</p>
         </div>
