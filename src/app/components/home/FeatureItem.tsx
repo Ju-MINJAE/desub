@@ -2,20 +2,15 @@ import Image from 'next/image';
 
 interface FeatureItemProps {
   imageSrc: string;
-  title: string;
-  description: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
 }
 
 const FeatureItem = ({ imageSrc, title, description }: FeatureItemProps) => {
   return (
     <div className="flex flex-col items-center">
-      <div className="relative w-[33rem] md:w-full aspect-square">
-        <Image
-          src={imageSrc || '/placeholder.svg'}
-          alt={title}
-          fill
-          style={{ objectFit: 'contain' }}
-        />
+      <div className="relative w-[33rem] md:w-full aspect-square whitespace-pre-line">
+        <Image src={imageSrc || '/placeholder.svg'} alt="" fill style={{ objectFit: 'contain' }} />
       </div>
       <h3 className="mt-[2.7rem] md:mt-[6.2rem] text-[2.5rem] md:text-[4.5rem] font-semibold text-center">
         {title}
