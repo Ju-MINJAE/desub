@@ -25,6 +25,7 @@ const Specialists = () => {
           src="/images/Specialists1.png"
           alt="Sevice_UIUX"
           fill
+          sizes="(min-width: 768px) 27.4rem, 17.1rem"
           style={{ objectFit: 'cover', zIndex: 1 }}
         />
       </div>
@@ -38,6 +39,7 @@ const Specialists = () => {
           src="/images/Specialists1.png"
           alt="Sevice_E-commerce"
           fill
+          sizes="(min-width: 768px) 27.4rem, 14rem"
           style={{ objectFit: 'cover', zIndex: 1 }}
         />
       </div>
@@ -51,6 +53,7 @@ const Specialists = () => {
           src="/images/Specialists1.png"
           alt="Sevice_Branding"
           fill
+          sizes="(min-width: 768px) 31.1rem, 15rem"
           style={{ objectFit: 'cover', zIndex: 1 }}
         />
       </div>
@@ -64,6 +67,7 @@ const Specialists = () => {
           src="/images/Specialists1.png"
           alt="Sevice_Printing"
           fill
+          sizes="(min-width: 768px) 21.6rem, 13.8rem"
           style={{ objectFit: 'cover', zIndex: 1 }}
         />
       </div>
@@ -77,6 +81,7 @@ const Specialists = () => {
           src="/images/Specialists1.png"
           alt="Sevice_Product Design"
           fill
+          sizes="(min-width: 768px) 42.6rem, 17.1rem"
           style={{ objectFit: 'cover', zIndex: 1 }}
         />
       </div>

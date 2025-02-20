@@ -90,7 +90,13 @@ const Contact = () => {
                 disabled={isLoading}
               >
                 <div className="relative w-[25px] h-[25px] md:w-[45px] md:h-[45px]">
-                  <Image fill alt="email_send" src="/icons/send.svg" className="object-contain" />
+                  <Image
+                    fill
+                    sizes="(min-width: 768px) 45px, 25px"
+                    alt="email_send"
+                    src="/icons/send.svg"
+                    className="object-contain"
+                  />
                 </div>
               </button>
             </form>

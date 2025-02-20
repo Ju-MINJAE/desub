@@ -17,13 +17,13 @@ const Membership = () => {
 
       <div className="w-[90%] md:w-[70%] max-w-[91.5rem] flex flex-col items-end">
         <div className="w-full pt-[8.6rem] px-4 md:px-8 pb-12 md:pb-16 rounded-[4rem] border mb-8">
-          <div className="w-[10rem] h-[10rem] md:w-[17.2rem] md:h-[17.2rem] mx-auto mb-[1.4rem] md:mb-[5rem]">
+          <div className="w-[10rem] h-[10rem] md:w-[17.2rem] md:h-[17.2rem] mx-auto mb-[1.4rem] md:mb-[5rem] relative">
             <Image
-              width={172}
-              height={172}
-              objectFit="contain"
+              fill
+              sizes="(min-width: 768px) 17.2rem, 10rem"
               alt="desub_membership"
               src="/images/desub_membership.png"
+              style={{ objectFit: 'contain' }}
             />
           </div>
           <h3 className="font-bold text-[3rem] md:text-[5rem] mb-0 md:mb-4 leading-[7.5rem]">
@@ -76,10 +76,11 @@ const Membership = () => {
             <p className="font-bold text-[2rem] md:text-[5rem] leading-[7.5rem]">자세히 보기</p>
             <Image
               width={200}
-              height={0}
+              height={56}
               alt="detail_arrow"
               src="/icons/Arrow_right.svg"
               className="w-[56px] md:w-[200px] h-auto"
+              sizes="(min-width: 768px) 200px, 56px"
             />
           </Link>
         </div>

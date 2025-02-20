@@ -14,7 +14,9 @@ const FeatureItem = ({ imageSrc, title, description }: FeatureItemProps) => {
           src={imageSrc || '/placeholder.svg'}
           alt={title}
           fill
+          sizes="(min-width: 768px) 100vw, 33rem"
           style={{ objectFit: 'contain' }}
+          priority
         />
       </div>
       <h3 className="mt-[2.7rem] md:mt-[6.2rem] text-[2.5rem] md:text-[4.5rem] font-semibold text-center">
