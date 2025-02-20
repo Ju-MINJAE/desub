@@ -43,7 +43,13 @@ const UniqueProcess = () => {
 
       <div className="flex flex-col md:items-start md:flex-row md:space-x-8 md:absolute md:left-[20%] md:-bottom-10 z-30 ml-[5.3rem] mt-[-1rem] md:mt-0">
         <div className="relative w-[15.5rem] h-[14rem] md:w-[47rem] md:h-[42rem] z-20 mb-8 md:mb-0 ml-[-1rem]">
-          <Image src="/icons/w.svg" alt="W icon" layout="fill" objectFit="contain" />
+          <Image
+            src="/icons/w.svg"
+            alt="W icon"
+            fill
+            sizes="(min-width: 768px) 47rem, 15.5rem"
+            style={{ objectFit: 'contain' }}
+          />
         </div>
 
         <div className="flex flex-col space-y-20 md:space-y-8 md:pt-[18rem] md:pl-[2rem] mt-[6.5rem] md:-mt-0">

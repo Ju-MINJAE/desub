@@ -33,7 +33,7 @@ const Membership = () => {
 
       <div className="w-[90%] md:w-[70%] max-w-[91.5rem] flex flex-col items-end">
         <div className="w-full pt-[4.8rem] md:pt-[7.5rem] px-[2.2rem] pb-12 md:pb-16 rounded-[4rem] border">
-          <div className="w-[10rem] h-[10rem] md:w-[17.2rem] md:h-[17.2rem] mx-auto mb-[1.4rem] md:mb-[5rem]">
+          <div className="w-[10rem] h-[10rem] md:w-[17.2rem] md:h-[17.2rem] mx-auto mb-[1.4rem] md:mb-[5rem] relative">
             <Image
               fill
               sizes="(min-width: 768px) 17.2rem, 10rem"
