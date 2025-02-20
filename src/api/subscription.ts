@@ -1,15 +1,31 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export type SubscriptionStatus = 'subscribed' | 'unsubscribed' | 'loading' | 'error';
+export type SubscriptionStatus = 'subscribed' | 'unsubscribed' | 'cancelled' | 'loading' | 'error';
 
-interface SubscriptionResponse {
-  status: SubscriptionStatus;
-  error?: string;
-  data?: any;
+interface SubscriptionItem {
+  id: number;
+  sub_status: SubscriptionStatus;
+  start_date: string;
+  end_date: string;
+  next_bill_date: string;
+  remaining_bill_date: string;
+  auto_renew: boolean;
+  cancelled_reason?: string;
+  other_reason?: string;
+  user: string;
+  plan: number;
+  billing_key: number;
 }
 
+interface SubscriptionError {
+  sub_status: 'error';
+  error: string;
+}
+
+type SubscriptionResponse = SubscriptionItem[] | SubscriptionError;
+
 export const statusSubscriptions = async (accessToken: string): Promise<SubscriptionResponse> => {
-  if (!accessToken) return { status: 'error', error: '인증 토큰이 없습니다.' };
+  if (!accessToken) return { sub_status: 'error', error: '인증 토큰이 없습니다.' };
 
   try {
     const response = await fetch(`${API_BASE_URL}/api/subscriptions/`, {
@@ -21,24 +37,16 @@ export const statusSubscriptions = async (accessToken: string): Promise<Subscrip
       },
     });
 
+    if (!response.ok) {
+      throw new Error(`서버 응답 실패: ${response.status}`);
+    }
+
     const data = await response.json();
-
-    if (response.status === 200) {
-      return { status: 'subscribed', data };
-    }
-
-    if (response.status === 403 || response.status === 404) {
-      return { status: 'unsubscribed', data };
-    }
-
-    return {
-      status: 'error',
-      error: `예상치 못한 응답: ${response.status}`,
-    };
+    return data;
   } catch (err) {
     console.error(err);
     return {
-      status: 'error',
+      sub_status: 'error',
       error: '구독 상태를 가져오는 데 실패했습니다.',
     };
   }
