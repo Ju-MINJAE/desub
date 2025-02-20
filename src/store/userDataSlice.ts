@@ -8,7 +8,11 @@ const initialState: UserData = {
   phone: '',
   sub_status: 'none',
   subscription_info: {
+    card_name: '',
+    card_number: '',
     end_date: '',
+    next_bill_date: '',
+    payment_amount: 0,
     plan_id: 0,
     remaining_days: 0,
   },

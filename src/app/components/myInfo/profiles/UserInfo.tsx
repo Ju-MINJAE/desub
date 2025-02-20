@@ -2,6 +2,7 @@ import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { ProfilesFormData } from '@/app/profiles/schemas/ProfilesSchema';
 import { ProfilesField } from '@/types/profiles';
 import { useAppSelector } from '@/hooks/redux/hooks';
+import { Input } from '@/app/components/ui/Input';
 
 interface Props {
   register: UseFormRegister<ProfilesFormData>;
@@ -28,24 +29,24 @@ const UserInfo = ({ register, errors }: Props) => {
   ];
 
   return (
-    <div className="w-full flex flex-col gap-[2.6rem] ml-[2rem]">
+    <div className="w-full flex flex-col gap-[2.6rem]">
       {USERNAME_FIELDS.map(field => (
-        <div key={field.id as string} className="flex justify-between items-center">
-          <p className="text-[1.6rem]">{field.label}</p>
-          <div className="flex flex-col gap-[1rem]">
-            <input
+        <div
+          key={field.id as string}
+          className="flex justify-between items-center w-[57.4rem] max-w-full"
+        >
+          <p className="text-[1.6rem] min-w-[13.9rem]">{field.label}</p>
+          <div className="flex flex-col gap-[1rem] flex-1">
+            <Input
               {...register(field.id)}
+              className="md:h-[4.7rem] !text-[1.6rem]"
               name={field.id}
-              className="w-[43.5rem] h-[4.7rem] p-[1rem] border-b"
               type={field.type}
               defaultValue={field.value}
               disabled={field.disable}
+              status={errors[field.id] ? 'error' : 'default'}
+              helperText={errors[field.id]?.message || undefined}
             />
-            {errors[field.id] && (
-              <div className="w-full">
-                <p className="text-red text-[1.6rem]">{errors[field.id]?.message}</p>
-              </div>
-            )}
           </div>
         </div>
       ))}
