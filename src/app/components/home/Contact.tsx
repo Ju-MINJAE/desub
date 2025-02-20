@@ -52,25 +52,26 @@ const Contact = () => {
           </Button>
         </div>
 
-        <div className="w-[95%] mx-auto bg-white rounded-[4.6rem] px-[6rem] py-[8rem] md:p-12 shadow-2xl">
-          <div className="max-w-[80%] mx-auto space-y-8 flex flex-col items-center">
+        <div className="w-full md:max-w-[122rem] mx-auto bg-white rounded-[4.6rem] px-[6rem] py-[8rem] shadow-2xl">
+          <div className="flex flex-col items-center">
             <div className="space-y-6 text-center">
-              <h1 className="text-[1.8rem] md:text-[2rem] font-semibold mt-[7rem]">
-                Join our journey!
-              </h1>
-              <div className="space-y-2 pt-[6rem]">
+              <p className="text-[1.8rem] md:text-[2rem] font-semibold">Join our journey!</p>
+              <div className="md:space-y-2 md:pt-[6rem] pt-[4rem]">
                 <p className="font-medium text-[1.6rem] md:text-[3rem]">
-                  타임할인, 신규 서비스 등 desub의 새로운 정보를 확인하세요!
+                  타임할인, 신규 서비스 등 <span className="font-semibold">desub</span>의{' '}
+                  <br className="md:hidden" />
+                  새로운 정보를 확인하세요!
                 </p>
                 <p className="font-medium text-[1.6rem] md:text-[3rem]">
-                  이메일 입력 시 desub의 서비스소개서 및 포트폴리오를 보내드립니다.
+                  이메일 입력 시 <span className="font-semibold">desub</span> 서비스소개서 및
+                  포트폴리오를 보내드립니다.
                 </p>
               </div>
             </div>
 
             <form
               onSubmit={handleSubmit}
-              className="relative w-full pt-[10rem] flex items-center gap-4"
+              className="relative w-full md:w-[62.9rem] pt-[4rem] md:pt-[10rem] flex items-center gap-4"
               autoComplete="off"
             >
               <Input
