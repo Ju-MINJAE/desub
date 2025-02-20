@@ -1,14 +1,9 @@
-import { useEffect } from 'react';
-import { Button } from '../ui/Button';
-import { useUserDataFetch } from '@/hooks/useUserDataFetch';
 import { format } from 'date-fns';
+import { useAppSelector } from '@/hooks/redux/hooks';
+import { Button } from '../ui/Button';
 
 const PaymentInfo = () => {
-  const { userData, getUserData } = useUserDataFetch();
-
-  useEffect(() => {
-    getUserData();
-  }, []);
+  const userData = useAppSelector(state => state.userData);
 
   const cardInfo = userData?.subscription_info;
   console.log(cardInfo);
