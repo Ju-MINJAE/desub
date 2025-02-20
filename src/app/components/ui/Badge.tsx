@@ -35,7 +35,7 @@ const Badge = ({ label, variant }: BadgeProps) => {
 
   return (
     <span
-      className={`px-[5rem] py-1 rounded-full text-[2rem] font-semibold ${getVariantStyles(
+      className={`px-[5rem] flex items-center md:h-[9.4rem] h-[6.4rem] rounded-full md:text-[4rem] text-[2rem] font-semibold ${getVariantStyles(
         variant,
       )}`}
     >

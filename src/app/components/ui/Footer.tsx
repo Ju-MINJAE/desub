@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="w-full px-[13rem] py-[10rem]">
+    <footer className="w-full px-[2.5rem] py-[1.7rem] md:px-[13rem] md:py-[10rem]">
       <Link href="/">
         <Image
           src="/images/desub_logo.png"
