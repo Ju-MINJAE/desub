@@ -6,6 +6,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { setUserSession } from '@/app/actions/serverAction';
 import { useAppDispatch } from '@/hooks/redux/hooks';
 import { loginSuccess } from '@/store/authslice';
+import { setUserData } from '@/store/userDataSlice';
+import { fetchUserData } from '@/api/userData';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -36,6 +38,10 @@ const GoogleCallback = () => {
         console.log('로그인 응답 데이터:', data);
 
         setUserSession(data.access_token, data.refresh_token); // 토큰 쿠키에 저장
+
+        // 로그인 완료 후 유저정보 로컬에 저장
+        const userData = await fetchUserData();
+        dispatch(setUserData(userData));
 
         // 구글 첫 로그인시 핸드폰번호 인증 필수
         if (!data.phone) {
