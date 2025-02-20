@@ -17,7 +17,7 @@ const FAQAccordion = () => {
   };
 
   return (
-    <div className="flex flex-col pt-[10rem] md:pt-[22.5rem]">
+    <div className="flex flex-col pt-[7.2rem] md:pt-[22.5rem]">
       <h2 className="ml-[4rem] md:ml-[13.5rem] mb-20 font-normal text-[1.8rem] md:text-[4rem] block">
         FAQ
       </h2>

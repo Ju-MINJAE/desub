@@ -12,11 +12,11 @@ const RotatingWorkingProcess = () => {
       </div>
 
       <div className="space-y-[2.1rem] md:space-y-[5.9rem] text-center relative">
-        <h3 className="text-[1.8rem] md:text-[2.5rem]">간략한 상담 및 문의</h3>
-        <h3 className="text-[1.8rem] md:text-[2.5rem]">구독 결제</h3>
-        <h3 className="text-[1.8rem] md:text-[2.5rem]">최적화된 업무 요청</h3>
-        <h3 className="text-[1.8rem] md:text-[2.5rem]">작업물 전달</h3>
-        <h3 className="text-[1.8rem] md:text-[2.5rem]">피드백 적용 및 완료</h3>
+        <p className="text-[1.8rem] md:text-[2.5rem]">간략한 상담 및 문의</p>
+        <p className="text-[1.8rem] md:text-[2.5rem]">구독 결제</p>
+        <p className="text-[1.8rem] md:text-[2.5rem]">최적화된 업무 요청</p>
+        <p className="text-[1.8rem] md:text-[2.5rem]">작업물 전달</p>
+        <p className="text-[1.8rem] md:text-[2.5rem]">피드백 적용 및 완료</p>
       </div>
 
       <div className="flex justify-end md:pt-[11.3rem] pt-[7.4rem]">

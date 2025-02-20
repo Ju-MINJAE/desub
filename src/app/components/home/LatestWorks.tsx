@@ -16,7 +16,10 @@ const LatestWorks = () => {
 
   return (
     <div className="flex flex-col overflow-hidden" ref={containerRef}>
-      <Heading tag="h1" className="mb-12 px-[6.2rem] md:px-[12rem] pt-[21rem] md:pt-36">
+      <Heading
+        tag="h1"
+        className="mb-12 px-[6.2rem] md:px-[12rem] pt-[11rem] md:pt-[21rem] md:pt-36"
+      >
         Check our
         <br />
         Latest works

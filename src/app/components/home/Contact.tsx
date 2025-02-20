@@ -36,10 +36,11 @@ const Contact = () => {
   };
 
   return (
-    <div className="pt-[6.5rem] md:pt-[7.2rem] pb-20 px-4 flex justify-center">
+    <div className="pt-[6.5rem] md:pt-[7.2rem] pb-[13.7rem] md:pb-20 px-[2rem] flex justify-center">
       <div className="w-screen">
         <h2 className="ml-[3.1rem] md:ml-[17rem] mb-[3.5rem] text-[2rem] md:text-[4rem] font-bold">
-          규모가 있는 프로젝트 진행이 필요하신가요?
+          규모가 있는 프로젝트 진행이
+          <br className="md:hidden" /> 필요하신가요?
         </h2>
         <div className="flex justify-center md:justify-start md:ml-[18rem] mb-8 md:mb-[15.8rem]">
           <Button

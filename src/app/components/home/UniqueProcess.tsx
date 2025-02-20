@@ -4,7 +4,7 @@ import WorkingProcess from './WorkingProcess';
 const UniqueProcess = () => {
   return (
     <div className="relative w-full pb-20 md:pb-[40rem] mt-[11rem] md:mt-[22.3rem]">
-      <h2 className="ml-[4rem] md:ml-[13.5rem] mb-20 font-normal text-[1.8rem] md:text-[4rem] block">
+      <h2 className="ml-[4rem] md:ml-[13.5rem] mb-[10rem] md:mb-20 font-normal text-[1.8rem] md:text-[4rem] block">
         Our unique process
       </h2>
       <div className="flex justify-center items-center relative top-5 md:top-48 z-20 px-[3rem]">
@@ -28,7 +28,7 @@ const UniqueProcess = () => {
           <Image src="/icons/w.svg" alt="W icon" layout="fill" objectFit="contain" />
         </div>
 
-        <div className="flex flex-col space-y-8 md:pt-[18rem] md:pl-[2rem]">
+        <div className="flex flex-col space-y-20 md:space-y-8 md:pt-[18rem] md:pl-[2rem] mt-[6.5rem] md:-mt-0">
           <div className="flex items-start space-x-2">
             <Image src="/icons/check_circle.svg" alt="check" width={26} height={26} />
             <p className="text-[1.6rem] md:text-[1.8rem] px-2 md:px-[1.8rem] md:leading-[2.7rem] leading-[2.4rem]">
