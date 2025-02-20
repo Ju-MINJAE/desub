@@ -11,6 +11,7 @@ export const GoogleSignupSchema = z.object({
   isPhoneVerified: z.boolean().refine(value => value === true, {
     message: '휴대폰 인증이 필요합니다.',
   }),
+  marketing: z.boolean().optional(),
 });
 
 export type GoogleSignupValues = z.infer<typeof GoogleSignupSchema>;

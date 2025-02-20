@@ -17,6 +17,7 @@ import { usePhoneAuth } from '@/hooks/usePhoneAuth';
 import { formatTime } from '@/utils/time';
 import { getUserSession } from '@/app/actions/serverAction';
 import { Alert } from '@/app/components/ui/Alert';
+import AgreementItem from '@/app/components/signup/AgreementItem';
 
 export default function Social() {
   const router = useRouter();
@@ -32,7 +33,6 @@ export default function Social() {
 
   const handleNavigateFindAccount = () => {
     router.push('/login/forgot'); // 계정찾기 페이지로 이동
-    console.log('이동 왜안됌');
   };
   const {
     register,
@@ -48,6 +48,7 @@ export default function Social() {
 
   // 폼제출
   const onSubmit = async (data: GoogleSignupValues) => {
+    console.log(data);
     const session = await getUserSession();
     const accessToken = session?.accessToken ?? ''; // 기본값 설정
     const refreshToken = session?.refreshToken ?? ''; // 기본값 설정
@@ -56,10 +57,11 @@ export default function Social() {
     if (!accessToken) {
       throw new Error('🚨 유효한 액세스 토큰이 없습니다.');
     }
-    const result = await saveGoogleUserPhone(data.phone_number, accessToken); // 구글 사용자 phone api 호출
+    const marketingConsent = data.marketing ?? false; // 기본값 false
+    const result = await saveGoogleUserPhone(data.phone_number, marketingConsent, accessToken); // 구글 사용자 phone api 호출
 
     // 회원가입 완료시
-    if (result?.message === '전화번호가 저장되었습니다.') {
+    if (result.status === 200) {
       dispatch(loginSuccess()); // login true
       router.push('/signup/complete'); // 회원가입 완료 페이지로 이동
     } else {
@@ -112,7 +114,6 @@ export default function Social() {
               {isRequested ? '인증 재발송' : '휴대폰 인증'}
             </Button>
           </div>
-
           {isAuthFieldVisible && !successMessage && (
             <div className="grid grid-cols-[54rem_14rem] gap-x-8 items-center mt-[3rem]">
               <Input
@@ -136,6 +137,15 @@ export default function Social() {
               </Button>
             </div>
           )}
+          <div className="mt-[5rem] mr-auto">
+            <AgreementItem
+              id="marketing"
+              text="마케팅 수신에 동의합니다."
+              required={false}
+              checked={watch('marketing') ?? false}
+              onChange={checked => setValue('marketing', checked, { shouldValidate: true })}
+            />
+          </div>
           <div className="flex items-center justify-center mt-[14.4rem]">
             <Button
               variant="black"
