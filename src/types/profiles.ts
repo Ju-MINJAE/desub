@@ -17,5 +17,20 @@ export type UserData = {
   name: string;
   phone: string;
   sub_status: string;
-  subscription_info: string | null;
+  subscription_info?: {
+    end_date: string;
+    plan_id: number;
+    remaining_days: number;
+  };
+};
+
+export type UnSubscriptionReason = {
+  id: string;
+  label: string;
+  contents?: string;
+};
+
+export type SubscriptionCancelReason = {
+  cancelled_reason: string[];
+  other_reason?: string;
 };

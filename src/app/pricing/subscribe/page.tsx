@@ -5,22 +5,22 @@ import Heading from '@/app/components/ui/Heading';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
 import { EXCEPT_VAT_PRICE, STANDARD_PRICE, VAT_PRICE } from '@/constants/price';
-import { useUserDataFetch } from '@/hooks/useUserDataFetch';
-import { requestPayment } from '@/app/actions/paymentAction';
+import { useAppSelector } from '@/hooks/redux/hooks';
+import { requestPayment } from '@/api/payment';
 const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
 const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
 
 import * as PortOne from '@portone/browser-sdk/v2';
 
 const Subscribe = () => {
-  const { userData, getUserData } = useUserDataFetch();
-
-  useEffect(() => {
-    getUserData();
-  }, []);
+  const userData = useAppSelector(state => state.userData);
 
   const handlePayment = async () => {
     try {
+      if (!userData) {
+        console.log('로그인 후 진행해주세요.');
+        return;
+      }
       // 빌링키 발급
       const issueResponse = await PortOne.requestIssueBillingKey({
         storeId: STORE_ID,
