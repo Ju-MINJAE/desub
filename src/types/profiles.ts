@@ -11,7 +11,7 @@ export type ProfilesField = {
   disable?: boolean;
 };
 
-interface SubscriptionInfo {
+export interface SubscriptionInfo {
   card_name: string;
   card_number: string;
   end_date: string | null;
