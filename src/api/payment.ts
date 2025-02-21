@@ -195,7 +195,7 @@ export const cancelSubscription = async (
     }
 
     const data = await response.json();
-    return data.message;
+    return data;
   } catch (error) {
     console.error('구독 일시정지 중 오류 발생:', error);
     return { success: false, message: error instanceof Error ? error.message : '알 수 없는 오류' };

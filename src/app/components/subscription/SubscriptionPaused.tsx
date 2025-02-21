@@ -10,11 +10,14 @@ import { formatDateShort, formatRemainingBillDate } from '@/utils/dateUtils';
 import { handleCancelSubscription } from '@/utils/subscribe/handleCancelSubscription';
 import { handleResumeSubscription } from '@/utils/subscribe/handleResumeSubscription';
 import { SubscriptionCancelReason } from '@/types/profiles';
+import { updateSubStatus } from '@/store/userDataSlice';
+import { useAppDispatch } from '@/hooks/redux/hooks';
 
 const SubscriptionPaused = () => {
   const [subscriptionInfo, setSubscriptionInfo] = useState<string>('');
   const [nextBillDate, setNextBillDate] = useState<string>('');
   const [plan, setPlan] = useState<number | null>(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -25,6 +28,7 @@ const SubscriptionPaused = () => {
 
         if (Array.isArray(response) && response.length > 0) {
           const subscription = response[0];
+
           setPlan(subscription.plan);
           if (subscription.sub_status === 'paused') {
             const { formattedDate, daysRemaining } = formatRemainingBillDate(
@@ -46,7 +50,10 @@ const SubscriptionPaused = () => {
   }, []);
 
   const handleSubscriptionStatus = async (plan: number) => {
-    await handleResumeSubscription(plan);
+    console.log(1);
+    const resumeSubscription = await handleResumeSubscription(plan);
+    console.log(resumeSubscription);
+    dispatch(updateSubStatus('active'));
   };
 
   const handleUnsubscribe = async (
