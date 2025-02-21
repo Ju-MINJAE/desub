@@ -10,13 +10,19 @@ const persistConfig = {
   key: 'userData',
   storage,
 };
+// auth persist
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+};
 
 const persistedUserDataReducer = persistReducer(persistConfig, userDataReducer);
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
     subscriptionStatus: subscriptionStatusReducer,
-    auth: authReducer,
+    auth: persistedAuthReducer,
     userData: persistedUserDataReducer,
   },
   middleware: getDefaultMiddleware =>

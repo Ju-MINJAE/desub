@@ -19,8 +19,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
-  // const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
-  const isAuthenticated = localStorage.getItem('isAuthenticated');
+  const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
   console.log(isAuthenticated, subscriptionStatus);
 
