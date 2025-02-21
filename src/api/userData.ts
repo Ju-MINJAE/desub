@@ -26,6 +26,14 @@ export const fetchUserData = async () => {
   }
 
   const data = await response.json();
-  console.log('ㅇㅇㅇ', data);
-  return data;
+
+  //구독 현황 제외 유저 정보
+  const userData = {
+    email: data.email,
+    name: data.name,
+    phone: data.phone,
+    img_url: data.img_url,
+  };
+
+  return userData;
 };
