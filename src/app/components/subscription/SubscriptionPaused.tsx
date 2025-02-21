@@ -25,6 +25,7 @@ const SubscriptionPaused = () => {
 
         if (Array.isArray(response) && response.length > 0) {
           const subscription = response[0];
+
           setPlan(subscription.plan);
           if (subscription.sub_status === 'paused') {
             const { formattedDate, daysRemaining } = formatRemainingBillDate(
