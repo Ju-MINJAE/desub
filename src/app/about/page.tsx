@@ -9,7 +9,7 @@ export default function About() {
     <main className="relative min-h-screen">
       <div className="absolute inset-0 w-full h-full">
         <Image
-          src="/images/AboutBackGround.png"
+          src="/images/AboutBackGround.svg"
           alt="background"
           fill
           className="object-cover w-full h-full -z-10"
