@@ -6,7 +6,7 @@ export const handlePauseSubscription = async (plan: number) => {
     const { accessToken } = await getUserSession();
     if (!accessToken) return;
 
-    const response = await await pauseSubscription(plan, accessToken);
+    const response = await pauseSubscription(plan, accessToken);
     console.log(response);
   } catch (error) {
     console.error(error);

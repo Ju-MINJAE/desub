@@ -14,7 +14,10 @@ import * as PortOne from '@portone/browser-sdk/v2';
 
 const Subscribe = () => {
   const userData = useAppSelector(state => state.userData);
+  const planData = useAppSelector(state => state.plan);
 
+  // 여기서는 그냥 플랜 아이디만 필요
+  console.log(planData);
   const handlePayment = async () => {
     try {
       if (!userData) {
@@ -43,8 +46,9 @@ const Subscribe = () => {
       // 빌링키 발급
       await saveBillingKey(issueResponse?.billingKey as string, accessToken);
       // 상품 아이디 조회
-      const planId = await searchPlanId(accessToken);
-
+      const planData = await searchPlanId();
+      const planId = planData.id;
+      console.log(planData);
       if (typeof planId !== 'number') {
         console.log('구독 결제할 수 있는 상품이 없습니다.');
         return;
@@ -66,13 +70,13 @@ const Subscribe = () => {
       <div className="flex flex-col justify-center items-center mt-[6rem] md:mt-[10rem]">
         <div className="w-[35.5rem] md:w-[54rem] p-[3rem] border">
           <Heading tag="h1" className="!text-[4rem] md:!text-[5rem] leading-normal">
-            Standard
+            {planData.plan_name}
           </Heading>
           <ul className="mt-[5rem]">
             <li className="flex justify-between">
               <span className="text-[1.6rem]">매달 결제</span>
               <span className="text-right font-medium">
-                {STANDARD_PRICE.toLocaleString()}/월
+                {planData.price.toLocaleString()}/월
                 <br />
                 (VAT 포함)
               </span>
@@ -81,15 +85,18 @@ const Subscribe = () => {
         </div>
 
         <div className="w-[31.1rem] md:w-[50.5rem] mt-[5rem]">
-          <p className="mb-[0.7rem] text-right">{EXCEPT_VAT_PRICE.toLocaleString()}원/월</p>
+          <p className="mb-[0.7rem] text-right">
+            {Math.ceil(planData.price / 1.1).toLocaleString()}원/월
+          </p>
           <p className="flex justify-between font-medium text-[1.5rem] pb-[2.2rem] border-b">
             <span className="font-normal">VAT 10%</span>
-            <span>{VAT_PRICE.toLocaleString()}원/월</span>
+            <span>{Math.ceil(planData.price - planData.price / 1.1).toLocaleString()}원/월</span>
           </p>
           <p className="flex justify-between mt-[2.2rem]">
             <span className="font-bold">결제</span>
             <span className="text-[2.5rem] md:text-[3rem] text-right">
-              <span className="font-bold">{STANDARD_PRICE.toLocaleString()}원</span>/월
+              <span className="font-bold">{planData.price.toLocaleString()}원</span>
+              /월
               <br />
               <span className="font-normal text-[1.6rem]">(VAT 포함)</span>
             </span>

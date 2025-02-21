@@ -32,16 +32,13 @@ export const saveBillingKey = async (billingKey: string, accessToken: string) =>
 };
 
 // 상품 아이디 조회
-export const searchPlanId = async (accessToken: string) => {
+export const searchPlanId = async () => {
   try {
-    if (!accessToken) return { sub_status: 'error', error: '인증 토큰이 없습니다.' };
-
     const response = await fetch(`${API_BASE_URL}/api/plans/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${accessToken}`,
       },
     });
 
@@ -50,10 +47,10 @@ export const searchPlanId = async (accessToken: string) => {
       const errorMessage = errorData.error || `HTTP error! Status: ${response.status}`;
       throw new Error(errorMessage);
     }
-
     const data = await response.json();
     const planId = data.find((plan: Plan) => plan.is_active === true);
-    return planId.id;
+
+    return planId;
   } catch (error) {
     console.error('상품 아이디 조회 중 오류 발생:', error);
     return { success: false, message: error instanceof Error ? error.message : '알 수 없는 오류' };
@@ -230,7 +227,7 @@ export const pauseSubscription = async (plan: number, accessToken: string) => {
     }
 
     const data = await response.json();
-    return data.message;
+    return data;
   } catch (error) {
     console.error('구독 일시정지 중 오류 발생:', error);
     return { success: false, message: error instanceof Error ? error.message : '알 수 없는 오류' };

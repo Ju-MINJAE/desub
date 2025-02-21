@@ -25,8 +25,11 @@ const userDataSlice = createSlice({
     setUserData: (_, action: PayloadAction<UserData>) => {
       return action.payload;
     },
+    updateSubStatus: (state, action: PayloadAction<'active' | 'cancelled' | 'none' | 'paused'>) => {
+      state.sub_status = action.payload;
+    },
   },
 });
 
-export const { setUserData } = userDataSlice.actions;
+export const { setUserData, updateSubStatus } = userDataSlice.actions;
 export default userDataSlice.reducer;
