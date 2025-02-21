@@ -79,7 +79,7 @@ const Subscription = () => {
       setIsBlinking(true);
     }
   };
-
+  console.log('??', userData.sub_status);
   const handleStatus = () => {
     switch (userData?.sub_status) {
       case 'active':

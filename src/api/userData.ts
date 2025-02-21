@@ -1,6 +1,5 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
 import { getUserSession } from '@/app/actions/serverAction';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -29,8 +28,3 @@ export const fetchUserData = async () => {
   const data = await response.json();
   return data;
 };
-
-export async function invalidateUserData() {
-  revalidatePath('/subscription');
-  revalidatePath('/myInfo');
-}

@@ -3,6 +3,7 @@
 import { getUserSession } from '../app/actions/serverAction';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 import { Plan } from '@/types/plan';
+import { SubscriptionCancelReason } from '@/types/profiles';
 
 // 유저 데이터 받아오는 함수
 export const requestPayment = async (billingKey: string) => {
@@ -77,4 +78,104 @@ export const requestPayment = async (billingKey: string) => {
   }
 
   return '구독결제가 완료되었습니다';
+};
+
+// 구독 취소
+export const requestUnsubscribed = async (
+  id: number,
+  reasons: SubscriptionCancelReason,
+  accessToken: string,
+) => {
+  try {
+    if (!accessToken) return { sub_status: 'error', error: '인증 토큰이 없습니다.' };
+
+    const response = await fetch(`${API_BASE_URL}/api/payment/refund/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        plan_id: id,
+        cancelled_reason: reasons.cancelled_reason,
+        other_reason: reasons.other_reason,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      const errorMessage = errorData.error?.[0] || `HTTP error! Status: ${response.status}`;
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+    return data.message;
+  } catch (error) {
+    console.error('구독 일시정지 중 오류 발생:', error);
+    return { success: false, message: error instanceof Error ? error.message : '알 수 없는 오류' };
+  }
+};
+
+export const pauseSubscription = async (plan: number, accessToken: string) => {
+  try {
+    if (!accessToken) return { sub_status: 'error', error: '인증 토큰이 없습니다.' };
+
+    const response = await fetch(`${API_BASE_URL}/api/payment/pause/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        plan_id: plan,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      const errorMessage = errorData.error?.[0] || `HTTP error! Status: ${response.status}`;
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+    return data.message;
+  } catch (error) {
+    console.error('구독 일시정지 중 오류 발생:', error);
+    return { success: false, message: error instanceof Error ? error.message : '알 수 없는 오류' };
+  }
+};
+
+export const resumeSubscription = async (plan: number, accessToken: string) => {
+  try {
+    if (!accessToken) return { sub_status: 'error', error: '인증 토큰이 없습니다.' };
+
+    const response = await fetch(`${API_BASE_URL}/api/payment/resume/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        plan_id: plan,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      const errorMessage = errorData.error?.[0] || `HTTP error! Status: ${response.status}`;
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+    return data.message;
+  } catch (error) {
+    console.error('구독재개 중 오류 발생:', error);
+    return { success: false, message: error instanceof Error ? error.message : '알 수 없는 오류' };
+  }
 };
