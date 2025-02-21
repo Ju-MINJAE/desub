@@ -17,7 +17,7 @@ const FAQAccordion = () => {
   };
 
   return (
-    <div className="flex flex-col pt-[10rem] md:pt-[22.5rem]">
+    <div className="flex flex-col pt-[7.2rem] md:pt-[22.5rem]">
       <h2 className="ml-[4rem] md:ml-[13.5rem] mb-20 font-normal text-[1.8rem] md:text-[4rem] block">
         FAQ
       </h2>
@@ -28,12 +28,15 @@ const FAQAccordion = () => {
             <div key={index} className="border-b border-black">
               <button
                 onClick={() => toggleAccordion(index)}
-                className="flex w-full items-center justify-between py-1 md:py-4"
+                className="flex w-full items-center justify-between py-[1rem] md:py-[2.7rem] md:pl-[4.6rem]"
               >
-                <span className="text-[1.6rem] md:text-[3rem]">{item.question}</span>
+                <span className="text-[1.6rem] md:text-[3rem] text-left break-keep">
+                  {item.question}
+                </span>
                 <div className="relative w-[3rem] h-[3rem] md:w-[6.4rem] md:h-[6.4rem]">
                   <Image
                     fill
+                    sizes="(min-width: 768px) 6.4rem, 3rem"
                     alt="accordion_open_close"
                     src="/icons/chevron-down.svg"
                     className={`object-contain transition-transform duration-200 ${
@@ -51,7 +54,7 @@ const FAQAccordion = () => {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="pt-[1.1rem] md:pt-[6rem] pd-[1.1rem] md:pb-6 text-[1.4rem] md:text-[2.5rem] whitespace-pre-line">
+                  <p className="md:pt-[6rem] pd-[1.1rem] md:pb-6 text-[1.4rem] md:text-[2.5rem] whitespace-pre-line  md:pl-[4.6rem]">
                     {item.answer}
                   </p>
                 </div>

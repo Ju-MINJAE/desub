@@ -12,9 +12,9 @@ import BannerImage from './components/home/BannerImage';
 const Home = () => {
   return (
     <div className="flex flex-col">
-      <div className="relative w-full h-[80vh] mb-10">
+      {/* <div className="relative w-full h-[80vh] mb-10">
         <BannerImage />
-      </div>
+      </div> */}
       <HeroText />
       <Features />
       <UniqueProcess />

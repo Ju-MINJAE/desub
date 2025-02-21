@@ -4,8 +4,8 @@ import type React from 'react';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '../components/ui/Button';
 import TextButton from '../components/ui/TextButton';
-import { useState, useEffect } from 'react';
-import SubscriptionInactive from '../components/subscription/SubscriptionInactive';
+import { useState, useEffect, useMemo } from 'react';
+import SubscriptionsStatus from '../components/subscription/SubscriptionsStatus';
 import SubscriptionActive from '../components/subscription/SubscriptionActive';
 import SubscriptionPaused from '../components/subscription/SubscriptionPaused';
 import { SimpleAlert } from '../components/ui/SimpleAlert';
@@ -14,40 +14,66 @@ import { Alert } from '../components/ui/Alert';
 import Rating from 'react-rating';
 import '../../styles/review.css';
 import { useRouter } from 'next/navigation';
-import { useUserDataFetch } from '@/hooks/useUserDataFetch';
-
-const example = [
-  {
-    logTime: '2025-01-15 15:30',
-    changeLog: '재개',
-  },
-  {
-    logTime: '2025-02-15 15:30',
-    changeLog: '일시정지',
-  },
-];
+import { useAppSelector } from '@/hooks/redux/hooks';
+import { getUserSession } from '../actions/serverAction';
+import { getSubscriptionHistory, SubscriptionHistoryItem } from '@/api/subscription';
+import { formatDate } from '../../utils/dateUtils';
+import { postReview } from '@/api/review';
 
 const Subscription = () => {
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
   const [reviewModal, setReviewModal] = useState(false);
   const [review, setReview] = useState({
     rating: 0,
-    contents: '',
+    content: '',
   });
   const [reviewContents, setReviewContents] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
   const [lastCheckModal, setLastCheckModal] = useState(false);
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
+  const [history, setHistory] = useState<SubscriptionHistoryItem[]>([]);
   const router = useRouter();
-  const { userData, getUserData } = useUserDataFetch();
+  const userData = useAppSelector(state => state.userData);
+  const userSubStatue = userData.sub_status;
 
   useEffect(() => {
-    getUserData();
+    const fetchHistory = async () => {
+      try {
+        const { accessToken } = await getUserSession();
+        if (!accessToken) return;
+        const response = await getSubscriptionHistory(accessToken);
+
+        if (response.status === 'success' && response.data) {
+          setHistory(response.data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchHistory();
   }, []);
-  console.log(userData);
+
   const handleStarHover = () => {
     setIsBlinking(false);
   };
+
+  const translateStatus = (status: string) => {
+    switch (status) {
+      case 'renewal':
+        return '결제';
+      case 'cancel':
+        return '취소';
+      case 'pause':
+        return '일시정지';
+      case 'restarted':
+        return '재개';
+      default:
+        return status;
+    }
+  };
+
+  const reversedHistory = useMemo(() => [...history].reverse(), [history]);
 
   const handleStarLeave = () => {
     if (!reviewModal) {
@@ -57,14 +83,14 @@ const Subscription = () => {
 
   const handleStatus = () => {
     switch (userData?.sub_status) {
-      case 'none':
-        return <SubscriptionInactive />;
       case 'active':
+        return <SubscriptionActive />;
+      case 'cancelled':
         return <SubscriptionActive />;
       case 'paused':
         return <SubscriptionPaused />;
       default:
-        return <SubscriptionInactive />;
+        return <SubscriptionsStatus />;
     }
   };
 
@@ -74,7 +100,7 @@ const Subscription = () => {
     setReviewContents(e.target.value);
     if (content.trim() !== '') {
       setWarningMessage('');
-      setReview(prev => ({ ...prev, contents: content }));
+      setReview(prev => ({ ...prev, content: content }));
     }
   };
 
@@ -97,19 +123,25 @@ const Subscription = () => {
     setWarningMessage('');
     setReview({
       rating: 0,
-      contents: '',
+      content: '',
     });
   };
 
   // 최종 제출
-  const handleReviewSubmit = () => {
-    if (reviewContents.trim() === '') {
-      setWarningMessage('후기 내용을 입력해주세요.');
-      return;
+  const handleReviewSubmit = async () => {
+    try {
+      if (reviewContents.trim() === '') {
+        setWarningMessage('후기 내용을 입력해주세요.');
+        return;
+      }
+
+      await postReview(review);
+
+      resetReview();
+      setLastCheckModal(true);
+    } catch (error) {
+      console.error('리뷰 제출 실패:', error);
     }
-    console.log(review);
-    resetReview();
-    setLastCheckModal(true);
   };
 
   const goToTrelloLink = () => (window.location.href = 'https://trello.com/b/8NZhWTI4/desub');
@@ -131,7 +163,7 @@ const Subscription = () => {
               <textarea
                 className="w-full h-[20.7rem] border border-black p-[1rem]"
                 onChange={handleReviewContents}
-                value={review.contents}
+                value={review.content}
                 placeholder="여기에 솔직한 후기를 작성해주세요."
               ></textarea>
               {warningMessage && (
@@ -178,10 +210,10 @@ const Subscription = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-[1.5rem] text-[1.5rem] overflow-y-auto">
-                {example.map((item, index) => (
+                {reversedHistory.map((item, index) => (
                   <div key={index} className="flex items-center text-medium">
-                    <div className="w-3/4">{item.logTime}</div>
-                    <div className="w-1/4">{item.changeLog}</div>
+                    <div className="w-3/4">{formatDate(item.change_date)}</div>
+                    <div className="w-1/4">{translateStatus(item.status)}</div>
                   </div>
                 ))}
               </div>
@@ -194,24 +226,26 @@ const Subscription = () => {
       )}
       <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
         <BackButton text="my subscription" />
-        <div className="flex items-center">
-          <Button
-            onClick={openReviewModal}
-            className={`w-[11.9rem] h-[3.3rem] text-[1.5rem] ${isBlinking ? 'blinking' : ''}`}
-            size="small"
-            variant="outline"
-          >
-            리뷰 작성하기
-          </Button>
-          <div
-            onMouseEnter={handleStarHover}
-            onMouseLeave={handleStarLeave}
-            className="cursor-pointer"
-            onClick={openReviewModal}
-          >
-            <Image src="/icons/review.svg" alt="review_button" width={176.99} height={68} />
+        {userSubStatue !== 'none' && (
+          <div className="flex items-center">
+            <Button
+              onClick={openReviewModal}
+              className={`w-[11.9rem] h-[3.3rem] text-[1.5rem] ${isBlinking ? 'blinking' : ''}`}
+              size="small"
+              variant="outline"
+            >
+              리뷰 작성하기
+            </Button>
+            <div
+              onMouseEnter={handleStarHover}
+              onMouseLeave={handleStarLeave}
+              className="cursor-pointer"
+              onClick={openReviewModal}
+            >
+              <Image src="/icons/review.svg" alt="review_button" width={176.99} height={68} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="grid grid-cols-2 h-[71.2rem] mt-[2.9rem] px-[5.8rem]">
@@ -266,7 +300,6 @@ const Subscription = () => {
           </div>
         </div>
 
-        {/* 구독현황 */}
         <div className="flex flex-col pl-[5.9rem] justify-center">
           <div className="flex justify-between mt-[0.9rem]">
             <p className="font-bold">Status</p>

@@ -30,14 +30,14 @@ const MyInfo = () => {
       <BackButton className="pt-[4.7rem] px-[4.7rem]" text="my info" />
       <div className="w-full flex flex-col gap-[9.5rem] items-center">
         <ProfilesImage />
-        <div className="w-[35%] flex flex-col justify-between gap-[7rem]">
-          <p className="text-[2rem] font-extrabold ml-[2rem]">내 정보</p>
+        <div className="flex flex-col justify-between gap-[7rem]">
+          <p className="text-[2rem] font-extrabold">내 정보</p>
           <UserInfo register={register} errors={errors} />
           <Password register={register} errors={errors} />
         </div>
         <hr className="w-[70rem] border-lightgray" />
-        <div className="w-[35%] flex flex-col gap-[5rem]">
-          <p className="text-[2rem] font-extrabold ml-[2rem]">결제정보</p>
+        <div className="flex flex-col gap-[5rem]">
+          <p className="text-[2rem] font-extrabold">결제정보</p>
           <PaymentInfo />
         </div>
         <Button type="submit" variant="black">

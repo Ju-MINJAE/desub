@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
+import { useAppSelector } from '@/hooks/redux/hooks';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
+  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -31,6 +33,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
     { href: '/pricing', label: 'Pricing' },
     { href: '/book', label: 'Book a call' },
     { href: '/pricing/subscribe', label: 'Subscribe', className: 'pt-[3.5rem]' },
+    ...(isAuthenticated ? [{ href: '/subscription', label: 'My subscription' }] : []),
   ];
 
   return (
@@ -71,15 +74,17 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
         >
           Menu
         </button>
-        <button
-          className="w-[7.3rem] h-[3.3rem] bg-transparent text-white border border-white rounded-[2rem]"
-          onClick={() => {
-            router.push('/login');
-            onClose;
-          }}
-        >
-          login
-        </button>
+        {!isAuthenticated && (
+          <button
+            className="w-[7.3rem] h-[3.3rem] bg-transparent text-white border border-white rounded-[2rem]"
+            onClick={() => {
+              router.push('/login');
+              onClose;
+            }}
+          >
+            login
+          </button>
+        )}
       </div>
     </div>
   );

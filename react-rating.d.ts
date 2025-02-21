@@ -4,7 +4,7 @@ declare module 'react-rating' {
   interface RatingProps {
     initialRating: number;
     onChange: (rating: number) => void;
-    [key: string]: any; // 추가적인 props를 처리하기 위한 방법
+    [key: string]: any;
   }
 
   const Rating: React.FC<RatingProps>;

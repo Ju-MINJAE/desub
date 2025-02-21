@@ -16,12 +16,24 @@ import { formatPhoneNumber } from '@/utils/phone';
 import { usePhoneAuth } from '@/hooks/usePhoneAuth';
 import { formatTime } from '@/utils/time';
 import { getUserSession } from '@/app/actions/serverAction';
+import { Alert } from '@/app/components/ui/Alert';
+import AgreementItem from '@/app/components/signup/AgreementItem';
 
 export default function Social() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [isAuthFieldVisible, setIsAuthFieldVisible] = useState(false);
 
+  const handleClosePopup = () => {
+    setIsLoginPromptOpen(false);
+  };
+  const handleNavigateLogin = () => {
+    router.push('/login/email'); // 로그인 페이지로 이동
+  };
+
+  const handleNavigateFindAccount = () => {
+    router.push('/login/forgot'); // 계정찾기 페이지로 이동
+  };
   const {
     register,
     handleSubmit,
@@ -36,6 +48,7 @@ export default function Social() {
 
   // 폼제출
   const onSubmit = async (data: GoogleSignupValues) => {
+    console.log(data);
     const session = await getUserSession();
     const accessToken = session?.accessToken ?? ''; // 기본값 설정
     const refreshToken = session?.refreshToken ?? ''; // 기본값 설정
@@ -44,10 +57,11 @@ export default function Social() {
     if (!accessToken) {
       throw new Error('🚨 유효한 액세스 토큰이 없습니다.');
     }
-    const result = await saveGoogleUserPhone(data.phone_number, accessToken); // 구글 사용자 phone api 호출
+    const marketingConsent = data.marketing ?? false; // 기본값 false
+    const result = await saveGoogleUserPhone(data.phone_number, marketingConsent, accessToken); // 구글 사용자 phone api 호출
 
     // 회원가입 완료시
-    if (result?.message === '전화번호가 저장되었습니다.') {
+    if (result.status === 200) {
       dispatch(loginSuccess()); // login true
       router.push('/signup/complete'); // 회원가입 완료 페이지로 이동
     } else {
@@ -55,8 +69,15 @@ export default function Social() {
     }
   };
 
-  const { handleRequestVerification, handleVerifyCode, timeLeft, successMessage, isRequested } =
-    usePhoneAuth(watch, setValue, setError);
+  const {
+    handleRequestVerification,
+    handleVerifyCode,
+    timeLeft,
+    successMessage,
+    isRequested,
+    isLoginPromptOpen,
+    setIsLoginPromptOpen,
+  } = usePhoneAuth(watch, setValue, setError);
 
   const handleButtonClick = () => {
     handleRequestVerification(); // 휴대폰번호 인증 api
@@ -79,8 +100,8 @@ export default function Social() {
               type="tel"
               placeholder="010-1234-5678"
               {...register('phone_number')}
-              helperText={errors.phone_number?.message || ''}
-              status={errors.phone_number ? 'error' : 'default'}
+              helperText={errors.phone_number?.message || successMessage || ''}
+              status={errors.phone_number ? 'error' : successMessage ? 'success' : 'default'}
               value={formatPhoneNumber(phoneNumber)} // 실시간으로 포맷 적용
             />
             <Button
@@ -93,8 +114,7 @@ export default function Social() {
               {isRequested ? '인증 재발송' : '휴대폰 인증'}
             </Button>
           </div>
-
-          {isAuthFieldVisible && (
+          {isAuthFieldVisible && !successMessage && (
             <div className="grid grid-cols-[54rem_14rem] gap-x-8 items-center mt-[3rem]">
               <Input
                 type="text"
@@ -117,6 +137,15 @@ export default function Social() {
               </Button>
             </div>
           )}
+          <div className="mt-[5rem] mr-auto">
+            <AgreementItem
+              id="marketing"
+              text="마케팅 수신에 동의합니다."
+              required={false}
+              checked={watch('marketing') ?? false}
+              onChange={checked => setValue('marketing', checked, { shouldValidate: true })}
+            />
+          </div>
           <div className="flex items-center justify-center mt-[14.4rem]">
             <Button
               variant="black"
@@ -128,6 +157,24 @@ export default function Social() {
             </Button>
           </div>
         </form>
+        {isLoginPromptOpen && (
+          <Alert
+            buttonText="로그인 하기"
+            textButton="계정 찾기"
+            size="full"
+            title={
+              <>
+                입력된 정보로 가입된 이력이 있습니다.
+                <br />
+                로그인 또는 계정찾기를 진행해주세요.
+              </>
+            }
+            variant="green"
+            onClose={() => handleClosePopup()}
+            onSubmit={() => handleNavigateLogin()}
+            onTextButtonClick={() => handleNavigateFindAccount()}
+          />
+        )}
       </div>
     </div>
   );

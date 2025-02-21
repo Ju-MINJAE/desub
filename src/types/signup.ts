@@ -44,6 +44,7 @@ export type GoogleResponse = {
   access_token: string;
   refresh_token: string;
   phone: boolean;
+  error?: string;
 };
 
 export type LoginResponse = {

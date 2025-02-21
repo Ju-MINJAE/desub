@@ -31,8 +31,8 @@ const Available = () => {
   const x = useTransform(scrollYProgress, [0, 1], isMobile ? ['5%', '-40%'] : ['0%', '-10%']);
 
   return (
-    <div ref={ref} className="w-full px-4 md:px-[5rem] mt-20 overflow-hidden">
-      <h2 className="font-normal text-[1.8rem] md:text-[4rem] ml-4 md:ml-[13.5rem] block mb-10 md:mb-20">
+    <div ref={ref} className="w-full px-4 md:px-[5rem] mt-[10rem] md:mt-20 overflow-hidden">
+      <h2 className="font-normal text-[1.8rem] md:text-[4rem] ml-4 md:ml-[13.5rem] block mb-[6.4rem] md:mb-[8.4rem]">
         We available for
       </h2>
       <motion.div ref={containerRef} style={{ x }} className="flex gap-4 md:gap-[3rem] w-max">

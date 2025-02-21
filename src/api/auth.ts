@@ -83,8 +83,9 @@ export const loginWithGoogle = async () => {
 
 export const saveGoogleUserPhone = async (
   phone: string,
+  marketing_agreement: boolean,
   accessToken: string,
-): Promise<GoogleResponse> => {
+): Promise<GoogleResponse & { status: number }> => {
   console.log(phone, accessToken);
   try {
     const response = await fetch(`${API_BASE_URL}/api/user/g-phone/`, {
@@ -94,17 +95,18 @@ export const saveGoogleUserPhone = async (
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({ phone }),
+      body: JSON.stringify({ phone, marketing_agreement }),
     });
 
     const data = await response.json();
+    const status = response.status;
 
     if (!response.ok) {
       throw new Error(`🚨 서버 응답 실패: ${response.status}`);
     }
 
     console.log('전화번호 저장 성공:', data);
-    return data;
+    return { ...data, status };
   } catch (error) {
     console.error('🚨 구글 전화번호 저장 오류:', error);
     throw error;
@@ -119,7 +121,7 @@ export const fetchRefreshedToken = async (refreshToken: string): Promise<LoginRe
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ refreshToken }),
+      body: JSON.stringify({ refresh_token: refreshToken }),
     });
 
     const data = await response.json();
@@ -148,7 +150,7 @@ export const logoutUser = async (accessToken: string, refreshToken: string) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({ refreshToken }),
+      body: JSON.stringify({ refresh_token: refreshToken }),
     });
 
     if (!response.ok) {
