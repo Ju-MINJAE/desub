@@ -53,3 +53,27 @@ export async function getUserSession() {
     throw error;
   }
 }
+
+// 토큰 삭제 함수 (로그아웃)
+export async function clearUserSession() {
+  try {
+    cookies().set({
+      name: 'access_token',
+      value: '',
+      path: '/',
+      maxAge: 0, // 즉시 만료
+    });
+
+    cookies().set({
+      name: 'refresh_token',
+      value: '',
+      path: '/',
+      maxAge: 0, // 즉시 만료
+    });
+
+    console.log('유저 세션이 삭제되었습니다.');
+  } catch (error) {
+    console.error('세션 삭제 실패:', error);
+    throw error;
+  }
+}
