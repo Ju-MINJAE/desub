@@ -5,9 +5,10 @@ import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
 import { EXCEPT_VAT_PRICE, STANDARD_PRICE, VAT_PRICE } from '@/constants/price';
 import { useAppSelector } from '@/hooks/redux/hooks';
-import { requestPayment } from '@/api/payment';
+import { saveBillingKey, searchPlanId, subscribe } from '@/api/payment';
 const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
 const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
+import { getUserSession } from '@/app/actions/serverAction';
 
 import * as PortOne from '@portone/browser-sdk/v2';
 
@@ -36,8 +37,21 @@ const Subscribe = () => {
         return;
       }
 
-      const paymentData = await requestPayment(issueResponse?.billingKey as string);
-      console.log(paymentData);
+      const { accessToken } = await getUserSession();
+      if (!accessToken) return;
+
+      // 빌링키 발급
+      await saveBillingKey(issueResponse?.billingKey as string, accessToken);
+      // 상품 아이디 조회
+      const planId = await searchPlanId(accessToken);
+
+      if (typeof planId !== 'number') {
+        console.log('구독 결제할 수 있는 상품이 없습니다.');
+        return;
+      }
+      // 구독 결제 요청
+      const subscribeResponse = await subscribe(planId, accessToken);
+      console.log(subscribeResponse);
     } catch (error) {
       console.log(error);
     }
