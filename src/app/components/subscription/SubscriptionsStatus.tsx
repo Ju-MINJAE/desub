@@ -17,7 +17,7 @@ const SubscriptionsStatus = () => {
         if (!accessToken) return;
 
         const response = await statusSubscriptions(accessToken);
-
+        console.log(response);
         if (Array.isArray(response) && response.length > 0) {
           setStatus(response[0].sub_status);
         } else if ('error' in response) {
