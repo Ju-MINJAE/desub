@@ -57,7 +57,11 @@ const SubscriptionActive = () => {
     subscribedPlanId: number,
     selectedReason: SubscriptionCancelReason,
   ) => {
-    await handleCancelSubscription(subscribedPlanId, selectedReason);
+    const cancelSubscriptionResponse = await handleCancelSubscription(
+      subscribedPlanId,
+      selectedReason,
+    );
+    console.log(cancelSubscriptionResponse);
   };
 
   return (

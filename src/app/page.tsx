@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect } from 'react';
 import HeroText from './components/home/HeroText';
 import Features from './components/home/Features';
 import UniqueProcess from './components/home/UniqueProcess';
@@ -8,13 +11,30 @@ import Marquee from './components/home/Marquee';
 import Membership from './components/home/Membership';
 import Contact from './components/home/Contact';
 import BannerImage from './components/home/BannerImage';
+import { searchPlanId } from '@/api/payment';
+import { setPlanData } from '@/store/planDataSlice';
+import { useAppDispatch } from '@/hooks/redux/hooks';
 
 const Home = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const fetchPlanData = async () => {
+      const planData = await searchPlanId();
+      if (!planData) {
+        console.log('구독 결제할 수 있는 상품이 없습니다.');
+      }
+      dispatch(setPlanData(planData));
+    };
+    fetchPlanData();
+  }, []);
+
   return (
     <div className="flex flex-col">
       {/* <div className="relative w-full h-[80vh] mb-10">
         <BannerImage />
       </div> */}
+
       <HeroText />
       <Features />
       <UniqueProcess />

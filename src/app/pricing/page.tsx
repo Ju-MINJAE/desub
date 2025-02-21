@@ -8,27 +8,12 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';
 import Link from 'next/link';
-import { searchPlanId } from '@/api/payment';
-import { setPlanData } from '@/store/planDataSlice';
-import { useAppDispatch } from '@/hooks/redux/hooks';
 import { useAppSelector } from '@/hooks/redux/hooks';
 
 const Pricing = () => {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const planData = useAppSelector(state => state.plan);
-
-  useEffect(() => {
-    const fetchPlanData = async () => {
-      const planData = await searchPlanId();
-      if (!planData) {
-        console.log('구독 결제할 수 있는 상품이 없습니다.');
-      }
-      dispatch(setPlanData(planData));
-    };
-    fetchPlanData();
-  }, []);
 
   const handleTooltipToggle = () => {
     setIsTooltipOpen(prev => !prev);
