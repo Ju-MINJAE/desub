@@ -46,7 +46,7 @@ const Login = () => {
 
       <div className="relative w-1/2">
         <Image
-          src="/login_intro.png"
+          src="/images/login_intro.png"
           alt="로그인"
           fill
           sizes="100vw"

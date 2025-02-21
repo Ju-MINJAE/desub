@@ -1,14 +1,17 @@
 'use client';
 
 import Image from 'next/image';
-import { STANDARD_PRICE } from '@/constants/price';
 import { Button } from '../ui/Button';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useAppSelector } from '@/hooks/redux/hooks';
+
 const Membership = () => {
   const router = useRouter();
   const [buttonText, setButtonText] = useState('check design option');
+  const planData = useAppSelector(state => state.plan);
+
   useEffect(() => {
     const updateButtonText = () => {
       if (window.innerWidth <= 768) {
@@ -45,13 +48,13 @@ const Membership = () => {
           <h3 className="font-bold text-[3rem] md:text-[5rem] mb-0 md:mb-4 leading-[7.5rem]">
             membership
           </h3>
-          <p className="font-medium text-[1.5rem] md:text-[1.8rem] mb-6">Monthly</p>
+          <p className="font-medium text-[1.5rem] md:text-[1.8rem] mb-6">{planData.period}</p>
 
           <div className="flex flex-col items-center pt-[1.4rem] md:pt-[5.9rem] relative">
             <div className="relative">
               <div className="flex justify-end items-baseline mb-2">
                 <span className="font-bold text-[3rem] md:text-[5rem]">
-                  {STANDARD_PRICE.toLocaleString()}원{' '}
+                  {planData.price.toLocaleString()}원{' '}
                 </span>
                 <span className="text-[1.8rem] md:text-[3rem]">/ Month</span>
               </div>

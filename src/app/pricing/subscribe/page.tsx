@@ -3,7 +3,6 @@
 import Heading from '@/app/components/ui/Heading';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
-import { EXCEPT_VAT_PRICE, STANDARD_PRICE, VAT_PRICE } from '@/constants/price';
 import { useAppSelector } from '@/hooks/redux/hooks';
 import { saveBillingKey, searchPlanId, subscribe } from '@/api/payment';
 const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
