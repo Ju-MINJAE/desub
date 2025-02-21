@@ -6,27 +6,24 @@ const PaymentInfo = () => {
   const userData = useAppSelector(state => state.userData);
 
   const cardInfo = userData?.subscription_info;
-  console.log(cardInfo);
-
-  if (!cardInfo) {
-    return null;
-  }
-
-  const formattedCardNum = cardInfo.card_number;
-  const formattedPrice = cardInfo.payment_amount.toLocaleString('ko-KR');
-
-  const formattedNextBillDate = cardInfo.next_bill_date
+  const formattedCardNum = cardInfo?.card_number || '등록된 카드가 없습니다.';
+  const formattedCardName = cardInfo?.card_name || '';
+  const formattedPrice = cardInfo?.payment_amount
+    ? cardInfo.payment_amount.toLocaleString('ko-KR') + '원'
+    : '';
+  const formattedNextBillDate = cardInfo?.next_bill_date
     ? format(new Date(cardInfo.next_bill_date), 'yyyy년 M월 d일')
     : '-';
+  const formattedEmail = cardInfo ? userData?.email || '결제 이메일 없음' : null;
 
   return (
-    <div className="flex flex-col gap-[5rem] w-[57.4rem] ">
+    <div className="flex flex-col gap-[5rem] w-full md:w-[57.4rem] ">
       <div className="flex items-center">
         <p className="text-[1.6rem] min-w-[13.9rem]">결제카드</p>
         <div className="flex items-center gap-[1.5rem] text-[1.6rem] font-medium">
           {/* <div className="bg-gray w-[6.9rem] h-[4.2rem] rounded-[0.3rem]"></div> */}
           <p>
-            {cardInfo.card_name}&nbsp;&nbsp;
+            {formattedCardName}&nbsp;&nbsp;
             {formattedCardNum}
           </p>
         </div>
@@ -36,8 +33,9 @@ const PaymentInfo = () => {
         <p className="text-[1.6rem] min-w-[13.9rem]">다음 정기 결제일</p>
         <div className="flex items-center text-[1.6rem] font-medium">
           <p>
-            {formattedNextBillDate}&nbsp;/&nbsp;
-            {formattedPrice}원
+            {formattedNextBillDate}
+            {formattedNextBillDate && formattedPrice ? '\u00A0/\u00A0' : ''}
+            {formattedPrice}
           </p>
         </div>
       </div>
@@ -45,18 +43,20 @@ const PaymentInfo = () => {
       <div className="flex items-center">
         <p className="text-[1.6rem] min-w-[13.9rem]">결제 이메일</p>
         <div className="w-3/4 flex items-center text-[1.6rem] font-medium">
-          <p>{userData?.email || '-'}</p>
+          <p>{formattedEmail || '-'}</p>
         </div>
       </div>
 
-      <Button
-        size="small"
-        type="button"
-        variant="outline"
-        className="w-[16.2rem] h-[5.5rem] bg-white text-[1.6rem]"
-      >
-        결제정보 변경
-      </Button>
+      {cardInfo && (
+        <Button
+          size="small"
+          type="button"
+          variant="outline"
+          className="w-[16.2rem] h-[5.5rem] bg-white text-[1.6rem]"
+        >
+          결제정보 변경
+        </Button>
+      )}
     </div>
   );
 };
