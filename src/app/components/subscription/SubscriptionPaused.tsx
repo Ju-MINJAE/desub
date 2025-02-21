@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { getUserSession } from '@/app/actions/serverAction';
 import { statusSubscriptions } from '@/api/subscription';
 import { formatDateShort, formatRemainingBillDate } from '@/utils/dateUtils';
-import { handleUnsubscribed } from '@/utils/subscribe/handleUnsubscribed';
+import { handleCancelSubscription } from '@/utils/subscribe/handleCancelSubscription';
 import { handleResumeSubscription } from '@/utils/subscribe/handleResumeSubscription';
 import { SubscriptionCancelReason } from '@/types/profiles';
 
@@ -53,7 +53,7 @@ const SubscriptionPaused = () => {
     subscribedPlanId: number,
     selectedReason: SubscriptionCancelReason,
   ) => {
-    await handleUnsubscribed(subscribedPlanId, selectedReason);
+    await handleCancelSubscription(subscribedPlanId, selectedReason);
   };
 
   return (

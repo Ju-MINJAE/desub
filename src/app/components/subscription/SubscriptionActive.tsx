@@ -7,7 +7,7 @@ import { getUserSession } from '@/app/actions/serverAction';
 import { statusSubscriptions } from '@/api/subscription';
 import Unsubscription from './Unsubscription';
 import { calculateRemainingDays, formatDate, formatDateShort } from '@/utils/dateUtils';
-import { handleUnsubscribed } from '@/utils/subscribe/handleUnsubscribed';
+import { handleCancelSubscription } from '@/utils/subscribe/handleCancelSubscription';
 import { SubscriptionCancelReason } from '@/types/profiles';
 import { handlePauseSubscription } from '@/utils/subscribe/handlePauseSubscription';
 
@@ -52,7 +52,7 @@ const SubscriptionActive = () => {
     subscribedPlanId: number,
     selectedReason: SubscriptionCancelReason,
   ) => {
-    await handleUnsubscribed(subscribedPlanId, selectedReason);
+    await handleCancelSubscription(subscribedPlanId, selectedReason);
   };
 
   return (

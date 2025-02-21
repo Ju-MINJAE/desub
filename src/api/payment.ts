@@ -81,7 +81,7 @@ export const requestPayment = async (billingKey: string) => {
 };
 
 // 구독 취소
-export const requestUnsubscribed = async (
+export const cancelSubscription = async (
   id: number,
   reasons: SubscriptionCancelReason,
   accessToken: string,
