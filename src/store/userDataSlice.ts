@@ -26,8 +26,11 @@ const userDataSlice = createSlice({
       return action.payload;
     },
     clearUserData: () => initialState,
+    updateSubStatus: (state, action: PayloadAction<'active' | 'cancelled' | 'none' | 'paused'>) => {
+      state.sub_status = action.payload;
+    },
   },
 });
 
-export const { setUserData, clearUserData } = userDataSlice.actions;
+export const { setUserData, clearUserData, updateSubStatus } = userDataSlice.actions;
 export default userDataSlice.reducer;
