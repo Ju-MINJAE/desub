@@ -8,6 +8,8 @@ import { Confirm } from '../ui/Confirm';
 import { UnSubscriptionReason, SubscriptionCancelReason } from '@/types/profiles';
 import { selectedReasonsInitialValue, unSubscriptionReasons } from '@/constants/unSubscription';
 import { useAppSelector } from '@/hooks/redux/hooks';
+import { updateSubStatus } from '@/store/userDataSlice';
+import { useAppDispatch } from '@/hooks/redux/hooks';
 
 interface UnsubscriptionProps {
   onUnsubscribe: (subscribedPlanId: number, selectedReasons: SubscriptionCancelReason) => void;
