@@ -1,23 +1,20 @@
 'use client';
 
 import { Button } from '../ui/Button';
-import { useAppDispatch } from '@/hooks/redux/hooks';
-import { setSubscriptionStatus } from '../../../store/subscriptionStatusSlice';
 import Image from 'next/image';
 import Unsubscription from './Unsubscription';
 import { useEffect, useState } from 'react';
 import { getUserSession } from '@/app/actions/serverAction';
 import { statusSubscriptions } from '@/api/subscription';
 import { formatDateShort, formatRemainingBillDate } from '@/utils/dateUtils';
+import { handleCancelSubscription } from '@/utils/subscribe/handleCancelSubscription';
+import { handleResumeSubscription } from '@/utils/subscribe/handleResumeSubscription';
+import { SubscriptionCancelReason } from '@/types/profiles';
 
 const SubscriptionPaused = () => {
-  const dispatch = useAppDispatch();
   const [subscriptionInfo, setSubscriptionInfo] = useState<string>('');
   const [nextBillDate, setNextBillDate] = useState<string>('');
-
-  const handleSubscriptionStatus = () => {
-    dispatch(setSubscriptionStatus('subscribed'));
-  };
+  const [plan, setPlan] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -28,7 +25,7 @@ const SubscriptionPaused = () => {
 
         if (Array.isArray(response) && response.length > 0) {
           const subscription = response[0];
-
+          setPlan(subscription.plan);
           if (subscription.sub_status === 'paused') {
             const { formattedDate, daysRemaining } = formatRemainingBillDate(
               subscription.remaining_bill_date,
@@ -48,9 +45,15 @@ const SubscriptionPaused = () => {
     fetchStatus();
   }, []);
 
-  const handleUnsubscribe = () => {
-    // 구독 취소 로직 - util 함수로 만들어서 SubscriptionActive와 SubscriptionPaused에 함께 쓸지 고민해보기
-    console.log('구독 취소 로직');
+  const handleSubscriptionStatus = async (plan: number) => {
+    await handleResumeSubscription(plan);
+  };
+
+  const handleUnsubscribe = async (
+    subscribedPlanId: number,
+    selectedReason: SubscriptionCancelReason,
+  ) => {
+    await handleCancelSubscription(subscribedPlanId, selectedReason);
   };
 
   return (
@@ -61,7 +64,7 @@ const SubscriptionPaused = () => {
           className="w-[14.7rem] h-[6rem] font-bold text-[1.8rem] flex justify-center items-center gap-[0.6rem]"
           size="small"
           variant="outline"
-          onClick={handleSubscriptionStatus}
+          onClick={() => plan !== null && handleSubscriptionStatus(plan)}
         >
           <Image src="/icons/play-circle.svg" alt="" width={24} height={24} />
           구독재개

@@ -39,7 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-react-rating.d.ts
 *storybook.log
 
 # .nvmrc

@@ -34,6 +34,7 @@ const Subscription = () => {
   const [history, setHistory] = useState<SubscriptionHistoryItem[]>([]);
   const router = useRouter();
   const userData = useAppSelector(state => state.userData);
+  const userSubStatue = userData.sub_status;
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -79,7 +80,7 @@ const Subscription = () => {
       setIsBlinking(true);
     }
   };
-
+  console.log('??', userData.sub_status);
   const handleStatus = () => {
     switch (userData?.sub_status) {
       case 'active':
@@ -223,24 +224,26 @@ const Subscription = () => {
       )}
       <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
         <BackButton text="my subscription" />
-        <div className="flex items-center">
-          <Button
-            onClick={openReviewModal}
-            className={`w-[11.9rem] h-[3.3rem] text-[1.5rem] ${isBlinking ? 'blinking' : ''}`}
-            size="small"
-            variant="outline"
-          >
-            리뷰 작성하기
-          </Button>
-          <div
-            onMouseEnter={handleStarHover}
-            onMouseLeave={handleStarLeave}
-            className="cursor-pointer"
-            onClick={openReviewModal}
-          >
-            <Image src="/icons/review.svg" alt="review_button" width={176.99} height={68} />
+        {userSubStatue !== 'none' && (
+          <div className="flex items-center">
+            <Button
+              onClick={openReviewModal}
+              className={`w-[11.9rem] h-[3.3rem] text-[1.5rem] ${isBlinking ? 'blinking' : ''}`}
+              size="small"
+              variant="outline"
+            >
+              리뷰 작성하기
+            </Button>
+            <div
+              onMouseEnter={handleStarHover}
+              onMouseLeave={handleStarLeave}
+              className="cursor-pointer"
+              onClick={openReviewModal}
+            >
+              <Image src="/icons/review.svg" alt="review_button" width={176.99} height={68} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="grid grid-cols-2 h-[71.2rem] mt-[2.9rem] px-[5.8rem]">

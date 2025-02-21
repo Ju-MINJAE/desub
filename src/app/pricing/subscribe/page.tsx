@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import Heading from '@/app/components/ui/Heading';
 import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
@@ -31,6 +30,12 @@ const Subscribe = () => {
           fullName: userData?.name,
         },
       });
+
+      if (!issueResponse?.billingKey) {
+        console.log('로그인 후 진행해주세요.');
+        return;
+      }
+
       const paymentData = await requestPayment(issueResponse?.billingKey as string);
       console.log(paymentData);
     } catch (error) {
