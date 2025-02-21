@@ -66,9 +66,9 @@ const PricingProcess = () => {
           <Image
             src="/icons/arrow.svg"
             alt="arrow_right"
-            width={400}
-            height={1}
-            className="w-[14rem] md:w-[40rem] rotate-180"
+            width={40} // Update to match SVG's actual width
+            height={40} // Update to match SVG's actual height
+            className="h-auto w-[14rem] md:w-[40rem] rotate-180"
             onClick={() => router.push('/pricing')}
           />
         </button>

@@ -36,7 +36,13 @@ const Header = () => {
       <div className="w-full">
         <header className="px-[3.7rem] py-[2rem] flex items-center justify-center">
           <Link href="/" className="relative">
-            <Image src="/images/desub_logo.png" alt="header_logo" width={194} height={44} />
+            <Image
+              src="/images/desub_logo.png"
+              alt="header_logo"
+              width={194}
+              height={44}
+              priority
+            />
           </Link>
         </header>
       </div>

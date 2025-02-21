@@ -1,6 +1,6 @@
-import { Button } from '../ui/Button';
-import { useAppSelector } from '@/hooks/redux/hooks';
 import { format } from 'date-fns';
+import { useAppSelector } from '@/hooks/redux/hooks';
+import { Button } from '../ui/Button';
 
 const PaymentInfo = () => {
   const userData = useAppSelector(state => state.userData);

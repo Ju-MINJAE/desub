@@ -16,7 +16,10 @@ const LatestWorks = () => {
 
   return (
     <div className="flex flex-col overflow-hidden" ref={containerRef}>
-      <Heading tag="h1" className="mb-12 px-[6.2rem] md:px-[12rem] pt-20 md:pt-36">
+      <Heading
+        tag="h1"
+        className="mb-12 px-[6.2rem] md:px-[12rem] pt-[11rem] md:pt-[21rem] md:pt-36"
+      >
         Check our
         <br />
         Latest works
@@ -26,7 +29,7 @@ const LatestWorks = () => {
         {[...Array(6)].map((_, index) => (
           <div
             key={index}
-            className="w-[24.1rem] h-[34.6rem] md:w-[51.3rem] md:h-[73.7rem] flex-shrink-0"
+            className="w-[24.1rem] h-[34.6rem] md:w-[51.3rem] md:h-[73.7rem] flex-shrink-0 rounded-[3rem] overflow-hidden md:rounded-none md:overflow-auto"
           >
             <Image
               src={`/images/desub_project_${index + 1}.png`}
