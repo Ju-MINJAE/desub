@@ -1,6 +1,6 @@
 import { SubscriptionCancelReason, UnSubscriptionReason } from '@/types/profiles';
 
-export const selectedReasonInitialValue: SubscriptionCancelReason = {
+export const selectedReasonsInitialValue: SubscriptionCancelReason = {
   cancelled_reason: [],
   other_reason: '',
 };

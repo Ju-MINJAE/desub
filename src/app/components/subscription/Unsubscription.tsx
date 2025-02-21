@@ -6,18 +6,18 @@ import { useState } from 'react';
 import { Alert } from '../ui/Alert';
 import { Confirm } from '../ui/Confirm';
 import { UnSubscriptionReason, SubscriptionCancelReason } from '@/types/profiles';
-import { selectedReasonInitialValue, unSubscriptionReasons } from '@/constants/unSubscription';
+import { selectedReasonsInitialValue, unSubscriptionReasons } from '@/constants/unSubscription';
 import { useAppSelector } from '@/hooks/redux/hooks';
 
 interface UnsubscriptionProps {
-  onUnsubscribe: (subscribedPlanId: number, selectedReason: SubscriptionCancelReason) => void;
+  onUnsubscribe: (subscribedPlanId: number, selectedReasons: SubscriptionCancelReason) => void;
   nextBillDate: string;
 }
 
 const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBillDate }) => {
   const [firstCheckModal, setFirstCheckModal] = useState(false);
   const [subscriptionModal, setSubscriptionModal] = useState(false);
-  const [selectedReason, setSelectedReason] = useState(selectedReasonInitialValue);
+  const [selectedReasons, setSelectedReasons] = useState(selectedReasonsInitialValue);
   const [isOther, setIsOther] = useState(false);
   const [otherContents, setOtherContents] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
@@ -28,7 +28,7 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
   const handleFirstCheck = () => {
     setFirstCheckModal(false);
     setSubscriptionModal(true);
-    setSelectedReason(selectedReasonInitialValue);
+    setSelectedReasons(selectedReasonsInitialValue);
     setIsOther(false);
     setOtherContents('');
     setWarningMessage('');
@@ -37,7 +37,7 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
   // Second modal
   const handleSelectedReason = (item: UnSubscriptionReason) => {
     setWarningMessage('');
-    setSelectedReason(prev => {
+    setSelectedReasons(prev => {
       const isSelected = prev.cancelled_reason.includes(item.id);
 
       if (isSelected) {
@@ -76,7 +76,7 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
     if (content.trim() !== '') {
       setWarningMessage('');
     }
-    setSelectedReason(prev => ({
+    setSelectedReasons(prev => ({
       ...prev,
       other_reason: content,
     }));
@@ -84,7 +84,7 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
 
   // Second modal final submit
   const handleSubscriptionReasonSubmit = () => {
-    if (selectedReason.cancelled_reason.length === 0) {
+    if (selectedReasons.cancelled_reason.length === 0) {
       setWarningMessage('구독취소 사유를 선택해주세요.');
       return;
     }
@@ -99,7 +99,7 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
   // Second modal close button
   const handleSubscriptionReasonModalClose = () => {
     setSubscriptionModal(false);
-    setSelectedReason(selectedReasonInitialValue);
+    setSelectedReasons(selectedReasonsInitialValue);
     setIsOther(false);
     setOtherContents('');
     setWarningMessage('');
@@ -109,7 +109,7 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
   const handleLastCheckSubmit = () => {
     setLastCheckModal(false);
     const subscribedPlanId = userData.subscription_info.plan_id;
-    onUnsubscribe(subscribedPlanId, selectedReason);
+    onUnsubscribe(subscribedPlanId, selectedReasons);
   };
 
   // Last modal close button
@@ -151,7 +151,7 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
                   <label key={item.id} className="flex items-center gap-[0.9rem]">
                     <input
                       type="checkbox"
-                      checked={selectedReason.cancelled_reason.includes(item.id)}
+                      checked={selectedReasons.cancelled_reason.includes(item.id)}
                       onChange={() => handleSelectedReason(item)}
                       className="peer hidden"
                     />
