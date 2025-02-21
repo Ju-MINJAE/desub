@@ -5,29 +5,32 @@ import type React from 'react';
 import { useState } from 'react';
 import { Alert } from '../ui/Alert';
 import { Confirm } from '../ui/Confirm';
-import { type UnSubscriptionReason, unSubscriptionReasons } from '@/constants/unSubscription';
+import { UnSubscriptionReason, SubscriptionCancelReason } from '@/types/profiles';
+import { selectedReasonInitialValue, unSubscriptionReasons } from '@/constants/unSubscription';
+import { useAppSelector } from '@/hooks/redux/hooks';
 
 interface UnsubscriptionProps {
-  onUnsubscribe: () => void;
+  onUnsubscribe: (subscribedPlanId: number, selectedReason: SubscriptionCancelReason) => void;
   nextBillDate: string;
 }
 
 const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBillDate }) => {
   const [firstCheckModal, setFirstCheckModal] = useState(false);
   const [subscriptionModal, setSubscriptionModal] = useState(false);
-  const [selectedReason, setSelectedReason] = useState<UnSubscriptionReason[]>([]);
-  const [isEtc, setIsEtc] = useState(false);
-  const [etcContents, setEtcContents] = useState('');
+  const [selectedReason, setSelectedReason] = useState(selectedReasonInitialValue);
+  const [isOther, setIsOther] = useState(false);
+  const [otherContents, setOtherContents] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
   const [lastCheckModal, setLastCheckModal] = useState(false);
+  const userData = useAppSelector(state => state.userData);
 
   // First modal
   const handleFirstCheck = () => {
     setFirstCheckModal(false);
     setSubscriptionModal(true);
-    setSelectedReason([]);
-    setIsEtc(false);
-    setEtcContents('');
+    setSelectedReason(selectedReasonInitialValue);
+    setIsOther(false);
+    setOtherContents('');
     setWarningMessage('');
   };
 
@@ -35,47 +38,60 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
   const handleSelectedReason = (item: UnSubscriptionReason) => {
     setWarningMessage('');
     setSelectedReason(prev => {
-      const isSelected = prev.some(reason => reason.id === item.id);
+      const isSelected = prev.cancelled_reason.includes(item.id);
+
       if (isSelected) {
-        if (item.id === 'etc') setIsEtc(false);
-        return prev.filter(reason => reason.id !== item.id);
+        if (item.id === 'other') {
+          setIsOther(false);
+        }
+        return {
+          ...prev,
+          cancelled_reason: prev.cancelled_reason.filter(reason => reason !== item.id),
+        };
       } else {
-        if (prev.length >= 3) {
+        if (prev.cancelled_reason.length >= 3) {
           setWarningMessage('구독취소 사유는 최대 3개까지 선택 가능합니다.');
           return prev;
         }
-        if (item.id === 'etc') {
-          setIsEtc(true);
-          return [...prev, { ...item, contents: etcContents }];
+        if (item.id === 'other') {
+          setIsOther(true);
+          return {
+            ...prev,
+            cancelled_reason: [...prev.cancelled_reason, item.id],
+            other_reason: otherContents,
+          };
         }
-        return [...prev, item];
+        return {
+          ...prev,
+          cancelled_reason: [...prev.cancelled_reason, item.id],
+        };
       }
     });
   };
 
   // Second modal 'etc' reason
-  const handleEtcContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleOtherContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const content = e.target.value;
-    setEtcContents(content);
+    setOtherContents(content);
     if (content.trim() !== '') {
       setWarningMessage('');
     }
-    setSelectedReason(prev =>
-      prev.map(reason => (reason.id === 'etc' ? { ...reason, contents: content } : reason)),
-    );
+    setSelectedReason(prev => ({
+      ...prev,
+      other_reason: content,
+    }));
   };
 
   // Second modal final submit
   const handleSubscriptionReasonSubmit = () => {
-    if (selectedReason.length === 0) {
+    if (selectedReason.cancelled_reason.length === 0) {
       setWarningMessage('구독취소 사유를 선택해주세요.');
       return;
     }
-    if (isEtc && etcContents.trim() === '') {
+    if (isOther && otherContents.trim() === '') {
       setWarningMessage('기타 사유를 입력해주세요.');
       return;
     }
-    console.log(selectedReason);
     setSubscriptionModal(false);
     setLastCheckModal(true);
   };
@@ -83,16 +99,17 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
   // Second modal close button
   const handleSubscriptionReasonModalClose = () => {
     setSubscriptionModal(false);
-    setSelectedReason([]);
-    setIsEtc(false);
-    setEtcContents('');
+    setSelectedReason(selectedReasonInitialValue);
+    setIsOther(false);
+    setOtherContents('');
     setWarningMessage('');
   };
 
   // Last modal final submit
   const handleLastCheckSubmit = () => {
     setLastCheckModal(false);
-    onUnsubscribe();
+    const subscribedPlanId = userData.subscription_info.plan_id;
+    onUnsubscribe(subscribedPlanId, selectedReason);
   };
 
   // Last modal close button
@@ -134,7 +151,7 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
                   <label key={item.id} className="flex items-center gap-[0.9rem]">
                     <input
                       type="checkbox"
-                      checked={selectedReason.some(reason => reason.id === item.id)}
+                      checked={selectedReason.cancelled_reason.includes(item.id)}
                       onChange={() => handleSelectedReason(item)}
                       className="peer hidden"
                     />
@@ -143,11 +160,11 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
                   </label>
                 ))}
               </div>
-              {isEtc && (
+              {isOther && (
                 <textarea
                   className="w-full h-[20.7rem] border border-black p-[1rem]"
-                  onChange={handleEtcContents}
-                  value={etcContents}
+                  onChange={handleOtherContents}
+                  value={otherContents}
                   placeholder="여기에 구독취소 사유를 작성해주세요."
                 ></textarea>
               )}
