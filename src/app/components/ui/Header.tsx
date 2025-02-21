@@ -9,16 +9,37 @@ import { useState } from 'react';
 import MobileMenu from './MobileMenu';
 import { useAppSelector } from '@/hooks/redux/hooks';
 import type { RootState } from '@/store/store';
+import { useAppDispatch } from '@/hooks/redux/hooks';
+import { logoutUser } from '@/api/auth';
+import { getUserSession, clearUserSession } from '@/app/actions/serverAction';
+import { logout } from '@/store/authslice';
+import { clearUserData } from '@/store/userDataSlice';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const router = useRouter();
-  // const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
-  const isAuthenticated = localStorage.getItem('isAuthenticated');
+  const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
   console.log(isAuthenticated, subscriptionStatus);
 
   const pathname = usePathname();
+
+  // 임시 로그아웃
+  const logoutSession = async () => {
+    const { accessToken, refreshToken } = await getUserSession();
+    if (accessToken && refreshToken) {
+      try {
+        await logoutUser(accessToken, refreshToken); // 로그아웃 api
+        alert('로그아웃 완료');
+      } catch (error) {
+        console.error('로그아웃 실패', error);
+      }
+    }
+    await clearUserSession(); // 토큰 삭제
+    dispatch(logout());
+    dispatch(clearUserData());
+  };
 
   if (
     pathname.startsWith('/login') ||
@@ -113,6 +134,12 @@ const Header = () => {
                 >
                   workspace
                 </Link>
+                <button
+                  className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem] hidden md:block"
+                  onClick={logoutSession}
+                >
+                  logout
+                </button>
               </>
             ) : (
               //  로그인 후 미구독
@@ -141,6 +168,12 @@ const Header = () => {
                   >
                     my subscription
                   </Link>
+                  <button
+                    className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem] hidden md:block"
+                    onClick={logoutSession}
+                  >
+                    logout
+                  </button>
                 </div>
               </div>
             )
