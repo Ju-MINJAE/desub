@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
+import { useAppSelector } from '@/hooks/redux/hooks';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -9,7 +10,7 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
-  const isAuthenticated = localStorage.getItem('isAuthenticated');
+  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
   const router = useRouter();
   const pathname = usePathname();
 
