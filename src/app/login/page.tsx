@@ -44,7 +44,7 @@ const Login = () => {
               onClick={loginWithGoogle}
             >
               <span className="mr-[1rem]">
-                <Image src="/icons/google.png" alt="로그인" width={20} height={20} />
+                <Image src="/images/google.png" alt="로그인" width={20} height={20} />
               </span>
               Google Login
             </Button>
