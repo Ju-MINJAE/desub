@@ -39,7 +39,6 @@ const Subscription = () => {
   // 구독현황
   const subscriptionData = useUserData();
   const userSubStatue = subscriptionData?.userData?.sub_status;
-  console.log('ㅇㅇㅇ', history);
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -48,10 +47,8 @@ const Subscription = () => {
         const userSubStatue = subscriptionData?.userData?.sub_status;
         console.log(userSubStatue);
         const { accessToken } = await getUserSession();
-        console.log('엑세스', accessToken);
         if (!accessToken) return;
         const response = await getSubscriptionHistory(accessToken);
-        console.log('머지', response);
         if (response.status === 'success' && response.data) {
           setHistory(response.data);
         }
@@ -94,8 +91,6 @@ const Subscription = () => {
     switch (userSubStatue) {
       case 'active':
         return <SubscriptionActive />;
-      // case 'cancelled':
-      //   return <SubscriptionActive />;
       case 'paused':
         return <SubscriptionPaused />;
       default:

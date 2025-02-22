@@ -187,7 +187,7 @@ export const cancelSubscription = async (
         other_reason: reasons.other_reason,
       }),
     });
-    console.log('구취되는건지', response);
+
     if (!response.ok) {
       const errorData = await response.json();
       const errorMessage = errorData.error?.[0] || `HTTP error! Status: ${response.status}`;

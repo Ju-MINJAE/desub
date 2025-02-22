@@ -9,7 +9,7 @@ import { statusSubscriptions, SubscriptionStatus } from '@/api/subscription';
 const SubscriptionsStatus = () => {
   const router = useRouter();
   const [status, setStatus] = useState<SubscriptionStatus>('loading');
-  console.log('?', status);
+
   useEffect(() => {
     const fetchStatus = async () => {
       try {
@@ -17,7 +17,6 @@ const SubscriptionsStatus = () => {
         if (!accessToken) return;
 
         const response = await statusSubscriptions(accessToken);
-        console.log('구독정보', response);
         if (Array.isArray(response) && response.length > 0) {
           setStatus(response[0].sub_status);
         } else if ('error' in response) {
