@@ -42,7 +42,7 @@ export const AccountFound = () => {
           forgot account?
         </Heading>
 
-        <p className="mb-[6rem] text-[2rem] text-center">
+        <p className="mb-[6rem] text-[1.4rem] md:text-[2rem] text-center">
           {account?.provider === 'google' ? (
             <>
               이미 <strong>&#123;google&#125;</strong> 로 가입하신 계정이 있습니다.
@@ -53,12 +53,12 @@ export const AccountFound = () => {
             '이미 desub 계정이 있습니다.'
           )}
         </p>
-        <p className="mb-[10.6rem] text-[2.5rem]">{maskedEmail}</p>
+        <p className="mb-[10.6rem] text-[2rem] md:text-[3.5rem]">{maskedEmail}</p>
 
         {account?.provider === 'google' ? (
           <>
             <Button
-              className="flex items-center justify-center text-[1.6rem] h-[5.5rem] w-[40rem]"
+              className="flex items-center justify-center text-[1.6rem] h-[5.5rem]"
               size="default"
               type="button"
               variant="outline"

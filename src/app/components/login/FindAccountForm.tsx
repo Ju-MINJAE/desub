@@ -45,7 +45,10 @@ const FindAccountForm = () => {
 
   const phoneNumber = watch('phone_number') || ''; // 입력 값 실시간 감지
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-[54rem]">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col items-center w-[28rem] md:w-[54rem]"
+    >
       <Input
         {...register('phone_number')}
         value={formatPhoneNumber(phoneNumber)} // 실시간으로 포맷 적용
@@ -55,7 +58,7 @@ const FindAccountForm = () => {
         type="tel"
       />
 
-      <Button size="default" type="submit" variant="black" className="mt-[12rem]">
+      <Button size="default" type="submit" variant="black" className="mt-[5rem] md:mt-[12rem]">
         계정찾기
       </Button>
     </form>

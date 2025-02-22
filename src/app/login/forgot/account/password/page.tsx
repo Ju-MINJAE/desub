@@ -8,9 +8,6 @@ import ResetPasswordForm from '@/app/components/login/ResetPassWordForm';
 const Password = () => {
   const router = useRouter();
 
-  const handleNavigate = () => {
-    router.push('/login/forgot/account/password/sent');
-  };
   return (
     <div className="h-full">
       <div className="pt-[4.7rem] pl-[4.7rem]">
@@ -20,7 +17,7 @@ const Password = () => {
         <Heading tag="h1" className="mb-[4.4rem]">
           forgot account?
         </Heading>
-        <p className="text-[2rem] text-center pb-[8rem]">
+        <p className="text-[1.4rem] md:text-[2rem] text-center pb-[4rem] md:pb-[8rem]">
           비밀번호 재설정을 위해
           <br />
           계정(이메일)을 입력하세요.
