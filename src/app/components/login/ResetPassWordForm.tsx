@@ -33,7 +33,10 @@ const ResetPasswordForm = () => {
 
   const email = watch('email') || '';
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-[54rem]">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col items-center w-[28rem] md:w-[54rem]"
+    >
       <Input
         {...register('email')}
         helperText={errors.email?.message || ''}
@@ -42,8 +45,8 @@ const ResetPasswordForm = () => {
         type="email"
       />
       <Button
-        className="text-[1.6rem] h-[5.5rem] !w-[40rem] mt-[14rem]"
-        size="full"
+        className="text-[1.6rem] h-[5.5rem] mt-[6rem] md:mt-[14rem]"
+        size="default"
         type="submit"
         variant="black"
       >

@@ -22,6 +22,7 @@ const LoginForm = () => {
     setIsSignupPromptOpen(false);
     setIsGoogleSignupAlertOpen(false);
   };
+
   const handleNavigateJoin = () => {
     router.push('/signup'); // 회원가입 페이지로 이동
   };
@@ -65,7 +66,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mb-[1.6rem] w-[40rem] mx-auto">
+      <div className="flex flex-col justify-center items-center mb-[1.6rem] w-[28rem] md:w-[40rem] mx-auto">
         <form onSubmit={onSubmit} className="flex flex-col items-center w-full">
           <Input placeholder="email address" name="email" type="email" className="!text-[2rem]" />
           <Input
