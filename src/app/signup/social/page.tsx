@@ -143,7 +143,7 @@ export default function Social() {
           <div className="mt-[5rem] grid grid-cols-[70rem] self-baseline items-center ml-[-1.7rem]">
             <AgreementItem
               id="marketing"
-              text="[선택] 마케팅 수신에 동의합니다."
+              text="마케팅 수신에 동의합니다. (선택)"
               required={false}
               checked={watch('marketing') ?? false}
               onChange={checked => setValue('marketing', checked, { shouldValidate: true })}
