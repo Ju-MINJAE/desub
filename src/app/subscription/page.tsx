@@ -43,9 +43,6 @@ const Subscription = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const subscriptionData = await useUserData();
-        const userSubStatue = subscriptionData?.userData?.sub_status;
-        console.log(userSubStatue);
         const { accessToken } = await getUserSession();
         if (!accessToken) return;
         const response = await getSubscriptionHistory(accessToken);
