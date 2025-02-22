@@ -10,7 +10,6 @@ import { calculateRemainingDays, formatDate, formatDateShort } from '@/utils/dat
 import { handleCancelSubscription } from '@/utils/subscribe/handleCancelSubscription';
 import { SubscriptionCancelReason } from '@/types/profiles';
 import { handlePauseSubscription } from '@/utils/subscribe/handlePauseSubscription';
-import { useAppDispatch } from '@/hooks/redux/hooks';
 
 const SubscriptionActive = () => {
   const [subscriptionInfo, setSubscriptionInfo] = useState<string>('');

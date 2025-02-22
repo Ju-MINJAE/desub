@@ -8,7 +8,7 @@ export const handleCancelSubscription = async (id: number, reasons: Subscription
     if (!accessToken) return;
 
     const response = await cancelSubscription(id, reasons, accessToken);
-    console.log('?', response);
+
     return response;
   } catch (error) {
     console.error(error);

@@ -39,7 +39,7 @@ const Subscription = () => {
   // 구독현황
   const subscriptionData = useUserData();
   const userSubStatue = subscriptionData?.userData?.sub_status;
-  console.log(userSubStatue);
+  console.log('하하', userSubStatue);
 
   useEffect(() => {
     const fetchHistory = async () => {
