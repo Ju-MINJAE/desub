@@ -6,9 +6,12 @@ import { Alert } from '@/app/components/ui/Alert';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { WithdrawalSchema, WithdrawalValue } from '@/app/auth/schemas/WithdrawalSchema';
+import { useRouter } from 'next/navigation';
 
 const PaymentInfo = () => {
+  const router = useRouter();
   const [isWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false); // 탈퇴 모달 열림 여부
+  const [isWithdrawalCompleteModalOpen, setWithdrawalCompleteModalOpen] = useState(false);
   const userData = useAppSelector(state => state.userData);
   // 탈퇴 팝업
   const handleOpenPopup = () => {
@@ -16,6 +19,11 @@ const PaymentInfo = () => {
   };
   const handleClosePopup = () => {
     setIsWithdrawalModalOpen(false);
+    setWithdrawalCompleteModalOpen(false);
+    reset();
+  };
+  const handleNavigateHome = () => {
+    router.push('/'); // 홈으로 이동
   };
 
   // useform
@@ -24,6 +32,7 @@ const PaymentInfo = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm<WithdrawalValue>({
     resolver: zodResolver(WithdrawalSchema),
     mode: 'onChange',
@@ -32,6 +41,8 @@ const PaymentInfo = () => {
   const onSubmit = async (data: WithdrawalValue) => {
     try {
       console.log('api 호출');
+      setIsWithdrawalModalOpen(false);
+      setWithdrawalCompleteModalOpen(true);
     } catch (error) {
       console.error('탈퇴사유 전송 실패', error);
     }
@@ -102,7 +113,7 @@ const PaymentInfo = () => {
       {/* 탈퇴하기모달 */}
       {isWithdrawalModalOpen && (
         <Alert
-          buttonText="작성완료"
+          buttonText="탈퇴신청"
           contents={
             <form
               onSubmit={handleSubmit(onSubmit)}
@@ -112,7 +123,7 @@ const PaymentInfo = () => {
                 {...register('reason')}
                 className="w-full h-[20.7rem] border border-black p-[1rem]"
                 value={withdrawalReason}
-                placeholder="여기에 솔직한 후기를 작성해주세요."
+                placeholder="여기에 탈퇴 사유를 작성해주세요."
               ></textarea>
               {errors.reason?.message && (
                 <div className=" w-full">
@@ -123,9 +134,11 @@ const PaymentInfo = () => {
           }
           title={
             <>
-              구독기간 중 언제든 리뷰를 작성하실 수 있어요.
+              탈퇴 신청 시 구독중인 상품이 있는 경우 탈퇴가 불가합니다.
               <br />
-              작성된 리뷰는 서비스 개선에 참고하겠습니다.
+              탈퇴 신청 후 처리까지 7영업일 이상 소요될 수 있습니다.
+              <br />
+              별도 문의는 고객센터를 통해 연락 부탁드립니다.
             </>
           }
           size="normal"
@@ -133,6 +146,16 @@ const PaymentInfo = () => {
           onClose={handleClosePopup}
           onSubmit={handleSubmit(onSubmit)}
           className="w-[60rem] min-h-[60.4rem]"
+        />
+      )}
+      {isWithdrawalCompleteModalOpen && (
+        <Alert
+          buttonText="확인"
+          title={<p>소중한 의견 감사합니다.</p>}
+          size="full"
+          variant="outline"
+          onClose={handleClosePopup}
+          onSubmit={handleNavigateHome}
         />
       )}
     </div>
