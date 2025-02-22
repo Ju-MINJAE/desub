@@ -33,7 +33,7 @@ const MyInfo = () => {
         <div className="flex flex-col justify-between gap-[7rem]">
           <p className="text-[2rem] font-extrabold">내 정보</p>
           <UserInfo register={register} errors={errors} />
-          <Password register={register} errors={errors} />
+          <Password />
         </div>
         <hr className="w-[70rem] border-lightgray" />
         <div className="flex flex-col gap-[5rem]">

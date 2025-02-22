@@ -1,6 +1,6 @@
-import type { ProfilesField } from '@/types/profiles';
+import type { PasswordField } from '@/types/profiles';
 
-export const PASSWORD_FIELDS: ProfilesField[] = [
+export const PASSWORD_FIELDS: PasswordField[] = [
   {
     id: 'password',
     type: 'password',
