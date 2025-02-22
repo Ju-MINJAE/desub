@@ -81,7 +81,7 @@ export const getSubscriptionHistory = async (accessToken: string): Promise<ApiRe
         Authorization: `Bearer ${accessToken}`,
       },
     });
-
+    console.log('히스토리', response);
     if (!response.ok) {
       return { status: 'error', error: `HTTP error! status: ${response.status}` };
     }
