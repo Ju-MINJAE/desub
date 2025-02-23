@@ -54,7 +54,7 @@ const Subscribe = () => {
       // 구독 결제 요청
       const subscribeResponse = await subscribe(planId, accessToken);
       console.log(subscribeResponse);
-      router.push('/subscription');
+      router.push('/');
     } catch (error) {
       console.log(error);
     }
