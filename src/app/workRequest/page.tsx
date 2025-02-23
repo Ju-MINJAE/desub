@@ -42,7 +42,7 @@ const WorkRequest = () => {
       id: 'website',
     },
     '인쇄물(printing)': {
-      query: 'w7aj16?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
+      query: 'mVbqN6?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
       id: 'printing',
     },
     '제안서(proposal)': {

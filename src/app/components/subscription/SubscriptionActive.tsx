@@ -54,6 +54,7 @@ const SubscriptionActive = () => {
     selectedReason: SubscriptionCancelReason,
   ) => {
     await handleCancelSubscription(subscribedPlanId, selectedReason);
+    window.location.reload();
   };
 
   return (

@@ -6,9 +6,7 @@ export const handleCancelSubscription = async (id: number, reasons: Subscription
   try {
     const { accessToken } = await getUserSession();
     if (!accessToken) return;
-
     const response = await cancelSubscription(id, reasons, accessToken);
-
     return response;
   } catch (error) {
     console.error(error);
