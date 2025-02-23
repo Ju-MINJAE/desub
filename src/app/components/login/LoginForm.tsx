@@ -39,13 +39,14 @@ const LoginForm = () => {
     try {
       setSeverErrorMsg('');
       const result = await loginWithEmail(email, password);
-
+      console.log('확인확인', result);
       if (result && result.access_token && result.refresh_token) {
         await setUserSession(result.access_token, result.refresh_token);
         dispatch(loginSuccess()); // 로그인 상태 변경
 
         // 로그인 완료 후 유저정보 로컬에 저장
         const userData = await fetchUserData();
+        console.log('확인', userData);
         dispatch(setUserData(userData));
 
         router.push('/'); // 홈으로 이동

@@ -41,7 +41,6 @@ export const loginWithEmail = async (email: string, password: string): Promise<L
     });
 
     const data = await response.json();
-
     if (!response.ok) {
       // 400 에러일 경우
       if (response.status === 400 && data.message) {
