@@ -21,7 +21,6 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
-  console.log(isAuthenticated, subscriptionStatus);
 
   const pathname = usePathname();
 
