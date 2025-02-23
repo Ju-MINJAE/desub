@@ -39,8 +39,7 @@ const LoginForm = () => {
     try {
       setSeverErrorMsg('');
       const result = await loginWithEmail(email, password);
-      console.log(result);
-      console.log(1);
+
       if (result && result.access_token && result.refresh_token) {
         await setUserSession(result.access_token, result.refresh_token);
         dispatch(loginSuccess()); // 로그인 상태 변경
