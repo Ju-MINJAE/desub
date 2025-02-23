@@ -10,8 +10,6 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/hooks/redux/hooks';
 import { loginSuccess } from '@/store/authslice';
 import { setUserSession } from '@/app/actions/serverAction';
-import { fetchUserData } from '@/api/userData';
-import { setUserData } from '@/store/userDataSlice';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -43,12 +41,6 @@ const LoginForm = () => {
       if (result && result.access_token && result.refresh_token) {
         await setUserSession(result.access_token, result.refresh_token);
         dispatch(loginSuccess()); // 로그인 상태 변경
-
-        // 로그인 완료 후 유저정보 로컬에 저장
-        const userData = await fetchUserData();
-        console.log('확인', userData);
-        dispatch(setUserData(userData));
-
         router.push('/'); // 홈으로 이동
       } else {
         // 400에러 떴을때 (로그인 실패시)

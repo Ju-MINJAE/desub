@@ -10,7 +10,6 @@ import FAQAccordion from './components/home/FAQ_Accordion';
 import Marquee from './components/home/Marquee';
 import Membership from './components/home/Membership';
 import Contact from './components/home/Contact';
-import BannerImage from './components/home/BannerImage';
 import { searchPlanId } from '@/api/payment';
 import { setPlanData } from '@/store/planDataSlice';
 import { useAppDispatch } from '@/hooks/redux/hooks';
