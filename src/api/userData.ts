@@ -26,6 +26,5 @@ export const fetchUserData = async () => {
   }
 
   const data = await response.json();
-  console.log('ㅇㅇㅇ', data);
   return data;
 };

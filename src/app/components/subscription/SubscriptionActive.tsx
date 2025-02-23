@@ -10,14 +10,11 @@ import { calculateRemainingDays, formatDate, formatDateShort } from '@/utils/dat
 import { handleCancelSubscription } from '@/utils/subscribe/handleCancelSubscription';
 import { SubscriptionCancelReason } from '@/types/profiles';
 import { handlePauseSubscription } from '@/utils/subscribe/handlePauseSubscription';
-import { updateSubStatus } from '@/store/userDataSlice';
-import { useAppDispatch } from '@/hooks/redux/hooks';
 
 const SubscriptionActive = () => {
   const [subscriptionInfo, setSubscriptionInfo] = useState<string>('');
   const [nextBillDate, setNextBillDate] = useState<string>('');
   const [plan, setPlan] = useState<number | null>(null);
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -48,20 +45,15 @@ const SubscriptionActive = () => {
   }, []);
 
   const handleSubscriptionStatus = async (plan: number) => {
-    const pauseSubscription = await handlePauseSubscription(plan);
-    console.log(pauseSubscription);
-    dispatch(updateSubStatus('paused'));
+    await handlePauseSubscription(plan);
+    window.location.reload();
   };
 
   const handleUnsubscribe = async (
     subscribedPlanId: number,
     selectedReason: SubscriptionCancelReason,
   ) => {
-    const cancelSubscriptionResponse = await handleCancelSubscription(
-      subscribedPlanId,
-      selectedReason,
-    );
-    console.log(cancelSubscriptionResponse);
+    await handleCancelSubscription(subscribedPlanId, selectedReason);
   };
 
   return (
