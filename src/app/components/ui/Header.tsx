@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -23,6 +24,18 @@ const Header = () => {
   const subscriptionStatus = useAppSelector((state: RootState) => state.subscriptionStatus.status);
 
   const pathname = usePathname();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { refreshToken } = await getUserSession();
+      if (!refreshToken) {
+        await clearUserSession();
+        dispatch(logout());
+        dispatch(clearUserData());
+      }
+    };
+    checkSession();
+  }, [dispatch]);
 
   // 임시 로그아웃
   const logoutSession = async () => {
