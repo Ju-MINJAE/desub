@@ -8,12 +8,13 @@ import { saveBillingKey, searchPlanId, subscribe } from '@/api/payment';
 const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
 const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
 import { getUserSession } from '@/app/actions/serverAction';
+import { useRouter } from 'next/navigation';
 
 import * as PortOne from '@portone/browser-sdk/v2';
-
 const Subscribe = () => {
   const userData = useAppSelector(state => state.userData);
   const planData = useAppSelector(state => state.plan);
+  const router = useRouter();
 
   const handlePayment = async () => {
     try {
@@ -53,6 +54,7 @@ const Subscribe = () => {
       // 구독 결제 요청
       const subscribeResponse = await subscribe(planId, accessToken);
       console.log(subscribeResponse);
+      router.push('/subscription');
     } catch (error) {
       console.log(error);
     }

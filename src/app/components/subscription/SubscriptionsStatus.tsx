@@ -36,12 +36,13 @@ const SubscriptionsStatus = () => {
     active: '구독중',
     none: '미구독',
     cancelled: '미구독',
+    refund_pending: '구독 취소 승인 중',
     paused: '일시정지',
     error: '오류 발생',
   }[status];
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col">
       <div className="w-full max-w-[40.1rem] flex justify-between">
         <p className="text-[5rem] font-bold">{statusText}</p>
       </div>

@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import subscriptionStatusReducer from './subscriptionStatusSlice';
 import authReducer from './authslice';
 import userDataReducer from './userDataSlice';
-import planReducter from './planDataSlice';
+import planReducer from './planDataSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
@@ -25,7 +25,7 @@ const planPersistConfig = {
 const persistedUserDataReducer = persistReducer(userDataPersistConfig, userDataReducer);
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
-const persistedPlanReducer = persistReducer(planPersistConfig, planReducter);
+const persistedPlanReducer = persistReducer(planPersistConfig, planReducer);
 
 export const store = configureStore({
   reducer: {

@@ -88,6 +88,8 @@ const Subscription = () => {
     switch (userSubStatue) {
       case 'active':
         return <SubscriptionActive />;
+      case 'cancelled':
+        return <SubscriptionActive />;
       case 'paused':
         return <SubscriptionPaused />;
       default:

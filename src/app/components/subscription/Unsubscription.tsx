@@ -109,9 +109,8 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
   const handleLastCheckSubmit = () => {
     setLastCheckModal(false);
     const subscribedPlanId = userData?.subscription_info?.plan_id;
-    console.log('와이', subscribedPlanId);
     onUnsubscribe(subscribedPlanId, selectedReasons);
-    // window.location.reload();
+    window.location.reload();
   };
 
   // Last modal close button
