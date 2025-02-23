@@ -46,6 +46,7 @@ const SubscriptionActive = () => {
 
   const handleSubscriptionStatus = async (plan: number) => {
     await handlePauseSubscription(plan);
+    window.location.reload();
   };
 
   const handleUnsubscribe = async (

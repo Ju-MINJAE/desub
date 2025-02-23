@@ -19,6 +19,7 @@ import { getUserSession } from '../actions/serverAction';
 import { getSubscriptionHistory, SubscriptionHistoryItem } from '@/api/subscription';
 import { formatDate } from '../../utils/dateUtils';
 import { postReview } from '@/api/review';
+import useSubStatus from '@/hooks/useSubStatus';
 
 const Subscription = () => {
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
@@ -33,8 +34,11 @@ const Subscription = () => {
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
   const [history, setHistory] = useState<SubscriptionHistoryItem[]>([]);
   const router = useRouter();
+  // 유저정보
   const userData = useAppSelector(state => state.userData);
-  const userSubStatue = userData.sub_status;
+  // 구독현황
+  const subscriptionData = useSubStatus();
+  const userSubStatue = subscriptionData?.status;
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -42,7 +46,6 @@ const Subscription = () => {
         const { accessToken } = await getUserSession();
         if (!accessToken) return;
         const response = await getSubscriptionHistory(accessToken);
-
         if (response.status === 'success' && response.data) {
           setHistory(response.data);
         }
@@ -80,10 +83,12 @@ const Subscription = () => {
       setIsBlinking(true);
     }
   };
-  console.log('??', userData.sub_status);
+
   const handleStatus = () => {
-    switch (userData?.sub_status) {
+    switch (userSubStatue) {
       case 'active':
+        return <SubscriptionActive />;
+      case 'cancelled':
         return <SubscriptionActive />;
       case 'paused':
         return <SubscriptionPaused />;

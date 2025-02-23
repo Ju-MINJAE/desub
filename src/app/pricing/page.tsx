@@ -1,17 +1,19 @@
 'use client';
 
+import { useEffect } from 'react';
 import Heading from '@/app/components/ui/Heading';
 import { Button } from '@/app/components/ui/Button';
 import TextButton from '@/app/components/ui/TextButton';
 import { useRouter } from 'next/navigation';
-import { STANDARD_PRICE } from '@/constants/price';
 import Image from 'next/image';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useAppSelector } from '@/hooks/redux/hooks';
 
 const Pricing = () => {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const router = useRouter();
+  const planData = useAppSelector(state => state.plan);
 
   const handleTooltipToggle = () => {
     setIsTooltipOpen(prev => !prev);
@@ -34,13 +36,13 @@ const Pricing = () => {
       <div className="relative">
         <div className="max-w-[33rem] md:max-w-[79rem] pt-[5.8rem] md:pt-[4.1rem] px-[2rem] md:px-[10rem] pb-[3.8rem] rounded-[4rem] border">
           <p className="text-[4rem] md:text-[5rem] font-bold leading-[6rem] md:leading-[7.5rem]">
-            standard
+            {planData.plan_name}
           </p>
-          <p className="text-[1.8rem] font-medium mb-[1.5rem] md:mb-[7.2rem]">monthly</p>
+          <p className="text-[1.8rem] font-medium mb-[1.5rem] md:mb-[7.2rem]">{planData.period}</p>
           <div className="flex flex-col items-end mb-[2.3rem]">
             <p className="w-full">
               <strong className="text-[3rem] md:text-[5rem] font-bold">
-                {STANDARD_PRICE.toLocaleString()}원
+                {planData.price.toLocaleString()}원
               </strong>
               <span className="text-[1.6rem] md:text-[3rem] font-light month"> / Month</span>
             </p>

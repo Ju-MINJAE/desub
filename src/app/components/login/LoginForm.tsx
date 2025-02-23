@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/hooks/redux/hooks';
 import { loginSuccess } from '@/store/authslice';
 import { setUserSession } from '@/app/actions/serverAction';
+import { fetchUserData } from '@/api/userData';
+import { setUserData } from '@/store/userDataSlice';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -22,6 +24,7 @@ const LoginForm = () => {
     setIsSignupPromptOpen(false);
     setIsGoogleSignupAlertOpen(false);
   };
+
   const handleNavigateJoin = () => {
     router.push('/signup'); // 회원가입 페이지로 이동
   };
@@ -40,6 +43,11 @@ const LoginForm = () => {
       if (result && result.access_token && result.refresh_token) {
         await setUserSession(result.access_token, result.refresh_token);
         dispatch(loginSuccess()); // 로그인 상태 변경
+
+        // 로그인 완료 후 유저정보 로컬에 저장
+        const userData = await fetchUserData();
+        dispatch(setUserData(userData));
+
         router.push('/'); // 홈으로 이동
       } else {
         // 400에러 떴을때 (로그인 실패시)
@@ -65,7 +73,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mb-[1.6rem] w-[40rem] mx-auto">
+      <div className="flex flex-col justify-center items-center mb-[1.6rem] w-[28rem] md:w-[40rem] mx-auto">
         <form onSubmit={onSubmit} className="flex flex-col items-center w-full">
           <Input placeholder="email address" name="email" type="email" className="!text-[2rem]" />
           <Input

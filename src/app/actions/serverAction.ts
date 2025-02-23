@@ -12,7 +12,7 @@ export async function setUserSession(accessToken: string, refreshToken: string) 
     secure: process.env.NODE_ENV === 'production', // HTTPS에서만 사용
     sameSite: 'strict',
     path: '/',
-    maxAge: 60 * 30, // 30분 유지
+    maxAge: 60 * 5, // 5분 유지
   });
 
   cookies().set({
@@ -22,7 +22,7 @@ export async function setUserSession(accessToken: string, refreshToken: string) 
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
     path: '/',
-    maxAge: 60 * 60 * 24 * 7, // 7일 유지
+    maxAge: 60 * 30, // 30분 유지
   });
 }
 
