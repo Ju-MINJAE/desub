@@ -48,3 +48,31 @@ export const requestPasswordReset = async (email: string) => {
     throw error;
   }
 };
+
+export const deleteAccount = async (accessToken: string, reason: string) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/user/`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ reason }),
+    });
+
+    const data = await response.json();
+    const status = response.status;
+
+    // 400 에러일 경우
+    if (response.status === 400) {
+      return { ...data, status };
+    }
+
+    console.log('회원탈퇴 성공:', data);
+    return { status, data };
+  } catch (error) {
+    console.error('회원탈퇴 요청 실패:', error);
+    throw error;
+  }
+};

@@ -50,6 +50,8 @@ const LoginForm = () => {
           setIsSignupPromptOpen(true);
         } else if (result.error === '구글 소셜 로그인으로 가입된 계정입니다.') {
           setIsGoogleSignupAlertOpen(true);
+        } else if (result.error === '비활성화된 계정입니다. 관리자나 고객센터에 문의해주세요.') {
+          setSeverErrorMsg(result.error); // 임의처리
         }
       }
     } catch (error) {

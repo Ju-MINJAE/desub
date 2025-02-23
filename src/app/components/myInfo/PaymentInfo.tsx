@@ -7,20 +7,30 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { WithdrawalSchema, WithdrawalValue } from '@/app/auth/schemas/WithdrawalSchema';
 import { useRouter } from 'next/navigation';
+import { useAppDispatch } from '@/hooks/redux/hooks';
+import { deleteAccount } from '@/api/account';
+import { getUserSession, clearUserSession } from '@/app/actions/serverAction';
+import { logout } from '@/store/authslice';
+import { clearUserData } from '@/store/userDataSlice';
 
 const PaymentInfo = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [isWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false); // 탈퇴 모달 열림 여부
   const [isWithdrawalCompleteModalOpen, setWithdrawalCompleteModalOpen] = useState(false);
+  const [serverErrorMsg, setSeverErrorMsg] = useState<string>('');
   const userData = useAppSelector(state => state.userData);
   // 탈퇴 팝업
   const handleOpenPopup = () => {
     setIsWithdrawalModalOpen(true);
+    reset();
+    setSeverErrorMsg('');
   };
   const handleClosePopup = () => {
     setIsWithdrawalModalOpen(false);
     setWithdrawalCompleteModalOpen(false);
     reset();
+    setSeverErrorMsg('');
   };
   const handleNavigateHome = () => {
     router.push('/'); // 홈으로 이동
@@ -40,9 +50,21 @@ const PaymentInfo = () => {
 
   const onSubmit = async (data: WithdrawalValue) => {
     try {
-      console.log('api 호출');
-      setIsWithdrawalModalOpen(false);
-      setWithdrawalCompleteModalOpen(true);
+      const { accessToken } = await getUserSession();
+      if (!accessToken) return;
+      const result = await deleteAccount(accessToken, data.reason);
+      // 탈퇴 성공시
+      if (result.status === 200) {
+        await clearUserSession();
+        dispatch(logout());
+        dispatch(clearUserData());
+        setIsWithdrawalModalOpen(false);
+        setWithdrawalCompleteModalOpen(true);
+      }
+      // 탈퇴 실패시
+      if (result.status === 400) {
+        setSeverErrorMsg(result.message);
+      }
     } catch (error) {
       console.error('탈퇴사유 전송 실패', error);
     }
@@ -60,6 +82,7 @@ const PaymentInfo = () => {
   const formattedEmail = cardInfo ? userData?.email || '결제 이메일 없음' : null;
 
   const withdrawalReason = watch('reason') || '';
+  console.log(serverErrorMsg);
   return (
     <div className="flex flex-col gap-[5rem] w-full md:w-[57.4rem] ">
       <div className="flex items-center">
@@ -114,6 +137,7 @@ const PaymentInfo = () => {
       {isWithdrawalModalOpen && (
         <Alert
           buttonText="탈퇴신청"
+          buttonType="submit"
           contents={
             <form
               onSubmit={handleSubmit(onSubmit)}
@@ -125,9 +149,11 @@ const PaymentInfo = () => {
                 value={withdrawalReason}
                 placeholder="여기에 탈퇴 사유를 작성해주세요."
               ></textarea>
-              {errors.reason?.message && (
+              {(errors.reason?.message || serverErrorMsg) && (
                 <div className=" w-full">
-                  <p className="text-red text-[1.6rem]">{errors.reason?.message}</p>
+                  <p className="text-red text-[1.6rem]">
+                    {errors.reason?.message || serverErrorMsg}
+                  </p>
                 </div>
               )}
             </form>
