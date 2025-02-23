@@ -11,7 +11,6 @@ import { useAppDispatch } from '@/hooks/redux/hooks';
 import { loginSuccess } from '@/store/authslice';
 import { setUserSession } from '@/app/actions/serverAction';
 
-
 const LoginForm = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -36,9 +35,8 @@ const LoginForm = () => {
     const password = formData.get('password') as string;
 
     try {
-      setSeverErrorMsg('');
       const result = await loginWithEmail(email, password);
-      console.log('확인확인', result);
+      setSeverErrorMsg('');
       if (result && result.access_token && result.refresh_token) {
         await setUserSession(result.access_token, result.refresh_token);
         dispatch(loginSuccess()); // 로그인 상태 변경
@@ -50,9 +48,7 @@ const LoginForm = () => {
           setSeverErrorMsg(result.error);
         } else if (result.error === '입력된 정보로 가입된 이력이 없습니다.') {
           setIsSignupPromptOpen(true);
-        } else if (
-          result.error === '구글 소셜 로그인으로 가입된 계정입니다. 구글 로그인을 이용해주세요.'
-        ) {
+        } else if (result.error === '구글 소셜 로그인으로 가입된 계정입니다.') {
           setIsGoogleSignupAlertOpen(true);
         }
       }
