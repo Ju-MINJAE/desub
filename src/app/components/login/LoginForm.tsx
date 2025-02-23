@@ -10,8 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/hooks/redux/hooks';
 import { loginSuccess } from '@/store/authslice';
 import { setUserSession } from '@/app/actions/serverAction';
-import { fetchUserData } from '@/api/userData';
-import { setUserData } from '@/store/userDataSlice';
+
 
 const LoginForm = () => {
   const router = useRouter();
@@ -43,26 +42,16 @@ const LoginForm = () => {
       if (result && result.access_token && result.refresh_token) {
         await setUserSession(result.access_token, result.refresh_token);
         dispatch(loginSuccess()); // 로그인 상태 변경
-
-        // 로그인 완료 후 유저정보 로컬에 저장
-        const userData = await fetchUserData();
-        console.log('확인', userData);
-        dispatch(setUserData(userData));
-
         router.push('/'); // 홈으로 이동
-      } else {
-        // 400에러 떴을때 (로그인 실패시)
-        // 비밀번호 틀렸을때
-        if (result.message === '비밀번호를 다시 확인해주세요.') {
-          setSeverErrorMsg(result.message);
-        }
-        // 입력된 정보 없을때 팝업 띄우기
-        if (result.message === '입력된 정보로 가입된 이력이 없습니다.') {
+      }
+      // 로그인 실패(400 에러)인 경우 처리
+      if (result.status === 400) {
+        if (result.error === '비밀번호를 다시 확인해주세요.') {
+          setSeverErrorMsg(result.error);
+        } else if (result.error === '입력된 정보로 가입된 이력이 없습니다.') {
           setIsSignupPromptOpen(true);
-        }
-        // 구글로 가입한 계정일때
-        if (
-          result.message === '구글 소셜 로그인으로 가입된 계정입니다. 구글 로그인을 이용해주세요.'
+        } else if (
+          result.error === '구글 소셜 로그인으로 가입된 계정입니다. 구글 로그인을 이용해주세요.'
         ) {
           setIsGoogleSignupAlertOpen(true);
         }
@@ -75,7 +64,7 @@ const LoginForm = () => {
   return (
     <>
       <div className="flex flex-col justify-center items-center mb-[1.6rem] w-[28rem] md:w-[40rem] mx-auto">
-        <form onSubmit={onSubmit} className="flex flex-col items-center w-full">
+        <form onSubmit={onSubmit} className="flex flex-col items-center w-full text-left">
           <Input placeholder="email address" name="email" type="email" className="!text-[2rem]" />
           <Input
             helperText={serverErrorMsg}
