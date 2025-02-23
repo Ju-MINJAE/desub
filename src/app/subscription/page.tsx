@@ -19,7 +19,7 @@ import { getUserSession } from '../actions/serverAction';
 import { getSubscriptionHistory, SubscriptionHistoryItem } from '@/api/subscription';
 import { formatDate } from '../../utils/dateUtils';
 import { postReview } from '@/api/review';
-import useUserData from '@/hooks/useUserData';
+import useSubStatus from '@/hooks/useSubStatus';
 
 const Subscription = () => {
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
@@ -37,8 +37,8 @@ const Subscription = () => {
   // 유저정보
   const userData = useAppSelector(state => state.userData);
   // 구독현황
-  const subscriptionData = useUserData();
-  const userSubStatue = subscriptionData?.userData?.sub_status;
+  const subscriptionData = useSubStatus();
+  const userSubStatue = subscriptionData?.status;
 
   useEffect(() => {
     const fetchHistory = async () => {

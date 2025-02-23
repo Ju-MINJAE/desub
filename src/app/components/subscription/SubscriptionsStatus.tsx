@@ -2,34 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/Button';
-import { getUserSession } from '@/app/actions/serverAction';
-import { useEffect, useState } from 'react';
-import { statusSubscriptions, SubscriptionStatus } from '@/api/subscription';
+import useSubStatus from '@/hooks/useSubStatus';
 
 const SubscriptionsStatus = () => {
   const router = useRouter();
-  const [status, setStatus] = useState<SubscriptionStatus>('loading');
-
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const { accessToken } = await getUserSession();
-        if (!accessToken) return;
-
-        const response = await statusSubscriptions(accessToken);
-        if (Array.isArray(response) && response.length > 0) {
-          setStatus(response[0].sub_status);
-        } else if ('error' in response) {
-          setStatus('none');
-        }
-      } catch (err) {
-        console.error(err);
-        setStatus('error');
-      }
-    };
-
-    fetchStatus();
-  }, []);
+  const subscriptionData = useSubStatus();
+  const status = subscriptionData?.status;
 
   const statusText = {
     loading: '로딩 중...',
