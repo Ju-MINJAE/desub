@@ -38,11 +38,10 @@ const LoginForm = () => {
     try {
       setSeverErrorMsg('');
       const result = await loginWithEmail(email, password);
-
+      console.log('확인확인', result);
       if (result && result.access_token && result.refresh_token) {
         await setUserSession(result.access_token, result.refresh_token);
         dispatch(loginSuccess()); // 로그인 상태 변경
-
         router.push('/'); // 홈으로 이동
       }
       // 로그인 실패(400 에러)인 경우 처리

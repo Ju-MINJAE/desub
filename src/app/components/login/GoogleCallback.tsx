@@ -7,7 +7,6 @@ import { setUserSession } from '@/app/actions/serverAction';
 import { useAppDispatch } from '@/hooks/redux/hooks';
 import { loginSuccess } from '@/store/authslice';
 
-
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const GoogleCallback = () => {
