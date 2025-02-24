@@ -26,7 +26,7 @@ const ProfilesImage = () => {
         />
       ) : (
         <div className="w-full h-full bg-gray flex justify-center items-center rounded-full">
-          <Image src="/icons/add.svg" alt="" width={40} height={40} />
+          <Image src="/icons/profile.svg" alt="" width={198} height={198} />
         </div>
       )}
       <input
