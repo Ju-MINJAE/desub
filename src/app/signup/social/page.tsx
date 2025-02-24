@@ -94,7 +94,10 @@ export default function Social() {
           google login
         </Heading>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col items-center">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full flex flex-col items-center max-w-[70rem]"
+        >
           <div className="grid grid-cols-[54rem_14rem] gap-x-8 items-center">
             <Input
               type="tel"
@@ -137,10 +140,10 @@ export default function Social() {
               </Button>
             </div>
           )}
-          <div className="mt-[5rem] mr-auto">
+          <div className="mt-[5rem] grid grid-cols-[70rem] self-baseline items-center ml-[-1.7rem]">
             <AgreementItem
               id="marketing"
-              text="마케팅 수신에 동의합니다."
+              text="마케팅 수신에 동의합니다. (선택)"
               required={false}
               checked={watch('marketing') ?? false}
               onChange={checked => setValue('marketing', checked, { shouldValidate: true })}

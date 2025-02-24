@@ -10,6 +10,11 @@ export type ProfilesField = {
   placeholder?: string;
   disable?: boolean;
 };
+export interface PasswordField {
+  id: 'password' | 'newPassword' | 'newPassword_confirm';
+  type: 'password';
+  placeholder: string;
+}
 
 export interface SubscriptionInfo {
   card_name: string;

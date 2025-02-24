@@ -1,10 +1,10 @@
-import type { ProfilesField } from '@/types/profiles';
+import type { PasswordField } from '@/types/profiles';
 
-export const PASSWORD_FIELDS: ProfilesField[] = [
+export const PASSWORD_FIELDS: PasswordField[] = [
   {
     id: 'password',
     type: 'password',
-    placeholder: '이전 비밀번호',
+    placeholder: '현재 비밀번호',
   },
   {
     id: 'newPassword',
