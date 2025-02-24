@@ -27,7 +27,7 @@ const AgreementItem = ({ id, text, required, link, checked, onChange }: Agreemen
           </TextButton>
         )}
         {text}
-        {required && '(필수)'}
+        {required ? '(필수)' : '(선택)'}
       </span>
     </label>
   );
