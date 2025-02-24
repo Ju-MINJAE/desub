@@ -27,7 +27,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'desub',
     description: '디자인 월 구독 서비스',
-    images: ['/images/desub_ thumbnail.png'],
+    url: 'https://www.desub.kr/',
+    siteName: 'desub',
+    images: [
+      {
+        url: 'https://www.desub.kr/images/desub_thumbnail.png',
+        width: 1200,
+        height: 630,
+        alt: 'desub 썸네일 이미지',
+      },
+    ],
+    locale: 'ko_KR',
+    type: 'website',
   },
 };
 
