@@ -264,3 +264,36 @@ export const resumeSubscription = async (plan: number, accessToken: string) => {
     return { success: false, message: error instanceof Error ? error.message : '알 수 없는 오류' };
   }
 };
+
+// 카드 결제 정보 변경
+export const changeCardInfo = async (billingKey: string, accessToken: string) => {
+  try {
+    if (!accessToken) return { sub_status: 'error', error: '인증 토큰이 없습니다.' };
+    console.log('빌링키확인', billingKey);
+    const response = await fetch(`${API_BASE_URL}/api/payment/update-billing-key/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        billing_key: billingKey,
+      }),
+    });
+    console.log('반환값', response);
+    if (!response.ok) {
+      const errorData = await response.json();
+      const errorMessage = errorData.error?.[0] || `HTTP error! Status: ${response.status}`;
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+    console.log('반환값2', data);
+    return data.message;
+  } catch (error) {
+    console.error('구독재개 중 오류 발생:', error);
+    return { success: false, message: error instanceof Error ? error.message : '알 수 없는 오류' };
+  }
+};
