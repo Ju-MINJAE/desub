@@ -56,20 +56,6 @@ const PaymentInfo = () => {
     mode: 'onChange',
   });
 
-  // 미구독 상태, 취소상태인경우 결제정보 영역 표시 x
-  if (userSubStatue === 'none' || userSubStatue === 'cancelled') {
-    return (
-      <div>
-        {' '}
-        <button
-          className="text-[1.6rem] leading-[2.4rem] font-medium underline"
-          onClick={handleOpenPopup}
-        >
-          탈퇴하기
-        </button>
-      </div>
-    );
-  }
   const onSubmit = async (data: WithdrawalValue) => {
     try {
       const { accessToken } = await getUserSession();
@@ -103,49 +89,9 @@ const PaymentInfo = () => {
   console.log(serverErrorMsg);
   return (
     <>
-      <hr className="w-[70rem] border-lightgray" />
-
-      <div className="flex flex-col gap-[5rem] w-full md:w-[57.4rem] ">
-        <p className="text-[2rem] font-extrabold">결제정보</p>
-
-        <div className="flex items-center">
-          <p className="text-[1.6rem] min-w-[13.9rem]">결제카드</p>
-          <div className="flex items-center gap-[1.5rem] text-[1.6rem] font-medium">
-            <p>
-              {cardInfo?.card_name}&nbsp;&nbsp;
-              {formattedCardNum}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center">
-          <p className="text-[1.6rem] min-w-[13.9rem]">다음 정기 결제일</p>
-          <div className="flex items-center text-[1.6rem] font-medium">
-            <p>
-              {formattedNextBillDate}&nbsp;/&nbsp;
-              {formattedPrice}원
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center">
-          <p className="text-[1.6rem] min-w-[13.9rem]">결제 이메일</p>
-          <div className="w-3/4 flex items-center text-[1.6rem] font-medium">
-            <p>{userData?.email || '-'}</p>
-          </div>
-        </div>
-
-        {cardInfo && (
-          <Button
-            size="small"
-            type="button"
-            variant="outline"
-            className="w-[16.2rem] h-[5.5rem] bg-white text-[1.6rem]"
-          >
-            결제정보 변경
-          </Button>
-        )}
-        <div className="align-baseline pt-[14.3rem]">
+      {/* 미구독 ,취소상태 */}
+      {userSubStatue === 'none' || userSubStatue === 'cancelled' ? (
+        <div>
           <button
             className="text-[1.6rem] leading-[2.4rem] font-medium underline"
             onClick={handleOpenPopup}
@@ -153,59 +99,112 @@ const PaymentInfo = () => {
             탈퇴하기
           </button>
         </div>
+      ) : (
+        <>
+          <hr className="w-[70rem] border-lightgray" />
+          <div className="flex flex-col gap-[5rem] w-full md:w-[57.4rem]">
+            <p className="text-[2rem] font-extrabold">결제정보</p>
 
-        {/* 탈퇴하기모달 */}
-        {isWithdrawalModalOpen && (
-          <Alert
-            buttonText="탈퇴신청"
-            buttonType="submit"
-            contents={
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="pb-[4rem] flex flex-col items-center gap-[2rem]"
+            <div className="flex items-center">
+              <p className="text-[1.6rem] min-w-[13.9rem]">결제카드</p>
+              <div className="flex items-center gap-[1.5rem] text-[1.6rem] font-medium">
+                <p>
+                  {cardInfo?.card_name}&nbsp;&nbsp;
+                  {formattedCardNum}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center">
+              <p className="text-[1.6rem] min-w-[13.9rem]">다음 정기 결제일</p>
+              <div className="flex items-center text-[1.6rem] font-medium">
+                <p>
+                  {formattedNextBillDate}&nbsp;/&nbsp;
+                  {formattedPrice}원
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center">
+              <p className="text-[1.6rem] min-w-[13.9rem]">결제 이메일</p>
+              <div className="w-3/4 flex items-center text-[1.6rem] font-medium">
+                <p>{userData?.email || '-'}</p>
+              </div>
+            </div>
+
+            {cardInfo && (
+              <Button
+                size="small"
+                type="button"
+                variant="outline"
+                className="w-[16.2rem] h-[5.5rem] bg-white text-[1.6rem]"
               >
-                <textarea
-                  {...register('reason')}
-                  className="w-full h-[20.7rem] border border-black p-[1rem]"
-                  value={withdrawalReason}
-                  placeholder="여기에 탈퇴 사유를 작성해주세요."
-                ></textarea>
-                {(errors.reason?.message || serverErrorMsg) && (
-                  <div className=" w-full">
-                    <p className="text-red text-[1.6rem]">
-                      {errors.reason?.message || serverErrorMsg}
-                    </p>
-                  </div>
-                )}
-              </form>
-            }
-            title={
-              <>
-                탈퇴 신청 시 구독중인 상품이 있는 경우 탈퇴가 불가합니다.
-                <br />
-                탈퇴 신청 후 처리까지 7영업일 이상 소요될 수 있습니다.
-                <br />
-                별도 문의는 고객센터를 통해 연락 부탁드립니다.
-              </>
-            }
-            size="normal"
-            variant="green"
-            onClose={handleClosePopup}
-            onSubmit={handleSubmit(onSubmit)}
-            className="w-[60rem] min-h-[60.4rem]"
-          />
-        )}
-        {isWithdrawalCompleteModalOpen && (
-          <Alert
-            buttonText="확인"
-            title={<p>소중한 의견 감사합니다.</p>}
-            size="full"
-            variant="outline"
-            onClose={handleClosePopup}
-            onSubmit={handleNavigateHome}
-          />
-        )}
-      </div>
+                결제정보 변경
+              </Button>
+            )}
+
+            <div className="align-baseline pt-[14.3rem]">
+              <button
+                className="text-[1.6rem] leading-[2.4rem] font-medium underline"
+                onClick={handleOpenPopup}
+              >
+                탈퇴하기
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {isWithdrawalModalOpen && (
+        <Alert
+          buttonText="탈퇴신청"
+          buttonType="submit"
+          contents={
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="pb-[4rem] flex flex-col items-center gap-[2rem]"
+            >
+              <textarea
+                {...register('reason')}
+                className="w-full h-[20.7rem] border border-black p-[1rem]"
+                value={withdrawalReason}
+                placeholder="여기에 탈퇴 사유를 작성해주세요."
+              ></textarea>
+              {(errors.reason?.message || serverErrorMsg) && (
+                <div className=" w-full">
+                  <p className="text-red text-[1.6rem]">
+                    {errors.reason?.message || serverErrorMsg}
+                  </p>
+                </div>
+              )}
+            </form>
+          }
+          title={
+            <>
+              탈퇴 신청 시 구독중인 상품이 있는 경우 탈퇴가 불가합니다.
+              <br />
+              탈퇴 신청 후 처리까지 7영업일 이상 소요될 수 있습니다.
+              <br />
+              별도 문의는 고객센터를 통해 연락 부탁드립니다.
+            </>
+          }
+          size="normal"
+          variant="green"
+          onClose={handleClosePopup}
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-[60rem] min-h-[60.4rem]"
+        />
+      )}
+      {isWithdrawalCompleteModalOpen && (
+        <Alert
+          buttonText="확인"
+          title={<p>소중한 의견 감사합니다.</p>}
+          size="full"
+          variant="outline"
+          onClose={handleClosePopup}
+          onSubmit={handleNavigateHome}
+        />
+      )}
     </>
   );
 };
