@@ -40,7 +40,7 @@ const ProfilesImage: React.FC<ProfilesImageProps> = ({ register, setValue }) => 
       <input
         type="file"
         accept="image/*"
-        {...register("image")} 
+        {...register('image')}
         onChange={handleImageChange}
         className="hidden rounded-full"
       />

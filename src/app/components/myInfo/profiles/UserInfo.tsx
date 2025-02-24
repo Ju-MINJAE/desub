@@ -1,15 +1,24 @@
-import { UseFormRegister, FieldErrors } from 'react-hook-form';
+import { UseFormTrigger, UseFormRegister, FieldErrors } from 'react-hook-form';
 import { useAppSelector } from '@/hooks/redux/hooks';
 import { Input } from '@/app/components/ui/Input';
 import { UserProfileUpdateValue } from '@/app/profiles/schemas/UserProfileUpdateSchema';
-
+import { useEffect } from 'react';
 interface Props {
   register: UseFormRegister<UserProfileUpdateValue>;
   errors: FieldErrors<UserProfileUpdateValue>;
+  setValue: (name: keyof UserProfileUpdateValue, value: any) => void;
+  trigger: UseFormTrigger<UserProfileUpdateValue>;
 }
 
-const UserInfo = ({ register, errors }: Props) => {
+const UserInfo = ({ register, errors, setValue, trigger }: Props) => {
+  console.log(errors, '?');
   const userData = useAppSelector(state => state.userData);
+
+  useEffect(() => {
+    if (userData?.name) {
+      setValue('name', userData.name);
+    }
+  }, [userData?.name, setValue]);
 
   return (
     <div className="w-full md:w-[57.4rem] flex flex-col gap-[2.6rem] flex-grow-0">
@@ -36,6 +45,9 @@ const UserInfo = ({ register, errors }: Props) => {
             status={errors.name ? 'error' : 'default'}
             helperText={errors.name?.message || undefined}
           />
+          {errors.name && (
+            <span className="text-red-500 text-[1.4rem]">{errors.name.message as string}</span>
+          )}
         </div>
       </div>
     </div>
