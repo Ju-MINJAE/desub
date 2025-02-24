@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-const useLoading = (loadingTime = 1500) => {
+const useLoading = (loadingTime = 1000) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
