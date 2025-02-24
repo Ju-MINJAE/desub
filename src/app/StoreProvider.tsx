@@ -15,7 +15,7 @@ export default function StoreProvider({ children }: { children: React.ReactNode 
   return (
     <Provider store={storeRef.current}>
       <PersistGate
-        loading={<LoadingSpinner width={360} height={270} className="pt-[20rem] md:pt-[40rem]" />}
+        loading={<LoadingSpinner className="pt-[20rem] md:pt-[30rem]" />}
         persistor={persistor}
       >
         {children}
