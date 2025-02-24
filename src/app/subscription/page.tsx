@@ -98,11 +98,9 @@ const Subscription = () => {
   // 리뷰 관리
   const handleReviewContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const content = e.target.value;
-    setReviewContents(e.target.value);
-    if (content.trim() !== '') {
-      setWarningMessage('');
-      setReview(prev => ({ ...prev, content: content }));
-    }
+    setReviewContents(content);
+    setWarningMessage('');
+    setReview(prev => ({ ...prev, content: content }));
   };
 
   const openReviewModal = () => {
