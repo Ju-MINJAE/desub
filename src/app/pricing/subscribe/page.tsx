@@ -5,12 +5,13 @@ import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
 import { useAppSelector } from '@/hooks/redux/hooks';
 import { saveBillingKey, searchPlanId, subscribe } from '@/api/payment';
-const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
-const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
 import { getUserSession } from '@/app/actions/serverAction';
 import { useRouter } from 'next/navigation';
-
 import * as PortOne from '@portone/browser-sdk/v2';
+
+const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
+const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
+
 const Subscribe = () => {
   const userData = useAppSelector(state => state.userData);
   const planData = useAppSelector(state => state.plan);
@@ -69,7 +70,7 @@ const Subscribe = () => {
         <BackButton text="Subscribe" />
       </div>
 
-      <div className="h-[70vh] flex flex-col justify-center items-center mt-[6rem] md:mt-[10rem]">
+      <div className="flex flex-col justify-center items-center mt-[6rem] md:mt-[10rem]">
         <div className="w-[35.5rem] md:w-[54rem] p-[3rem] border">
           <Heading tag="h1" className="!text-[4rem] md:!text-[5rem] leading-normal">
             {planData.plan_name}
@@ -107,6 +108,7 @@ const Subscribe = () => {
 
         <Button
           variant="green"
+          size="default"
           type="button"
           className="text-[1.6rem] mt-[6rem] md:mt-[9rem]"
           onClick={handlePayment}
