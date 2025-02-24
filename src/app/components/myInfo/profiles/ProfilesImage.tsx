@@ -26,7 +26,7 @@ const ProfilesImage = () => {
         />
       ) : (
         <div className="w-full h-full bg-gray flex justify-center items-center rounded-full">
-          <Image src="/icons/profile.svg" alt="" width={198} height={198} />
+          <Image src="/icons/profile.svg" alt="desub_myInfo_Profile" width={198} height={198} />
         </div>
       )}
       <input
