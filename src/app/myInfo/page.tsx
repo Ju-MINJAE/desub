@@ -18,11 +18,36 @@ import { getUserSession, clearUserSession } from '@/app/actions/serverAction';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/hooks/redux/hooks';
 
+type ModalType = 'confirm' | 'complete' | null;
+
+interface ModalProps {
+  title: React.ReactNode;
+  buttonText: string;
+  size: 'normal' | 'full';
+  variant: 'green' | 'outline';
+  buttonType?: 'button' | 'submit';
+}
+
+const MODAL_CONFIGS: Record<Exclude<ModalType, null>, ModalProps> = {
+  confirm: {
+    title: <>변경사항을 저장하시겠습니까?</>,
+    buttonText: '확인',
+    size: 'normal',
+    variant: 'green',
+    buttonType: 'submit',
+  },
+  complete: {
+    title: <p>변경사항이 저장되었습니다.</p>,
+    buttonText: '확인',
+    size: 'full',
+    variant: 'outline',
+  },
+};
+
 const MyInfo = () => {
   const userData = useAppSelector(state => state.userData);
   const router = useRouter();
-  const [isProfileModalOpen, setProfileModalOpen] = useState(false);
-  const [isProfileCompleteModalOpen, SetProfileCompleteModalOpen] = useState(false);
+  const [activeModal, setActiveModal] = useState<ModalType>(null);
 
   const {
     register,
@@ -69,26 +94,26 @@ const MyInfo = () => {
   const handleValidateBeforeOpenModal = () => {
     handleSubmit(
       () => {
-        setProfileModalOpen(true); // 유효성 검사 통과시 모달 열기
+        setActiveModal('confirm'); // 유효성 검사 통과시 확인 모달 열기
       },
       errors => {
         console.log('Validation errors:', errors); // 에러 확인용
       },
     )();
   };
-  const handleClosePopup = () => {
-    setProfileModalOpen(false);
-    SetProfileCompleteModalOpen(false);
-    reset();
-  };
 
-  const handleConfirmSubmit = () => {
-    SetProfileCompleteModalOpen(false); //확인 모달 닫기
-    handleSubmit(onSubmit)(); // form 직접 제출 실행
-  };
-
-  const handleNavigateHome = () => {
-    router.push('/'); // 홈으로 이동
+  const handleModalAction = () => {
+    switch (activeModal) {
+      case 'confirm':
+        handleSubmit(onSubmit)();
+        break;
+      case 'complete':
+        router.push('/');
+        break;
+      default:
+        setActiveModal(null);
+        break;
+    }
   };
   return (
     <>
@@ -112,27 +137,15 @@ const MyInfo = () => {
           </Button>
         </div>
       </form>
-      {/* 변경사항 저장확인 모달 */}
-      {isProfileModalOpen && (
+      {activeModal && (
         <Alert
-          buttonText="확인"
-          buttonType="submit"
-          title={<>변경사항을 저장하시겠습니까?</>}
-          size="normal"
-          variant="green"
-          onClose={handleClosePopup}
-          onSubmit={handleConfirmSubmit}
-        />
-      )}
-      {/* 변경사항 저장완료 모달 */}
-      {isProfileCompleteModalOpen && (
-        <Alert
-          buttonText="확인"
-          title={<p>변경사항이 저장되었습니다.</p>}
-          size="full"
-          variant="outline"
-          onClose={handleClosePopup}
-          onSubmit={handleNavigateHome}
+          buttonText={MODAL_CONFIGS[activeModal].buttonText}
+          buttonType={MODAL_CONFIGS[activeModal].buttonType || 'button'}
+          title={MODAL_CONFIGS[activeModal].title}
+          size={MODAL_CONFIGS[activeModal].size}
+          variant={MODAL_CONFIGS[activeModal].variant}
+          // onClose={handleCloseModal}
+          onSubmit={handleModalAction}
         />
       )}
     </>

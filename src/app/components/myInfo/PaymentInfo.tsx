@@ -25,8 +25,8 @@ const PaymentInfo = () => {
   const cardInfo = userData?.subscription_info;
   // 구독현황
   const subscriptionData = useSubStatus();
-  const userSubStatue = subscriptionData?.status;
-
+  const userSubStatue = subscriptionData?.status.sub_status;
+  console.log(userSubStatue, '?');
   // 탈퇴 팝업
   const handleOpenPopup = () => {
     setIsWithdrawalModalOpen(true);
