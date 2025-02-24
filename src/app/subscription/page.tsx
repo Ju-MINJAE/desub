@@ -263,7 +263,7 @@ const Subscription = () => {
                 <button>
                   <Image
                     src="/icons/setting.svg"
-                    alt=""
+                    alt="desub_myInfo"
                     width={24}
                     height={24}
                     onClick={() => router.push('/myInfo')}
@@ -289,7 +289,7 @@ const Subscription = () => {
                 onClick={goToTrelloLink}
               >
                 Workspace
-                <Image src="/icons/workSpace.svg" alt="" width={24} height={24} />
+                <Image src="/icons/workSpace.svg" alt="desub_workspace" width={24} height={24} />
               </Button>
             </div>
             <TextButton href="/howToRequest" className="mt-[4rem] text-[1.5rem]">

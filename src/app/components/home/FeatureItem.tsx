@@ -12,7 +12,7 @@ const FeatureItem = ({ imageSrc, title, description }: FeatureItemProps) => {
       <div className="relative w-[33rem] md:w-full aspect-square whitespace-pre-line">
         <Image
           src={imageSrc || '/placeholder.svg'}
-          alt=""
+          alt="desub_Feature"
           fill
           style={{ objectFit: 'contain' }}
           sizes="(min-width: 768px) 100vw, 33rem"
