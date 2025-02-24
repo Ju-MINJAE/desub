@@ -4,7 +4,7 @@ export const PASSWORD_FIELDS: PasswordField[] = [
   {
     id: 'password',
     type: 'password',
-    placeholder: '이전 비밀번호',
+    placeholder: '현재 비밀번호',
   },
   {
     id: 'newPassword',

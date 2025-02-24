@@ -27,8 +27,6 @@ const PaymentInfo = () => {
   // 구독현황
   const subscriptionData = useSubStatus();
   const userSubStatue = subscriptionData?.status;
-  console.log(userSubStatue, '상태');
-  console.log(cardInfo);
 
   // 탈퇴 팝업
   const handleOpenPopup = () => {
@@ -60,7 +58,17 @@ const PaymentInfo = () => {
 
   // 미구독 상태, 취소상태인경우 결제정보 영역 표시 x
   if (userSubStatue === 'none' || userSubStatue === 'cancelled') {
-    return null;
+    return (
+      <div>
+        {' '}
+        <button
+          className="text-[1.6rem] leading-[2.4rem] font-medium underline"
+          onClick={handleOpenPopup}
+        >
+          탈퇴하기
+        </button>
+      </div>
+    );
   }
   const onSubmit = async (data: WithdrawalValue) => {
     try {
