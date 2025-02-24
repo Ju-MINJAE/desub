@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { changePassword } from '@/api/account';
 import { Alert } from '@/app/components/ui/Alert';
+import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/hooks/redux/hooks';
 import {
@@ -22,18 +23,7 @@ const Password = () => {
   const dispatch = useAppDispatch();
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
   const [isPasswordCompleteModalOpen, setPasswordCompleteModalOpen] = useState(false);
-  const [inputTypes, setInputTypes] = useState(
-    PASSWORD_FIELDS.reduce<Record<string, string>>((acc, field) => {
-      acc[field.id] = 'password';
-      return acc;
-    }, {}),
-  );
-  const [visibilityIcon, setVisibilityIcon] = useState(
-    PASSWORD_FIELDS.reduce<Record<string, string>>((acc, field) => {
-      acc[field.id] = '/icons/visibility.svg';
-      return acc;
-    }, {}),
-  );
+  const { inputTypes, visibilityIcon, handleChangeType } = usePasswordVisibility(PASSWORD_FIELDS);
 
   const {
     register,
@@ -80,19 +70,6 @@ const Password = () => {
     }
   };
 
-  const handleChangeType = (id: string) => {
-    setInputTypes(prevState => ({
-      ...prevState,
-      [id]: prevState[id] === 'password' ? 'text' : 'password',
-    }));
-    setVisibilityIcon(prevState => ({
-      ...prevState,
-      [id]:
-        prevState[id] === '/icons/visibility.svg'
-          ? '/icons/invisibility.svg'
-          : '/icons/visibility.svg',
-    }));
-  };
   const handleClosePopup = () => {
     setPasswordModalOpen(false);
     setPasswordCompleteModalOpen(false);
