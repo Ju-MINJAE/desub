@@ -41,7 +41,7 @@ const SubscriptionActive = () => {
     window.location.reload();
   };
 
-  const handleUnsubscribe = async (plan: number, selectedReason: SubscriptionCancelReason) => {
+  const handleUnsubscribe = async (selectedReason: SubscriptionCancelReason) => {
     await handleCancelSubscription(plan, selectedReason);
     window.location.reload();
   };

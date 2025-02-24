@@ -46,7 +46,7 @@ const Subscribe = () => {
       // 상품 아이디 조회
       const planData = await searchPlanId();
       const planId = planData.id;
-      console.log(planData);
+
       if (typeof planId !== 'number') {
         console.log('구독 결제할 수 있는 상품이 없습니다.');
         return;

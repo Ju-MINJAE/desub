@@ -7,10 +7,9 @@ import { Alert } from '../ui/Alert';
 import { Confirm } from '../ui/Confirm';
 import { UnSubscriptionReason, SubscriptionCancelReason } from '@/types/profiles';
 import { selectedReasonsInitialValue, unSubscriptionReasons } from '@/constants/unSubscription';
-import { useAppSelector } from '@/hooks/redux/hooks';
 
 interface UnsubscriptionProps {
-  onUnsubscribe: (subscribedPlanId: number, selectedReasons: SubscriptionCancelReason) => void;
+  onUnsubscribe: (selectedReasons: SubscriptionCancelReason) => void;
   nextBillDate: string;
 }
 
@@ -22,7 +21,6 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
   const [otherContents, setOtherContents] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
   const [lastCheckModal, setLastCheckModal] = useState(false);
-  const userData = useAppSelector(state => state.userData);
 
   // First modal
   const handleFirstCheck = () => {
@@ -108,8 +106,7 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
   // Last modal final submit
   const handleLastCheckSubmit = () => {
     setLastCheckModal(false);
-    const subscribedPlanId = userData?.subscription_info?.plan_id;
-    onUnsubscribe(subscribedPlanId, selectedReasons);
+    onUnsubscribe(selectedReasons);
   };
 
   // Last modal close button
