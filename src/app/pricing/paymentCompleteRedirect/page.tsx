@@ -21,7 +21,7 @@ const PaymentCompleteRedirect = () => {
       setPaymentFailure(true);
       setMessage(data.error);
     }
-    if (data.error === '정기 결제 및 다음 결제 예약 성공') {
+    if (data.message === '정기 결제 및 다음 결제 예약 성공') {
       setMessage('구독이 완료되었습니다.');
     }
     if (data.error === '이미 Plans object (1)에 구독중입니다.') {
