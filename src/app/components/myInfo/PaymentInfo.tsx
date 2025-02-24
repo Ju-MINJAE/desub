@@ -17,16 +17,15 @@ import useSubStatus from '@/hooks/useSubStatus';
 const PaymentInfo = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [isWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false); // 탈퇴 모달 열림 여부
+  const [isWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false);
   const [isWithdrawalCompleteModalOpen, setWithdrawalCompleteModalOpen] = useState(false);
   const [serverErrorMsg, setSeverErrorMsg] = useState<string>('');
 
   const userData = useAppSelector(state => state.userData);
   const cardInfo = userData?.subscription_info;
-
   // 구독현황
   const subscriptionData = useSubStatus();
-  const userSubStatue = subscriptionData?.status;
+  const userSubStatue = subscriptionData?.status.sub_status;
 
   // 탈퇴 팝업
   const handleOpenPopup = () => {
@@ -86,7 +85,11 @@ const PaymentInfo = () => {
     : '-';
 
   const withdrawalReason = watch('reason') || '';
-  console.log(serverErrorMsg);
+
+  const changePaymentDetails = () => {
+    console.log(1);
+  };
+
   return (
     <>
       {/* 미구독 ,취소상태 */}
@@ -138,6 +141,7 @@ const PaymentInfo = () => {
                 type="button"
                 variant="outline"
                 className="w-[16.2rem] h-[5.5rem] bg-white text-[1.6rem]"
+                onClick={changePaymentDetails}
               >
                 결제정보 변경
               </Button>

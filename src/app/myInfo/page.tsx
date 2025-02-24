@@ -3,21 +3,24 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ProfilesFormData, ProfilesSchema } from '../profiles/schemas/ProfilesSchema';
+import {
+  UserProfileUpdateValue,
+  UserProfileUpdateSchema,
+} from '@/app/profiles/schemas/UserProfileUpdateSchema';
 import { BackButton } from '@/app/components/ui/BackButton';
-import ProfilesImage from '../components/myInfo/profiles/ProfilesImage';
-import UserInfo from '../components/myInfo/profiles/UserInfo';
 import Password from '../components/myInfo/profiles/Password';
 import PaymentInfo from '../components/myInfo/PaymentInfo';
+import ProfileDetails from '../components/myInfo/profiles/ProfileDetails';
 import { Button } from '../components/ui/Button';
 
 const MyInfo = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<ProfilesFormData>({
-    resolver: zodResolver(ProfilesSchema),
+  } = useForm<UserProfileUpdateValue>({
+    resolver: zodResolver(UserProfileUpdateSchema),
     mode: 'onBlur',
   });
 
@@ -29,10 +32,8 @@ const MyInfo = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="h-full">
       <BackButton className="pt-[4.7rem] px-[4.7rem]" text="my info" />
       <div className="w-full flex flex-col gap-[9.5rem] items-center">
-        <ProfilesImage />
-        <div className="flex flex-col justify-between gap-[7rem]">
-          <p className="text-[2rem] font-extrabold">내 정보</p>
-          <UserInfo register={register} errors={errors} />
+        <ProfileDetails register={register} errors={errors} setValue={setValue} />
+        <div className="flex w-full md:w-[57.4rem] md:justify-start justify-center">
           <Password />
         </div>
         <div className="flex flex-col gap-[5rem]">

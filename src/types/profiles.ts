@@ -1,9 +1,9 @@
-import { ProfilesFormData } from '@/app/profiles/schemas/ProfilesSchema';
+import { UserProfileUpdateValue } from '@/app/profiles/schemas/UserProfileUpdateSchema';
 
-type ProfilesFormKeys = keyof ProfilesFormData;
+type UserProfileUpdateKeys = keyof UserProfileUpdateValue;
 
 export type ProfilesField = {
-  id: ProfilesFormKeys;
+  id: UserProfileUpdateKeys;
   label?: string;
   value?: string;
   type: 'text' | 'password' | 'email';

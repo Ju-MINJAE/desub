@@ -1,7 +1,6 @@
 'use client';
 
 import Heading from '@/app/components/ui/Heading';
-import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
 import { useAppSelector } from '@/hooks/redux/hooks';
 import { saveBillingKey, searchPlanId, subscribe } from '@/api/payment';
@@ -16,6 +15,7 @@ const Subscribe = () => {
   const userData = useAppSelector(state => state.userData);
   const planData = useAppSelector(state => state.plan);
   const router = useRouter();
+  const m_redirect_url = `${window.location.origin}/pricing/subscribe`;
 
   const handlePayment = async () => {
     try {
@@ -32,6 +32,7 @@ const Subscribe = () => {
         customer: {
           fullName: userData?.name,
         },
+        redirectUrl: m_redirect_url,
       });
 
       if (!issueResponse?.billingKey) {
@@ -42,7 +43,7 @@ const Subscribe = () => {
       const { accessToken } = await getUserSession();
       if (!accessToken) return;
 
-      // 빌링키 발급
+      // 빌링키 저장
       await saveBillingKey(issueResponse?.billingKey as string, accessToken);
       // 상품 아이디 조회
       const planData = await searchPlanId();
@@ -54,6 +55,7 @@ const Subscribe = () => {
       }
       // 구독 결제 요청
       const subscribeResponse = await subscribe(planId, accessToken);
+      console.log('?', subscribeResponse);
       router.push(
         `/pricing/paymentCompleteRedirect?data=${encodeURIComponent(
           JSON.stringify(subscribeResponse),
@@ -67,7 +69,6 @@ const Subscribe = () => {
   return (
     <div className="h-full">
       <div className="pt-[4.7rem] pl-[4.7rem]">
-        {/* <BackButton text="Subscribe" /> */}
         <button
           onClick={() => router.push('/pricing')}
           className="flex flex-col items-start p-1 focus:outline-none"
@@ -77,7 +78,7 @@ const Subscribe = () => {
         </button>
       </div>
 
-      <div className="h-[70vh] flex flex-col justify-center items-center mt-[6rem] md:mt-[10rem]">
+      <div className="h-[110vh] flex flex-col justify-center items-center mt-[6rem] md:mt-[10rem] md:h-[70vh]">
         <div className="w-[35.5rem] md:w-[54rem] p-[3rem] border">
           <Heading tag="h1" className="!text-[4rem] md:!text-[5rem] leading-normal">
             {planData.plan_name}
