@@ -28,7 +28,7 @@ const Password = () => {
   // 유저 데이터 갖고오기
   const userData = useAppSelector(state => state.userData);
   const isGoogleUser = userData?.email.endsWith('@gmail.com');
-  
+
   const {
     register,
     handleSubmit,
@@ -126,16 +126,17 @@ const Password = () => {
           />
         </>
       ) : (
-        <Button
-          size="small"
-          type="button"
-          variant="outline"
-          className="w-[16.2rem] h-[5.5rem] bg-white text-[1.6rem]"
-          onClick={() => setPasswordModalOpen(true)}
-          disabled={isGoogleUser}
-        >
-          비밀번호 변경
-        </Button>
+        !isGoogleUser && (
+          <Button
+            size="small"
+            type="button"
+            variant="outline"
+            className="w-[16.2rem] h-[5.5rem] bg-white text-[1.6rem]"
+            onClick={() => setPasswordModalOpen(true)}
+          >
+            비밀번호 변경
+          </Button>
+        )
       )}
       {isPasswordCompleteModalOpen && (
         <Alert
