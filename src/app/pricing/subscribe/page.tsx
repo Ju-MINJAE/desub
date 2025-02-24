@@ -9,6 +9,7 @@ const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
 const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
 import { getUserSession } from '@/app/actions/serverAction';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 import * as PortOne from '@portone/browser-sdk/v2';
 const Subscribe = () => {
@@ -66,7 +67,14 @@ const Subscribe = () => {
   return (
     <div className="h-full">
       <div className="pt-[4.7rem] pl-[4.7rem]">
-        <BackButton text="Subscribe" />
+        {/* <BackButton text="Subscribe" /> */}
+        <button
+          onClick={() => router.push('/pricing')}
+          className="flex flex-col items-start p-1 focus:outline-none"
+        >
+          <Image src="/icons/arrow.svg" alt="BackButton" width={81} height={0} />
+          <span className="font-bold mt-6">Subscribe</span>
+        </button>
       </div>
 
       <div className="h-[70vh] flex flex-col justify-center items-center mt-[6rem] md:mt-[10rem]">
