@@ -1,39 +1,31 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Button } from '../ui/Button';
-import Image from 'next/image';
-import { getUserSession } from '@/app/actions/serverAction';
-import { statusSubscriptions } from '@/api/subscription';
-import Unsubscription from './Unsubscription';
 import { calculateRemainingDays, formatDate, formatDateShort } from '@/utils/dateUtils';
 import { handleCancelSubscription } from '@/utils/subscribe/handleCancelSubscription';
 import { SubscriptionCancelReason } from '@/types/profiles';
 import { handlePauseSubscription } from '@/utils/subscribe/handlePauseSubscription';
+import useSubStatus from '@/hooks/useSubStatus';
+import { Button } from '../ui/Button';
+import Image from 'next/image';
+import Unsubscription from './Unsubscription';
 
 const SubscriptionActive = () => {
+  const subscriptionData = useSubStatus();
+  const plan = subscriptionData.status.plan;
   const [subscriptionInfo, setSubscriptionInfo] = useState<string>('');
   const [nextBillDate, setNextBillDate] = useState<string>('');
-  const [plan, setPlan] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const { accessToken } = await getUserSession();
-        if (!accessToken) return;
-        const response = await statusSubscriptions(accessToken);
+        if (subscriptionData.status.sub_status === 'active') {
+          const formattedEndDate = formatDateShort(subscriptionData.status.end_date);
+          const daysRemaining = calculateRemainingDays(subscriptionData.status.end_date);
+          setSubscriptionInfo(`~${formattedEndDate} / D-${daysRemaining}일 남음`);
 
-        if (Array.isArray(response) && response.length > 0) {
-          const subscription = response[0];
-          setPlan(subscription.plan);
-          if (subscription.sub_status === 'active') {
-            const formattedEndDate = formatDateShort(subscription.end_date);
-            const daysRemaining = calculateRemainingDays(subscription.end_date);
-            setSubscriptionInfo(`~${formattedEndDate} / D-${daysRemaining}일 남음`);
-
-            if (subscription.next_bill_date) {
-              setNextBillDate(formatDate(subscription.next_bill_date));
-            }
+          if (subscriptionData.status.next_bill_date) {
+            setNextBillDate(formatDate(subscriptionData.status.next_bill_date));
           }
         }
       } catch (err) {
@@ -42,18 +34,15 @@ const SubscriptionActive = () => {
     };
 
     fetchStatus();
-  }, []);
+  }, [subscriptionData]);
 
   const handleSubscriptionStatus = async (plan: number) => {
     await handlePauseSubscription(plan);
     window.location.reload();
   };
 
-  const handleUnsubscribe = async (
-    subscribedPlanId: number,
-    selectedReason: SubscriptionCancelReason,
-  ) => {
-    await handleCancelSubscription(subscribedPlanId, selectedReason);
+  const handleUnsubscribe = async (plan: number, selectedReason: SubscriptionCancelReason) => {
+    await handleCancelSubscription(plan, selectedReason);
     window.location.reload();
   };
 

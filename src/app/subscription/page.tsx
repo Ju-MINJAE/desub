@@ -38,7 +38,7 @@ const Subscription = () => {
   const userData = useAppSelector(state => state.userData);
   // 구독현황
   const subscriptionData = useSubStatus();
-  const userSubStatue = subscriptionData?.status;
+  const userSubStatue = subscriptionData?.status.sub_status;
 
   useEffect(() => {
     const fetchHistory = async () => {
