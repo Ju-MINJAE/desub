@@ -7,6 +7,23 @@ import StoreProvider from './StoreProvider';
 export const metadata: Metadata = {
   title: 'desub',
   description: '디자인 월 구독 서비스',
+  keywords: [
+    '디자인 구독',
+    '월간 디자인',
+    '디자인 서비스',
+    '그래픽 디자인',
+    '웹 디자인',
+    '로고 디자인',
+    '브랜딩',
+    '일러스트레이션',
+    'UI/UX 디자인',
+    '디자인 트렌드',
+    '창의적 디자인',
+    '전문 디자인',
+    '맞춤형 디자인',
+    '디자인 솔루션',
+    '디자인 플랫폼',
+  ],
   openGraph: {
     title: 'desub',
     description: '디자인 월 구독 서비스',
@@ -20,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className="antialiased flex flex-col min-h-screen">
         <StoreProvider>
           <Header />
