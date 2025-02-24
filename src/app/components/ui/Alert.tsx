@@ -63,7 +63,7 @@ export const Alert = ({
         <Image
           className="self-end cursor-pointer mb-0"
           src="/icons/close.svg"
-          alt=""
+          alt="Alert_close"
           width={40}
           height={40}
           onClick={onClose}

@@ -67,7 +67,7 @@ const SubscriptionActive = () => {
           variant="outline"
           onClick={() => plan !== null && handleSubscriptionStatus(plan)}
         >
-          <Image src="/icons/pause-circle.svg" alt="" width={24} height={24} />
+          <Image src="/icons/pause-circle.svg" alt="subscription_pause" width={24} height={24} />
           일시정지
         </Button>
       </div>
