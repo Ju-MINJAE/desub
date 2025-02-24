@@ -11,7 +11,7 @@ const userDataPersistConfig = {
   key: 'userData',
   storage,
 };
-// auth persist
+
 const authPersistConfig = {
   key: 'auth',
   storage,

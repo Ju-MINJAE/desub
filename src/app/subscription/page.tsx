@@ -38,7 +38,7 @@ const Subscription = () => {
   const userData = useAppSelector(state => state.userData);
   // 구독현황
   const subscriptionData = useSubStatus();
-  const userSubStatue = subscriptionData?.status;
+  const userSubStatue = subscriptionData?.status.sub_status;
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -98,11 +98,9 @@ const Subscription = () => {
   // 리뷰 관리
   const handleReviewContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const content = e.target.value;
-    setReviewContents(e.target.value);
-    if (content.trim() !== '') {
-      setWarningMessage('');
-      setReview(prev => ({ ...prev, content: content }));
-    }
+    setReviewContents(content);
+    setWarningMessage('');
+    setReview(prev => ({ ...prev, content: content }));
   };
 
   const openReviewModal = () => {

@@ -5,12 +5,13 @@ import { BackButton } from '@/app/components/ui/BackButton';
 import { Button } from '@/app/components/ui/Button';
 import { useAppSelector } from '@/hooks/redux/hooks';
 import { saveBillingKey, searchPlanId, subscribe } from '@/api/payment';
-const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
-const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
 import { getUserSession } from '@/app/actions/serverAction';
 import { useRouter } from 'next/navigation';
-
 import * as PortOne from '@portone/browser-sdk/v2';
+
+const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
+const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
+
 const Subscribe = () => {
   const userData = useAppSelector(state => state.userData);
   const planData = useAppSelector(state => state.plan);
@@ -46,15 +47,18 @@ const Subscribe = () => {
       // 상품 아이디 조회
       const planData = await searchPlanId();
       const planId = planData.id;
-      console.log(planData);
+
       if (typeof planId !== 'number') {
         console.log('구독 결제할 수 있는 상품이 없습니다.');
         return;
       }
       // 구독 결제 요청
       const subscribeResponse = await subscribe(planId, accessToken);
-      console.log(subscribeResponse);
-      router.push('/');
+      router.push(
+        `/pricing/paymentCompleteRedirect?data=${encodeURIComponent(
+          JSON.stringify(subscribeResponse),
+        )}`,
+      );
     } catch (error) {
       console.log(error);
     }
@@ -104,6 +108,7 @@ const Subscribe = () => {
 
         <Button
           variant="green"
+          size="default"
           type="button"
           className="text-[1.6rem] mt-[6rem] md:mt-[9rem]"
           onClick={handlePayment}

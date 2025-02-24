@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { statusSubscriptions, SubscriptionStatus } from '@/api/subscription';
+import { statusSubscriptions } from '@/api/subscription';
 import { getUserSession } from '@/app/actions/serverAction';
+import { initialStatus } from '@/constants/subStatus';
 
 export const useSubStatus = () => {
-  const [status, setStatus] = useState<SubscriptionStatus>('loading');
+  const [status, setStatus] = useState(initialStatus);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -14,13 +15,13 @@ export const useSubStatus = () => {
         const response = await statusSubscriptions(accessToken);
 
         if (Array.isArray(response) && response.length > 0) {
-          setStatus(response[0].sub_status);
+          const subscribedPlan = response[0];
+          setStatus(subscribedPlan);
         } else if ('error' in response) {
-          setStatus('none');
+          setStatus(initialStatus);
         }
       } catch (err) {
         console.error(err);
-        setStatus('error');
       }
     };
 
