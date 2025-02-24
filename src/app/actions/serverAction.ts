@@ -9,8 +9,9 @@ export async function setUserSession(accessToken: string, refreshToken: string) 
     name: 'access_token',
     value: accessToken,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // HTTPS에서만 사용
-    sameSite: 'lax',
+    sameSite: 'none',
+    // secure: process.env.NODE_ENV === 'production', // HTTPS에서만 사용
+    secure: true,
     path: '/',
     maxAge: 60 * 5, // 5분 유지
   });
@@ -19,8 +20,9 @@ export async function setUserSession(accessToken: string, refreshToken: string) 
     name: 'refresh_token',
     value: refreshToken,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    // secure: process.env.NODE_ENV === 'production',
+    sameSite: 'none',
+    secure: true,
     path: '/',
     maxAge: 60 * 30, // 30분 유지
   });
