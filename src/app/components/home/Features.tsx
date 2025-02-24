@@ -17,13 +17,13 @@ const Features = () => {
             </p>
           }
           description={
-            <p>
+            <span>
               고객은 반복적인
               <br />
               계약과정 없이도 필요할 때마다
               <br />
               맞춤형 디자인 지원
-            </p>
+            </span>
           }
         />
         <FeatureItem
@@ -36,11 +36,11 @@ const Features = () => {
             </p>
           }
           description={
-            <p>
+            <span>
               핏이 잘 맞고 쉬운
               <br />
               디자인 커뮤니케이션
-            </p>
+            </span>
           }
         />
         <FeatureItem
@@ -53,11 +53,11 @@ const Features = () => {
             </p>
           }
           description={
-            <p>
+            <span>
               이직/인사이동 리스크 없이
               <br />
               지속가능한 작업
-            </p>
+            </span>
           }
         />
       </div>
