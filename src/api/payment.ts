@@ -59,37 +59,35 @@ export const searchPlanId = async () => {
 
 // 구독 결제 요청
 export const subscribe = async (planId: number, accessToken: string) => {
-  try {
-    if (!accessToken) return { sub_status: 'error', error: '인증 토큰이 없습니다.' };
+  if (!accessToken) return { sub_status: 'error', error: '인증 토큰이 없습니다.' };
 
-    const response = await fetch(`${API_BASE_URL}/api/payment/subscribe/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        plan_id: planId,
-      }),
-    });
+  const response = await fetch(`${API_BASE_URL}/api/payment/subscribe/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    credentials: 'include',
+    body: JSON.stringify({
+      plan_id: planId,
+    }),
+  });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      const errorMessage = errorData.error || `HTTP error! Status: ${response.status}`;
-      throw new Error(errorMessage);
-    }
-
-    const data = response.json();
-    return data;
-  } catch (error) {
-    console.error('구독 결제 중 오류 발생:', error);
-    return { success: false, message: error instanceof Error ? error.message : '알 수 없는 오류' };
+  if (response.status === 400) {
+    const errorData = await response.json();
+    return { sub_status: response.status, error: errorData.error };
   }
+
+  if (response.status > 400) {
+    const errorText = await response.text();
+    return { sub_status: response.status, error: errorText };
+  }
+
+  const data = await response.json();
+  return data;
 };
 
-// 유저 데이터 받아오는 함수
 export const requestPayment = async (billingKey: string) => {
   const { accessToken } = await getUserSession();
 

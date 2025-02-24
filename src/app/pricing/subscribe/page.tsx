@@ -53,8 +53,11 @@ const Subscribe = () => {
       }
       // 구독 결제 요청
       const subscribeResponse = await subscribe(planId, accessToken);
-      console.log(subscribeResponse);
-      router.push('/');
+      router.push(
+        `/pricing/paymentCompleteRedirect?data=${encodeURIComponent(
+          JSON.stringify(subscribeResponse),
+        )}`,
+      );
     } catch (error) {
       console.log(error);
     }
@@ -66,7 +69,7 @@ const Subscribe = () => {
         <BackButton text="Subscribe" />
       </div>
 
-      <div className="flex flex-col justify-center items-center mt-[6rem] md:mt-[10rem]">
+      <div className="h-[70vh] flex flex-col justify-center items-center mt-[6rem] md:mt-[10rem]">
         <div className="w-[35.5rem] md:w-[54rem] p-[3rem] border">
           <Heading tag="h1" className="!text-[4rem] md:!text-[5rem] leading-normal">
             {planData.plan_name}

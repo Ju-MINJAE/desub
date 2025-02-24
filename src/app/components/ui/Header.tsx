@@ -44,6 +44,7 @@ const Header = () => {
     pathname.startsWith('/login') ||
     pathname.includes('/social') ||
     pathname === '/pricing/subscribe' ||
+    pathname === '/pricing/paymentCompleteRedirect' ||
     pathname === '/subscription' ||
     pathname === '/workRequest' ||
     pathname === '/howToRequest' ||
