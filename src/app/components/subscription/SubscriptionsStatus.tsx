@@ -7,7 +7,7 @@ import useSubStatus from '@/hooks/useSubStatus';
 const SubscriptionsStatus = () => {
   const router = useRouter();
   const subscriptionData = useSubStatus();
-  const status = subscriptionData?.status;
+  const status = subscriptionData?.status.sub_status;
 
   const statusText = {
     loading: '로딩 중...',
