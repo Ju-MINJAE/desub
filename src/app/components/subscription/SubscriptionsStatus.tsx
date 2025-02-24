@@ -2,61 +2,38 @@
 
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/Button';
-import { getUserSession } from '@/app/actions/serverAction';
-import { useEffect, useState } from 'react';
-import { statusSubscriptions, SubscriptionStatus } from '@/api/subscription';
+import useSubStatus from '@/hooks/useSubStatus';
 
 const SubscriptionsStatus = () => {
   const router = useRouter();
-  const [status, setStatus] = useState<SubscriptionStatus>('loading');
-
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const { accessToken } = await getUserSession();
-        if (!accessToken) return;
-
-        const response = await statusSubscriptions(accessToken);
-
-        if (Array.isArray(response) && response.length > 0) {
-          setStatus(response[0].sub_status);
-        } else if ('error' in response) {
-          setStatus('none');
-        }
-      } catch (err) {
-        console.error(err);
-        setStatus('error');
-      }
-    };
-
-    fetchStatus();
-  }, []);
+  const subscriptionData = useSubStatus();
+  const status = subscriptionData?.status;
 
   const statusText = {
     loading: '로딩 중...',
     active: '구독중',
     none: '미구독',
     cancelled: '미구독',
+    refund_pending: '구독 취소 승인 중',
     paused: '일시정지',
     error: '오류 발생',
   }[status];
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col">
       <div className="w-full max-w-[40.1rem] flex justify-between">
         <p className="text-[5rem] font-bold">{statusText}</p>
       </div>
-      {status === 'none' ||
-        (status === 'cancelled' && (
-          <Button
-            className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem] mt-[6.7rem]"
-            size="small"
-            variant="green"
-            onClick={() => router.push('/pricing')}
-          >
-            구독하기
-          </Button>
-        ))}
+      {(status === 'none' || status === 'cancelled') && (
+        <Button
+          className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem] mt-[6.7rem]"
+          size="small"
+          variant="green"
+          onClick={() => router.push('/pricing')}
+        >
+          구독하기
+        </Button>
+      )}
     </div>
   );
 };

@@ -3,6 +3,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAppSelector } from '@/hooks/redux/hooks';
+import { useAppDispatch } from '@/hooks/redux/hooks';
+import { getUserSession, clearUserSession } from '@/app/actions/serverAction';
+import { logout } from '@/store/authslice';
+import { clearUserData } from '@/store/userDataSlice';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -10,9 +14,22 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
+  const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { refreshToken } = await getUserSession();
+      if (!refreshToken) {
+        await clearUserSession();
+        dispatch(logout());
+        dispatch(clearUserData());
+      }
+    };
+    checkSession();
+  }, [dispatch]);
 
   useEffect(() => {
     if (isOpen) {

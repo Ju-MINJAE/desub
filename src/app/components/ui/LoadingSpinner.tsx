@@ -3,18 +3,17 @@ import Image from 'next/image';
 interface LoadingSpinnerProps {
   width?: number;
   height?: number;
+  className?: string;
 }
 
-export default function LoadingSpinner({ width = 200, height = 100 }: LoadingSpinnerProps) {
+const LoadingSpinner = ({ width = 50, height = 50, className = '' }: LoadingSpinnerProps) => {
   return (
-    <div className="flex justify-center items-center">
-      <Image
-        src="/images/loadingspinner.gif"
-        alt="Loading..."
-        width={width}
-        height={height}
-        priority
-      />
+    <div className={`flex justify-center items-center ${className}`}>
+      <div className="animate-spinner">
+        <Image src="/icons/loading.svg" alt="Loading..." width={width} height={height} priority />
+      </div>
     </div>
   );
-}
+};
+
+export default LoadingSpinner;

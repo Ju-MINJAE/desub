@@ -5,75 +5,21 @@ import { BackButton } from '@/app/components/ui/BackButton';
 import { useState } from 'react';
 import Image from 'next/image';
 import WorkForm from '../components/workRequest/WorkForm';
+import { useAppSelector } from '@/hooks/redux/hooks';
+import { WORK_FORM_CONFIG, WORK_LIST } from '@/constants/workRequest';
 
 const WorkRequest = () => {
   const [selectedForm, setSelectedForm] = useState('업무 종류를 선택하세요.');
   const [showFormList, setShowFormList] = useState(false);
+  const userData = useAppSelector(state => state.userData);
+  const userSubscriptionStatus = userData.sub_status;
 
   const handleWorkSelect = (item: string) => {
     setSelectedForm(item);
     setShowFormList(false);
   };
 
-  const workList = [
-    '로고(logo)',
-    '웹사이트(website)',
-    '인쇄물(printing)',
-    '제안서(proposal)',
-    '콘텐츠(sns contents)',
-    '서비스 기획(UI/UX)',
-    '캐릭터디자인(character)',
-    '영상편집(editing)',
-    '모션그래픽(motion graphic)',
-    '쓰리디(3D graphic)',
-  ];
-
-  type FormConfig = {
-    [key: string]: { query: string; id: string };
-  };
-
-  const WORK_FORM_CONFIG: FormConfig = {
-    '로고(logo)': {
-      query: 'w7aj16?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
-      id: 'logo',
-    },
-    '웹사이트(website)': {
-      query: 'wM6P6E?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
-      id: 'website',
-    },
-    '인쇄물(printing)': {
-      query: 'w7aj16?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
-      id: 'printing',
-    },
-    '제안서(proposal)': {
-      query: 'wgJrgN?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
-      id: 'proposal',
-    },
-    '콘텐츠(sns contents)': {
-      query: 'w8652A?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
-      id: 'snsContents',
-    },
-    '서비스 기획(UI/UX)': {
-      query: '3EZYAo?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
-      id: 'UI/UX',
-    },
-    '캐릭터디자인(character)': {
-      query: 'n9R5aG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
-      id: 'character',
-    },
-    '영상편집(editing)': {
-      query: '3qJeg2?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
-      id: 'editing',
-    },
-    'motio모션그래픽(motion graphic)': {
-      query: '3jJ2gR?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
-      id: 'motionGraphic',
-    },
-    '쓰리디(3D graphic)': {
-      query: 'w49dEb?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',
-      id: '3dGraphic',
-    },
-  };
+  const isDisabled = ['refund_pending', 'none', 'cancelled'].includes(userSubscriptionStatus);
 
   return (
     <div className="h-full">
@@ -94,9 +40,9 @@ const WorkRequest = () => {
               height={24}
             />
           </div>
-          {showFormList && (
+          {showFormList && !isDisabled && (
             <div className="border absolute top-full">
-              {workList.map(item => (
+              {WORK_LIST.map(item => (
                 <div
                   key={item}
                   className="bg-white w-[43.7rem] h-[4.7rem] px-[1.7rem] py-[1.2rem] cursor-pointer hover:bg-[#F9F9F9] active:bg-[#F9F9F9]"
@@ -108,6 +54,12 @@ const WorkRequest = () => {
             </div>
           )}
         </div>
+
+        {isDisabled && (
+          <p className="font-semibold text-[1.4rem] md:text-[2rem]">
+            구독이 필요한 서비스입니다. 구독을 활성화해 주세요.
+          </p>
+        )}
 
         {selectedForm === '업무 종류를 선택하세요.' ? null : (
           <div className="w-full bg-lightgray px-[6rem] py-[3rem] flex">

@@ -4,10 +4,10 @@ import Footer from './components/ui/Footer';
 import Header from './components/ui/Header';
 import StoreProvider from './StoreProvider';
 
-export const metadata: Metadata = {
-  title: 'desub',
-  description: '디자인 월 구독 서비스',
-};
+// export const metadata: Metadata = {
+//   title: 'desub',
+//   description: '디자인 월 구독 서비스',
+// };
 
 export default function RootLayout({
   children,

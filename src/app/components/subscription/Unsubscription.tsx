@@ -108,7 +108,7 @@ const Unsubscription: React.FC<UnsubscriptionProps> = ({ onUnsubscribe, nextBill
   // Last modal final submit
   const handleLastCheckSubmit = () => {
     setLastCheckModal(false);
-    const subscribedPlanId = userData.subscription_info.plan_id;
+    const subscribedPlanId = userData?.subscription_info?.plan_id;
     onUnsubscribe(subscribedPlanId, selectedReasons);
   };
 
