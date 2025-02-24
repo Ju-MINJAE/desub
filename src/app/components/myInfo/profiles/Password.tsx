@@ -17,6 +17,7 @@ import { Input } from '@/app/components/ui/Input';
 import { getUserSession, clearUserSession } from '@/app/actions/serverAction';
 import { logout } from '@/store/authslice';
 import { clearUserData } from '@/store/userDataSlice';
+import { useAppSelector } from '@/hooks/redux/hooks';
 
 const Password = () => {
   const router = useRouter();
@@ -24,6 +25,9 @@ const Password = () => {
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
   const [isPasswordCompleteModalOpen, setPasswordCompleteModalOpen] = useState(false);
   const { inputTypes, visibilityIcon, handleChangeType } = usePasswordVisibility(PASSWORD_FIELDS);
+  // 유저 데이터 갖고오기
+  const userData = useAppSelector(state => state.userData);
+  const isGoogleUser = userData?.email.endsWith('@gmail.com');
 
   const {
     register,
@@ -122,15 +126,17 @@ const Password = () => {
           />
         </>
       ) : (
-        <Button
-          size="small"
-          type="button"
-          variant="outline"
-          className="w-[16.2rem] h-[5.5rem] bg-white text-[1.6rem]"
-          onClick={() => setPasswordModalOpen(true)}
-        >
-          비밀번호 변경
-        </Button>
+        isGoogleUser && (
+          <Button
+            size="small"
+            type="button"
+            variant="outline"
+            className="w-[16.2rem] h-[5.5rem] bg-white text-[1.6rem]"
+            onClick={() => setPasswordModalOpen(true)}
+          >
+            비밀번호 변경
+          </Button>
+        )
       )}
       {isPasswordCompleteModalOpen && (
         <Alert

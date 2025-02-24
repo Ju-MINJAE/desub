@@ -23,7 +23,6 @@ const PaymentInfo = () => {
 
   const userData = useAppSelector(state => state.userData);
   const cardInfo = userData?.subscription_info;
-
   // 구독현황
   const subscriptionData = useSubStatus();
   const userSubStatue = subscriptionData?.status;

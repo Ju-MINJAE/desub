@@ -1,12 +1,20 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import { UseFormRegister } from 'react-hook-form';
+import { UserProfileUpdateValue } from '@/app/profiles/schemas/UserProfileUpdateSchema';
 
-const ProfilesImage = () => {
+interface ProfilesImageProps {
+  register: UseFormRegister<UserProfileUpdateValue>;
+  setValue: (name: keyof UserProfileUpdateValue, value: any) => void;
+}
+
+const ProfilesImage: React.FC<ProfilesImageProps> = ({ register, setValue }) => {
   const [profileImage, setProfileImage] = useState<string | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
+      setValue('image', file);
       const reader = new FileReader();
       console.log(reader);
       reader.onloadend = () => {
@@ -32,6 +40,7 @@ const ProfilesImage = () => {
       <input
         type="file"
         accept="image/*"
+        {...register("image")} 
         onChange={handleImageChange}
         className="hidden rounded-full"
       />
