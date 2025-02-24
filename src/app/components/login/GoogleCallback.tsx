@@ -35,7 +35,7 @@ const GoogleCallback = () => {
         const data = await response.json();
         console.log('로그인 응답 데이터:', data);
 
-        setUserSession(data.access_token, data.refresh_token); // 토큰 쿠키에 저장
+        await setUserSession(data.access_token, data.refresh_token); // 토큰 쿠키에 저장
 
         // 구글 첫 로그인시 핸드폰번호 인증 필수
         if (!data.phone) {

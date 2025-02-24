@@ -8,6 +8,7 @@ interface AlertProps {
   contents?: React.ReactNode;
   buttonText: string;
   textButton?: string; // 추가
+  buttonType?: 'button' | 'submit'; // 추가: 버튼 타입
   variant?: 'green' | 'black' | 'outline';
   size: 'full' | 'normal' | 'small';
   className?: string;
@@ -21,6 +22,7 @@ export const Alert = ({
   contents,
   buttonText,
   textButton,
+  buttonType,
   variant = 'black',
   size = 'full',
   className = '',
@@ -61,7 +63,7 @@ export const Alert = ({
         <Image
           className="self-end cursor-pointer mb-0"
           src="/icons/close.svg"
-          alt=""
+          alt="Alert_close"
           width={40}
           height={40}
           onClick={onClose}
@@ -69,6 +71,7 @@ export const Alert = ({
         <div className="font-medium text-center text-[2rem]">{title}</div>
         <div className="w-full h-full font-normal text-[1.6rem]">{contents}</div>
         <button
+          type={buttonType}
           onClick={onSubmit}
           className={`
         ${getSizeStyles(size)} rounded-[50px]

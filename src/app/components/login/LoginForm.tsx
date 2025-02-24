@@ -35,9 +35,8 @@ const LoginForm = () => {
     const password = formData.get('password') as string;
 
     try {
-      setSeverErrorMsg('');
       const result = await loginWithEmail(email, password);
-      console.log('확인확인', result);
+      setSeverErrorMsg('');
       if (result && result.access_token && result.refresh_token) {
         await setUserSession(result.access_token, result.refresh_token);
         dispatch(loginSuccess()); // 로그인 상태 변경
@@ -49,10 +48,10 @@ const LoginForm = () => {
           setSeverErrorMsg(result.error);
         } else if (result.error === '입력된 정보로 가입된 이력이 없습니다.') {
           setIsSignupPromptOpen(true);
-        } else if (
-          result.error === '구글 소셜 로그인으로 가입된 계정입니다. 구글 로그인을 이용해주세요.'
-        ) {
+        } else if (result.error === '구글 소셜 로그인으로 가입된 계정입니다.') {
           setIsGoogleSignupAlertOpen(true);
+        } else if (result.error === '비활성화된 계정입니다. 관리자나 고객센터에 문의해주세요.') {
+          setSeverErrorMsg(result.error); // 임의처리
         }
       }
     } catch (error) {

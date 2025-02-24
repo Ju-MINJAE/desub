@@ -29,7 +29,10 @@ export const signUp = async (data: SignupData) => {
   }
 };
 
-export const loginWithEmail = async (email: string, password: string): Promise<LoginResponse> => {
+export const loginWithEmail = async (
+  email: string,
+  password: string,
+): Promise<LoginResponse & { status: number }> => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/user/login/`, {
       method: 'POST',
@@ -41,17 +44,15 @@ export const loginWithEmail = async (email: string, password: string): Promise<L
     });
 
     const data = await response.json();
-    if (!response.ok) {
-      // 400 에러일 경우
-      if (response.status === 400 && data.message) {
-        return data;
-      }
+    const status = response.status;
 
-      throw new Error('로그인 실패');
+    // 400 에러일 경우
+    if (response.status === 400) {
+      return { ...data, status };
     }
 
     console.log('로그인 성공:', data);
-    return data;
+    return { ...data, status };
   } catch (error) {
     console.error('로그인 요청 실패:', error);
     throw error;

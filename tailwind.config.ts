@@ -23,7 +23,17 @@ export default {
       gridTemplateColumns: {
         '24': 'repeat(24, minmax(0, 1fr))',
       },
+      keyframes: {
+        spinner: {
+          '0%': { transform: 'rotate(0deg)', opacity: '0.2' },
+          '50%': { opacity: '1' },
+          '100%': { transform: 'rotate(360deg)', opacity: '0.2' },
+        },
+      },
+      animation: {
+        spinner: 'spinner 1.5s linear infinite',
+      },
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-animate')],
 } satisfies Config;

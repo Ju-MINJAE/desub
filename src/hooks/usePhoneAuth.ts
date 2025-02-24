@@ -59,6 +59,9 @@ export const usePhoneAuth = <T extends PhoneFormFields>(
         setIsRequested(true);
       } else if (data.error === '동일한 전화번호로 가입된 계정이 있습니다.') {
         setIsLoginPromptOpen(true);
+        setError('phone_number' as Path<T>, {
+          message: data.error,
+        });
       } else {
         setError('phone_number' as Path<T>, {
           message: data.error,

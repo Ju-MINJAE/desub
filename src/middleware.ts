@@ -9,7 +9,9 @@ export const middleware = (req: NextRequest) => {
 
   if (
     !isAuthenticated &&
-    (pathname.startsWith('/myInfo') || pathname.startsWith('/subscription'))
+    (pathname.startsWith('/myInfo') ||
+      pathname.startsWith('/subscription') ||
+      pathname.startsWith('/workRequest'))
   ) {
     return NextResponse.redirect(new URL('/login', req.url));
   }

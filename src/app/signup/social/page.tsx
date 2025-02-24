@@ -49,13 +49,11 @@ export default function Social() {
   // 폼제출
   const onSubmit = async (data: GoogleSignupValues) => {
     console.log(data);
-    const session = await getUserSession();
-    const accessToken = session?.accessToken ?? ''; // 기본값 설정
-    const refreshToken = session?.refreshToken ?? ''; // 기본값 설정
-
-    setUserSession(accessToken, refreshToken); // 토큰저장
+    const { accessToken } = await getUserSession();
+    
     if (!accessToken) {
-      throw new Error('🚨 유효한 액세스 토큰이 없습니다.');
+      console.log('엑세스 토큰이 없습니다.');
+      return '엑세스 토큰이 없습니다.';
     }
     const marketingConsent = data.marketing ?? false; // 기본값 false
     const result = await saveGoogleUserPhone(data.phone_number, marketingConsent, accessToken); // 구글 사용자 phone api 호출
@@ -94,7 +92,10 @@ export default function Social() {
           google login
         </Heading>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col items-center">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full flex flex-col items-center max-w-[70rem]"
+        >
           <div className="grid grid-cols-[54rem_14rem] gap-x-8 items-center">
             <Input
               type="tel"
@@ -137,7 +138,7 @@ export default function Social() {
               </Button>
             </div>
           )}
-          <div className="mt-[5rem] mr-auto">
+          <div className="mt-[5rem] grid grid-cols-[70rem] self-baseline items-center ml-[-1.7rem]">
             <AgreementItem
               id="marketing"
               text="마케팅 수신에 동의합니다."
