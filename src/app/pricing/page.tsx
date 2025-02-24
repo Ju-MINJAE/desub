@@ -153,7 +153,7 @@ const Pricing = () => {
                     </span>
                     <Image
                       src="/icons/tooltip.svg"
-                      alt=""
+                      alt="dshop_info"
                       width={16}
                       height={16}
                       className="absolute -top-2 -right-5"

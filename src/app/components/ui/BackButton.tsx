@@ -17,7 +17,7 @@ export function BackButton({ text, className = '' }: BackButtonProps) {
       className={`flex flex-col items-start p-1 focus:outline-none   ${className}`}
       aria-label={text || '뒤로 가기'}
     >
-      <Image src="/icons/arrow.svg" alt="" width={81} height={0} />
+      <Image src="/icons/arrow.svg" alt="BackButton" width={81} height={0} />
       {text && <span className="font-bold mt-6">{text}</span>}
     </button>
   );

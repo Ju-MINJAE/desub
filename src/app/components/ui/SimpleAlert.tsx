@@ -21,7 +21,7 @@ export const SimpleAlert = ({ title, contents, className = '', onClose }: Simple
           <Image
             className="self-end cursor-pointer"
             src="/icons/close.svg"
-            alt=""
+            alt="SimpleAlert_close"
             width={40}
             height={40}
             onClick={onClose}

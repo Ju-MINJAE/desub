@@ -59,7 +59,7 @@ export const Confirm = ({
         <Image
           className="self-end cursor-pointer"
           src="/icons/close.svg"
-          alt=""
+          alt="Confirm_close"
           width={40}
           height={40}
           onClick={onClose}
