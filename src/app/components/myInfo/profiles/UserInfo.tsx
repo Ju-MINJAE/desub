@@ -27,16 +27,12 @@ const UserInfo = ({ register, errors }: Props) => {
       value: userData?.name,
     },
   ];
-
   return (
-    <div className="w-full flex flex-col gap-[2.6rem]">
+    <div className="w-full md:w-[57.4rem] flex flex-col gap-[2.6rem] flex-grow-0">
       {USERNAME_FIELDS.map(field => (
-        <div
-          key={field.id as string}
-          className="flex justify-between items-center w-[57.4rem] max-w-full"
-        >
+        <div key={field.id as string} className="flex justify-between items-center w-full">
           <p className="text-[1.6rem] min-w-[13.9rem]">{field.label}</p>
-          <div className="flex flex-col gap-[1rem] flex-1">
+          <div className="flex flex-col gap-[1rem] w-full">
             <Input
               {...register(field.id)}
               className="md:h-[4.7rem] !text-[1.6rem]"
