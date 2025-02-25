@@ -256,7 +256,7 @@ const Subscription = () => {
         <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
           <BackButton text="my subscription" />
           {userSubStatue !== 'none' && (
-            <div className="flex items-center">
+            <div className="flex items-center relative z-[-10]">
               <Button
                 onClick={openReviewModal}
                 className={`w-[11.9rem] h-[3.3rem] text-[1.5rem] ${isBlinking ? 'blinking' : ''}`}
@@ -281,7 +281,7 @@ const Subscription = () => {
           {/* 프로필 */}
           <div className="flex flex-col gap-[9.9rem] border-r">
             <div className="mt-[5.5rem] flex flex-col items-center">
-              <div className="w-[19.8rem] h-[19.8rem] rounded-full relative">
+              <div className="w-[19.8rem] h-[19.8rem] rounded-full relative z-[-10]">
                 {/* 구독페이지 기본 프사 */}
                 {pathname === '/subscription' && isDefaultImage ? (
                   <div className="w-full h-full flex justify-center items-center rounded-full">
