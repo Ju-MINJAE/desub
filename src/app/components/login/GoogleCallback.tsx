@@ -33,7 +33,6 @@ const GoogleCallback = () => {
         });
 
         const data = await response.json();
-        console.log('로그인 응답 데이터:', data);
 
         await setUserSession(data.access_token, data.refresh_token); // 토큰 쿠키에 저장
 

@@ -126,7 +126,7 @@ const Password = () => {
           />
         </>
       ) : (
-        isGoogleUser && (
+        !isGoogleUser && (
           <Button
             size="small"
             type="button"
