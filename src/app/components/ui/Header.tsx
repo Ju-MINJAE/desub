@@ -11,7 +11,6 @@ import MobileMenu from './MobileMenu';
 import { useAppSelector } from '@/hooks/redux/hooks';
 import type { RootState } from '@/store/store';
 import { useAppDispatch } from '@/hooks/redux/hooks';
-import { logoutUser } from '@/api/auth';
 import { getUserSession, clearUserSession } from '@/app/actions/serverAction';
 import { logout } from '@/store/authslice';
 import { clearUserData } from '@/store/userDataSlice';
@@ -36,22 +35,6 @@ const Header = () => {
     };
     checkSession();
   }, [dispatch]);
-
-  // 임시 로그아웃
-  const logoutSession = async () => {
-    const { accessToken, refreshToken } = await getUserSession();
-    if (accessToken && refreshToken) {
-      try {
-        await logoutUser(accessToken, refreshToken); // 로그아웃 api
-        alert('로그아웃 완료');
-      } catch (error) {
-        console.error('로그아웃 실패', error);
-      }
-    }
-    await clearUserSession(); // 토큰 삭제
-    dispatch(logout());
-    dispatch(clearUserData());
-  };
 
   if (
     pathname.startsWith('/login') ||
@@ -91,7 +74,7 @@ const Header = () => {
   ];
 
   return (
-    <div className="w-full fixed top-0 left-0 z-50 bg-white border-b">
+    <div className="w-full fixed bottom-0 left-0 z-50 bg-white border-t md:fixed md:top-0 md:bottom-auto md:border-b md:border-t-0">
       <header className="px-[2rem] md:px-[3.7rem] py-[2rem] flex items-center justify-between">
         <div className="flex items-center">
           <Button
@@ -148,12 +131,6 @@ const Header = () => {
                 >
                   workspace
                 </Link>
-                <button
-                  className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem] hidden md:block"
-                  onClick={logoutSession}
-                >
-                  logout
-                </button>
               </>
             ) : (
               //  로그인 후 미구독
@@ -182,12 +159,6 @@ const Header = () => {
                   >
                     my subscription
                   </Link>
-                  <button
-                    className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem] hidden md:block"
-                    onClick={logoutSession}
-                  >
-                    logout
-                  </button>
                 </div>
               </div>
             )
@@ -202,11 +173,6 @@ const Header = () => {
               >
                 subscribe
               </Button>
-              {/* <Link href="/login" className="hidden md:block">
-                <button className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem]">
-                  login
-                </button>
-              </Link> */}
               <button
                 className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem] hidden md:block"
                 onClick={() => router.push('/login')}

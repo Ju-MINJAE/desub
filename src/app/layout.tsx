@@ -49,7 +49,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="antialiased flex flex-col min-h-screen">
+      <body className="antialiased flex flex-col min-h-screen pb-[8rem] md:pb-0 md:pt-[80px]">
         <StoreProvider>
           <Header />
           <main className="flex-grow">{children}</main>
