@@ -90,7 +90,7 @@ const Specialists = () => {
         {items.map(item => (
           <p
             key={item.id}
-            className="hover:underline hover:decoration-2 hover:bg-primary"
+            className="hover:underline hover:decoration-2 hover:bg-primary hover:font-semibold"
             onMouseEnter={() => setHoverIndex(item.id)}
             onMouseLeave={() => setHoverIndex(null)}
           >
