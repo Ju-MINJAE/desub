@@ -188,34 +188,36 @@ const Subscription = () => {
             className="w-[60rem] min-h-[60.4rem]"
           />
         )}
-      </div>
-
-      <div className="grid grid-cols-2 h-[71.2rem] mt-[2.9rem] px-[5.8rem]">
-        {/* 프로필 */}
-        <div className="flex flex-col gap-[9.9rem] border-r">
-          <div className="mt-[5.5rem] flex flex-col items-center">
-            <div className="w-[19.8rem] h-[19.8rem] rounded-[100rem]">
-              <img
-                src={userData?.img_url ?? undefined}
-                alt="프로필사진"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <div className="mt-[2rem]">
-              <p className="text-[5rem] font-bold italic">wassup!</p>
-              <div className="flex gap-[1rem]">
-                <p className="text-[5rem] font-bold">
-                  <span className="underline">{userData?.name}</span> 님
-                </p>
-                <button>
-                  <Image
-                    src="/icons/setting.svg"
-                    alt="desub_myInfo"
-                    width={24}
-                    height={24}
-                    onClick={() => router.push('/myInfo')}
-                  />
-                </button>
+        {lastCheckModal && (
+          <Alert
+            buttonText="확인"
+            title={<p>소중한 의견 감사합니다.</p>}
+            size="full"
+            variant="outline"
+            onClose={() => setLastCheckModal(false)}
+            onSubmit={() => setLastCheckModal(false)}
+          />
+        )}
+        {subscriptionStatusModal && (
+          <SimpleAlert
+            contents={
+              <div className="w-full h-[15rem] flex flex-col overflow-hidden">
+                <div className="flex pb-[1.9rem] text-[1.5rem] font-bold">
+                  <div className="w-3/4">
+                    <p>일시</p>
+                  </div>
+                  <div className="w-1/4">
+                    <p>내용</p>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-[1.5rem] text-[1.5rem] overflow-y-auto">
+                  {reversedHistory.map((item, index) => (
+                    <div key={index} className="flex items-center text-medium">
+                      <div className="w-3/4">{formatDate(item.change_date)}</div>
+                      <div className="w-1/4">{translateStatus(item.status)}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             }
             title="구독현황 변경 및 결제이력"
@@ -251,7 +253,13 @@ const Subscription = () => {
           {/* 프로필 */}
           <div className="flex flex-col gap-[9.9rem] border-r">
             <div className="mt-[5.5rem] flex flex-col items-center">
-              <div className="w-[19.8rem] h-[19.8rem] bg-gray rounded-[100rem]"></div>
+              <div className="w-[19.8rem] h-[19.8rem] rounded-[100rem]">
+                <img
+                  src={userData?.img_url ?? undefined}
+                  alt="프로필사진"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
               <div className="mt-[2rem]">
                 <p className="text-[5rem] font-bold italic">wassup!</p>
                 <div className="flex gap-[1rem]">
