@@ -58,7 +58,7 @@ const SignupForm = () => {
   return (
     <FormProvider {...methods}>
       <form
-        className="w-full space-y-[8rem]"
+        className="w-full space-y-[5rem] md:space-y-[8rem]"
         onSubmit={isValid ? methods.handleSubmit(onSubmit) : undefined}
       >
         {SIGNUP_FIELDS.map(field => (
