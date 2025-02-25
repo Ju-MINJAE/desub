@@ -281,7 +281,7 @@ const Subscription = () => {
           {/* 프로필 */}
           <div className="flex flex-col gap-[9.9rem] border-r">
             <div className="mt-[5.5rem] flex flex-col items-center">
-              <div className="w-[19.8rem] h-[19.8rem] rounded-full relative">
+              <div className="w-[19.8rem] h-[19.8rem] rounded-full relative z-[-10]">
                 {/* 구독페이지 기본 프사 */}
                 {pathname === '/subscription' && isDefaultImage ? (
                   <div className="w-full h-full flex justify-center items-center rounded-full">
@@ -298,7 +298,7 @@ const Subscription = () => {
                 )}
               </div>
 
-              <div className="mt-[2rem]">
+              <div className="mt-[2rem] text-center">
                 <p className="text-[5rem] font-bold italic">wassup!</p>
                 <div className="flex gap-[1rem]">
                   <p className="text-[5rem] font-bold">
@@ -337,7 +337,7 @@ const Subscription = () => {
                   <Image src="/icons/workSpace.svg" alt="desub_workspace" width={24} height={24} />
                 </Button>
               </div>
-              <TextButton href="/howToRequest" className="mt-[4rem] text-[1.5rem]">
+              <TextButton href="/HowToRequest" className="mt-[4rem] text-[1.5rem]">
                 <span className="font-bold">how to request</span>
               </TextButton>
             </div>

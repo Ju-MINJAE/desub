@@ -86,8 +86,8 @@ export const FormField = ({ field }: FormFieldProps) => {
 
   return (
     <>
-      <div className="grid grid-cols-[30rem_54rem_14rem] gap-x-8 items-center">
-        <label htmlFor={field.id} className="text-[3rem]">
+      <div className="grid grid-cols-1 md:grid-cols-[30rem_1fr_14rem] gap-x-8 items-center px-10">
+        <label htmlFor={field.id} className="text-[2.2rem] md:text-[3rem]">
           {field.label}
         </label>
         <Input
@@ -109,7 +109,7 @@ export const FormField = ({ field }: FormFieldProps) => {
           }
           helperText={
             field.id === 'email'
-              ? emailMessage || errorMessage 
+              ? emailMessage || errorMessage
               : errors?.[field.id]?.message || (successMessage ? successMessage : '')
           }
           {...register(field.id, {
@@ -120,7 +120,7 @@ export const FormField = ({ field }: FormFieldProps) => {
           <Button
             type="button"
             variant="outline"
-            className="!w-[14rem] h-[5rem] text-[2rem]"
+            className="mt-[2rem] md:mt-0 !w-[11rem] md:!w-[14rem] md:!h-[5rem] md:text-[2rem] text-[1.6rem] !h-[4rem]"
             onClick={handleButtonClick}
             disabled={buttonDisabled} // 인증 성공시 버튼 비활성화
           >
@@ -129,7 +129,7 @@ export const FormField = ({ field }: FormFieldProps) => {
         )}
       </div>
       {field.authField && isAuthFieldVisible && !successMessage && (
-        <div className="pl-[32rem] !mt-[3rem] grid grid-cols-[54rem_14rem] gap-x-8">
+        <div className="md:pl-[32rem] pl-0 !mt-[3rem] grid grid-cols-1 md:grid-cols-[54rem_14rem] gap-x-8 px-10">
           <Input
             id={field.authField.id}
             type={field.authField.type}
@@ -145,7 +145,7 @@ export const FormField = ({ field }: FormFieldProps) => {
           <Button
             type="button"
             variant="outline"
-            className="!w-[14rem] h-[5rem] text-[2rem] mt-[2.2rem]"
+            className="mt-[2rem] md:mt-0 !w-[11rem] md:!w-[14rem] md:!h-[5rem] md:text-[2rem] text-[1.6rem] !h-[4rem]"
             onClick={handleVerifyCode}
           >
             {field.authField.button?.text}

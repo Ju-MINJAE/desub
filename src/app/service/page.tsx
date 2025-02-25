@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 const Service = () => {
   return (
     <LoadingWrapper>
-      <div className="w-full flex flex-col justify-center items-center pt-[5rem] md:pt-[12.2rem] pb-[13.3rem]">
+      <div className="w-full flex flex-col justify-center items-center pt-[5rem] md:pt-[23.2rem] pb-[10.2rem]">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -76,7 +76,7 @@ const Service = () => {
             },
           }}
           id="text"
-          className="w-full mt-[18rem] md:mt-[40rem] flex flex-col gap-3 md:gap-14 justify-start pl-[3.1rem] md:pl-[40rem] pr-8"
+          className="w-full mt-[18rem] md:mt-[40rem] flex flex-col gap-3 md:gap-14 justify-start pl-[3.1rem] md:pl-[80rem] pr-8"
         >
           <motion.div
             variants={{
@@ -108,7 +108,7 @@ const Service = () => {
                 },
               },
             }}
-            className="text-[1.8rem] md:text-[3rem] font-bold"
+            className="text-[1.8rem] font-bold md:text-[3rem]"
           >
             업무 효율에 가장 최적화된 생산성 툴을 사용하고 있습니다.
           </motion.p>
