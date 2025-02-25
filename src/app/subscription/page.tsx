@@ -152,7 +152,7 @@ const Subscription = () => {
   // 프로필사진
   const serverImage = userData?.img_url || '';
   const displayedImage = getProfileImage(serverImage);
-  const isDefaultImage = displayedImage === "/icons/profile.svg";
+  const isDefaultImage = displayedImage === '/icons/profile.svg';
   return (
     <LoadingWrapper>
       <div className="h-full">
@@ -260,22 +260,22 @@ const Subscription = () => {
           {/* 프로필 */}
           <div className="flex flex-col gap-[9.9rem] border-r">
             <div className="mt-[5.5rem] flex flex-col items-center">
-            <div className="w-[19.8rem] h-[19.8rem] rounded-full relative">
-              {/* 구독페이지 기본 프사 */}
-              {pathname === "/subscription" && isDefaultImage ? (
-                <div className="w-full h-full flex justify-center items-center rounded-full">
-                  <span className="bg-[#d9d9d9] w-[19.8rem] h-[19.8rem] rounded-full flex"></span>
-                </div>
-              ) : (
-                <Image
-                  src={displayedImage}
-                  alt="프로필이미지"
-                  className="w-full h-full object-cover rounded-full"
-                  width={198}
-                  height={198}
-                />
-              )}
-            </div>
+              <div className="w-[19.8rem] h-[19.8rem] rounded-full relative">
+                {/* 구독페이지 기본 프사 */}
+                {pathname === '/subscription' && isDefaultImage ? (
+                  <div className="w-full h-full flex justify-center items-center rounded-full">
+                    <span className="bg-[#d9d9d9] w-[19.8rem] h-[19.8rem] rounded-full flex"></span>
+                  </div>
+                ) : (
+                  <Image
+                    src={displayedImage}
+                    alt="프로필이미지"
+                    className="w-full h-full object-cover rounded-full"
+                    width={198}
+                    height={198}
+                  />
+                )}
+              </div>
 
               <div className="mt-[2rem]">
                 <p className="text-[5rem] font-bold italic">wassup!</p>
@@ -283,7 +283,7 @@ const Subscription = () => {
                   <p className="text-[5rem] font-bold">
                     <span className="underline">{userData?.name}</span> 님
                   </p>
-                  
+
                   <button>
                     <Image
                       src="/icons/setting.svg"

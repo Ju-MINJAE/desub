@@ -27,7 +27,7 @@ const Home = () => {
       try {
         const planData = await searchPlanId();
         const userData = await fetchUserData();
-
+        console.log(userData);
         if (!planData) {
           console.log('구독 결제할 수 있는 상품이 없습니다.');
         }

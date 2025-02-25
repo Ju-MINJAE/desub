@@ -1,4 +1,4 @@
-import { type SubscriptionItem, SubscriptionStatus } from '@/api/subscription';
+import { type SubscriptionItem } from '@/api/subscription';
 
 export const initialStatus: SubscriptionItem = {
   id: 0,
