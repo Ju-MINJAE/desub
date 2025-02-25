@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { useAppSelector } from '@/hooks/redux/hooks';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/app/components/ui/Button';
 import { Alert } from '@/app/components/ui/Alert';
 import { useForm } from 'react-hook-form';
@@ -15,7 +15,8 @@ import { clearUserData } from '@/store/userDataSlice';
 import useSubStatus from '@/hooks/useSubStatus';
 const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
 const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
-import { changeCardInfo } from '@/api/payment';
+import { changeCardInfo, fetchCardInfo } from '@/api/payment';
+import { cardDetailInfo } from '@/types/cardInfo';
 
 import * as PortOne from '@portone/browser-sdk/v2';
 
@@ -25,6 +26,9 @@ const PaymentInfo = () => {
   const [isWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false);
   const [isWithdrawalCompleteModalOpen, setWithdrawalCompleteModalOpen] = useState(false);
   const [serverErrorMsg, setSeverErrorMsg] = useState<string>('');
+  const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+  const [mobileAlert, setMobileAlert] = useState(false);
+  const [cardDetailInfo, setDetailCardInfo] = useState<cardDetailInfo | null>(null);
 
   const userData = useAppSelector(state => state.userData);
   const cardInfo = userData?.subscription_info;
@@ -32,6 +36,17 @@ const PaymentInfo = () => {
   const subscriptionData = useSubStatus();
   const userSubStatue = subscriptionData?.status.sub_status;
   const m_redirect_url = `${window.location.origin}/pricing/subscribe`;
+
+  useEffect(() => {
+    const fetchCardData = async () => {
+      const { accessToken } = await getUserSession();
+      if (!accessToken) return;
+
+      const cardInfoData = await fetchCardInfo(accessToken);
+      setDetailCardInfo(cardInfoData);
+    };
+    fetchCardData();
+  }, []);
 
   // 탈퇴 팝업
   const handleOpenPopup = () => {
@@ -83,7 +98,6 @@ const PaymentInfo = () => {
     }
   };
   // 결제정보
-  const formattedCardNum = cardInfo?.card_number;
   const formattedPrice = cardInfo?.payment_amount.toLocaleString('ko-KR');
 
   const formattedNextBillDate = cardInfo?.next_bill_date
@@ -93,28 +107,38 @@ const PaymentInfo = () => {
   const withdrawalReason = watch('reason') || '';
 
   const changePaymentDetails = async () => {
-    const issueResponse = await PortOne.requestIssueBillingKey({
-      storeId: STORE_ID,
-      channelKey: CHANNEL_KEY,
-      billingKeyMethod: 'CARD',
-      issueId: `ISSUE${Date.now()}`,
-      customer: {
-        fullName: userData?.name,
-      },
-      redirectUrl: m_redirect_url,
-    });
-
-    if (!issueResponse?.billingKey) {
-      console.log('로그인 후 진행해주세요.');
-      return;
+    if (isMobile) {
+      setMobileAlert(true);
     }
 
-    const { accessToken } = await getUserSession();
-    if (!accessToken) return;
+    if (!isMobile) {
+      const issueResponse = await PortOne.requestIssueBillingKey({
+        storeId: STORE_ID,
+        channelKey: CHANNEL_KEY,
+        billingKeyMethod: 'CARD',
+        issueId: `ISSUE${Date.now()}`,
+        customer: {
+          fullName: userData?.name,
+        },
+        redirectUrl: m_redirect_url,
+      });
 
-    const billingKey = issueResponse.billingKey;
-    const response = await changeCardInfo(billingKey, accessToken);
-    console.log(response);
+      if (!issueResponse?.billingKey) {
+        console.log('로그인 후 진행해주세요.');
+        return;
+      }
+
+      const { accessToken } = await getUserSession();
+      if (!accessToken) return;
+
+      const billingKey = issueResponse.billingKey;
+      await changeCardInfo(billingKey, accessToken);
+      window.location.reload();
+    }
+  };
+
+  const handleMobileAlertClosePopup = () => {
+    setMobileAlert(prev => !prev);
   };
 
   return (
@@ -131,6 +155,16 @@ const PaymentInfo = () => {
         </div>
       ) : (
         <>
+          {mobileAlert && (
+            <Alert
+              buttonText="결제하기"
+              size="full"
+              title="결제정보 변경은 pc에서 진행해주시기 바랍니다."
+              variant="green"
+              onClose={() => handleMobileAlertClosePopup()}
+              onSubmit={() => handleMobileAlertClosePopup()}
+            />
+          )}
           <hr className="w-[70rem] border-lightgray" />
           <div className="flex flex-col gap-[5rem] w-full md:w-[57.4rem]">
             <p className="text-[2rem] font-extrabold">결제정보</p>
@@ -139,8 +173,8 @@ const PaymentInfo = () => {
               <p className="text-[1.6rem] min-w-[13.9rem]">결제카드</p>
               <div className="flex items-center gap-[1.5rem] text-[1.6rem] font-medium">
                 <p>
-                  {cardInfo?.card_name}&nbsp;&nbsp;
-                  {formattedCardNum}
+                  {cardDetailInfo?.card_name}&nbsp;&nbsp;
+                  {cardDetailInfo?.card_number}
                 </p>
               </div>
             </div>

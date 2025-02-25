@@ -297,3 +297,33 @@ export const changeCardInfo = async (billingKey: string, accessToken: string) =>
     return { success: false, message: error instanceof Error ? error.message : '알 수 없는 오류' };
   }
 };
+
+// 카드 정보 요청
+export const fetchCardInfo = async (accessToken: string) => {
+  try {
+    if (!accessToken) return { sub_status: 'error', error: '인증 토큰이 없습니다.' };
+
+    const response = await fetch(`${API_BASE_URL}/api/payment/card-info/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      const errorMessage = errorData.error?.[0] || `HTTP error! Status: ${response.status}`;
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error('카드 결제 정보 변경 중 오류:', error);
+    return { success: false, message: error instanceof Error ? error.message : '알 수 없는 오류' };
+  }
+};
