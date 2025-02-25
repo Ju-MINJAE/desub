@@ -25,7 +25,7 @@ const PricingProcess = () => {
 
   return (
     <div className="flex justify-end w-full mt-[45.274rem]">
-      <div className="flex flex-col items-start pr-[8rem] md:pr-[15rem]">
+      <div className="flex flex-col items-start pr-[16rem] md:pr-[48.5rem]">
         <Image
           src="/icons/ellipses.svg"
           alt="Ellipses_Service"
@@ -38,7 +38,7 @@ const PricingProcess = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={pricingTextCount}
-                className="absolute left-0 text-[2rem] md:text-[5rem] whitespace-nowrap"
+                className="absolute left-0 text-[3rem] md:text-[8rem] whitespace-nowrap"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{
                   opacity: 1,
@@ -60,7 +60,7 @@ const PricingProcess = () => {
               </motion.div>
             </AnimatePresence>
           </div>
-          <span className="text-[2rem] md:text-[5rem]">필요하세요?</span>
+          <span className="text-[3rem] md:text-[8rem]">필요하세요?</span>
         </Heading>
         <button className="mt-[2rem] md:mt-[7rem]">
           <Image
