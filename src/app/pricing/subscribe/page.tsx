@@ -5,11 +5,11 @@ import Heading from '@/app/components/ui/Heading';
 import { Button } from '@/app/components/ui/Button';
 import { useAppSelector } from '@/hooks/redux/hooks';
 import { saveBillingKey, searchPlanId, subscribe } from '@/api/payment';
-const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
-const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
 import { getUserSession } from '@/app/actions/serverAction';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
+const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
 import { Alert } from '@/app/components/ui/Alert';
 
 import * as PortOne from '@portone/browser-sdk/v2';
@@ -151,6 +151,7 @@ const Subscribe = () => {
 
         <Button
           variant="green"
+          size="default"
           type="button"
           className="text-[1.6rem] mt-[6rem] md:mt-[9rem]"
           onClick={handlePayment}
