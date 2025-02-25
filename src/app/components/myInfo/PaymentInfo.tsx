@@ -13,11 +13,16 @@ import { getUserSession, clearUserSession } from '@/app/actions/serverAction';
 import { logout } from '@/store/authslice';
 import { clearUserData } from '@/store/userDataSlice';
 import useSubStatus from '@/hooks/useSubStatus';
+const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
+const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
+import { changeCardInfo } from '@/api/payment';
+
+import * as PortOne from '@portone/browser-sdk/v2';
 
 const PaymentInfo = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [isWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false); // 탈퇴 모달 열림 여부
+  const [isWithdrawalModalOpen, setIsWithdrawalModalOpen] = useState(false);
   const [isWithdrawalCompleteModalOpen, setWithdrawalCompleteModalOpen] = useState(false);
   const [serverErrorMsg, setSeverErrorMsg] = useState<string>('');
 
@@ -26,7 +31,8 @@ const PaymentInfo = () => {
   // 구독현황
   const subscriptionData = useSubStatus();
   const userSubStatue = subscriptionData?.status.sub_status;
-  console.log(userSubStatue, '?');
+  const m_redirect_url = `${window.location.origin}/pricing/subscribe`;
+
   // 탈퇴 팝업
   const handleOpenPopup = () => {
     setIsWithdrawalModalOpen(true);
@@ -85,7 +91,32 @@ const PaymentInfo = () => {
     : '-';
 
   const withdrawalReason = watch('reason') || '';
-  console.log(serverErrorMsg);
+
+  const changePaymentDetails = async () => {
+    const issueResponse = await PortOne.requestIssueBillingKey({
+      storeId: STORE_ID,
+      channelKey: CHANNEL_KEY,
+      billingKeyMethod: 'CARD',
+      issueId: `ISSUE${Date.now()}`,
+      customer: {
+        fullName: userData?.name,
+      },
+      redirectUrl: m_redirect_url,
+    });
+
+    if (!issueResponse?.billingKey) {
+      console.log('로그인 후 진행해주세요.');
+      return;
+    }
+
+    const { accessToken } = await getUserSession();
+    if (!accessToken) return;
+
+    const billingKey = issueResponse.billingKey;
+    const response = await changeCardInfo(billingKey, accessToken);
+    console.log(response);
+  };
+
   return (
     <>
       {/* 미구독 ,취소상태 */}
@@ -137,6 +168,7 @@ const PaymentInfo = () => {
                 type="button"
                 variant="outline"
                 className="w-[16.2rem] h-[5.5rem] bg-white text-[1.6rem]"
+                onClick={changePaymentDetails}
               >
                 결제정보 변경
               </Button>
