@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { UseFormRegister } from 'react-hook-form';
 import { UserProfileUpdateValue } from '@/app/profiles/schemas/UserProfileUpdateSchema';
@@ -10,34 +10,31 @@ interface ProfilesImageProps {
 }
 
 const ProfilesImage: React.FC<ProfilesImageProps> = ({ register, setValue }) => {
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [localPreview, setLocalPreview] = useState<string | undefined>(undefined);
   const userData = useAppSelector(state => state.userData);
-  const profileUrl = userData?.img_url || '';
+  const serverImage = userData?.img_url || '';
 
-  // 파일 미리보기
+  // 파일 미리보기 핸들러
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+    if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setValue('image', file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfileImage(reader.result as string);
+        setLocalPreview(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  useEffect(() => {
-    if (profileUrl) {
-      setProfileImage(profileUrl);
-    }
-  }, [profileUrl]);
+  // localPreview가 있으면 그것을, 없으면 서버 이미지를 사용
+  const displayedImage = localPreview || serverImage || undefined;
 
   return (
     <label className="w-[19.8rem] h-[19.8rem] cursor-pointer">
-      {profileImage ? (
+      {displayedImage ? (
         <img
-          src={profileUrl}
+          src={displayedImage}
           alt="프로필이미지"
           className="w-full h-full object-cover rounded-full"
         />

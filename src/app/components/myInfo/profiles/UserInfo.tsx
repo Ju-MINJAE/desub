@@ -45,9 +45,6 @@ const UserInfo = ({ register, errors, setValue, trigger }: Props) => {
             status={errors.name ? 'error' : 'default'}
             helperText={errors.name?.message || undefined}
           />
-          {errors.name && (
-            <span className="text-red-500 text-[1.4rem]">{errors.name.message as string}</span>
-          )}
         </div>
       </div>
     </div>

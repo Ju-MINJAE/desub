@@ -14,7 +14,7 @@ import PaymentInfo from '@/app/components/myInfo/PaymentInfo';
 import ProfileDetails from '@/app/components/myInfo/profiles/ProfileDetails';
 import { Button } from '@/app/components/ui/Button';
 import { updateUserProfile } from '@/api/account';
-import { getUserSession, clearUserSession } from '@/app/actions/serverAction';
+import { getUserSession } from '@/app/actions/serverAction';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/hooks/redux/hooks';
 
@@ -48,7 +48,7 @@ const MyInfo = () => {
   const userData = useAppSelector(state => state.userData);
   const router = useRouter();
   const [activeModal, setActiveModal] = useState<ModalType>(null);
-
+  const schema = UserProfileUpdateSchema(userData?.name ?? '', userData?.img_url ?? '');
   const {
     register,
     handleSubmit,
@@ -56,7 +56,7 @@ const MyInfo = () => {
     trigger,
     formState: { errors },
   } = useForm<UserProfileUpdateValue>({
-    resolver: zodResolver(UserProfileUpdateSchema),
+    resolver: zodResolver(schema),
     mode: 'onSubmit',
     defaultValues: {
       name: userData?.name || '',
@@ -68,7 +68,8 @@ const MyInfo = () => {
     try {
       const { accessToken } = await getUserSession();
       if (!accessToken) return;
-      const result = await updateUserProfile(accessToken, data.name, data.image); // api 호출
+      const fileToUpload = data.image instanceof File ? data.image : null;
+      const result = await updateUserProfile(accessToken, data.name, fileToUpload);
 
       // 유저 정보 변경 성공시
       if (result.status === 200) {

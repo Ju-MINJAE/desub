@@ -1,18 +1,32 @@
 import { z } from 'zod';
 
-export const UserProfileUpdateSchema = z
-  .object({
-    name: z.string().default('').optional(),
-    image: z.instanceof(File).optional().nullable(), // 🔥 파일만 허용 (URL 제거)
-  })
-  .superRefine((data, ctx) => {
-    if (!data.name?.trim() && !data.image) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: '프로필 이미지나 이름 중 하나 이상 변경해 주세요.',
-        path: ['name'], // 오류를 name 필드에 표시
-      });
-    }
-  });
+export const UserProfileUpdateSchema = (initialName: string, initialImageUrl: string) => {
+  return z
+    .object({
+      name: z.string().default(''),
+      image: z
+        .union([z.instanceof(File), z.string()])
+        .optional()
+        .nullable(),
+    })
+    .superRefine((data, ctx) => {
+      const isNameChanged = data.name !== initialName;
 
-export type UserProfileUpdateValue = z.infer<typeof UserProfileUpdateSchema>;
+      let isImageChanged = false;
+      if (data.image instanceof File) {
+        isImageChanged = true;
+      } else if (typeof data.image === 'string') {
+        isImageChanged = data.image !== initialImageUrl;
+      }
+
+      if (!(isNameChanged || isImageChanged)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: '프로필 이미지 또는 이름 중 하나 이상을 변경해 주세요.',
+          path: ['name'],
+        });
+      }
+    });
+};
+
+export type UserProfileUpdateValue = z.infer<ReturnType<typeof UserProfileUpdateSchema>>;
