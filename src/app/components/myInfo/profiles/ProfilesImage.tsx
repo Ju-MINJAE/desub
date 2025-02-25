@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { UseFormRegister } from 'react-hook-form';
 import { UserProfileUpdateValue } from '@/app/profiles/schemas/UserProfileUpdateSchema';
+import { useAppSelector } from '@/hooks/redux/hooks';
 
 interface ProfilesImageProps {
   register: UseFormRegister<UserProfileUpdateValue>;
@@ -10,13 +11,15 @@ interface ProfilesImageProps {
 
 const ProfilesImage: React.FC<ProfilesImageProps> = ({ register, setValue }) => {
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const userData = useAppSelector(state => state.userData);
+  const profileUrl = userData?.img_url || '';
 
+  // 파일 미리보기
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
       setValue('image', file);
       const reader = new FileReader();
-      console.log(reader);
       reader.onloadend = () => {
         setProfileImage(reader.result as string);
       };
@@ -24,11 +27,17 @@ const ProfilesImage: React.FC<ProfilesImageProps> = ({ register, setValue }) => 
     }
   };
 
+  useEffect(() => {
+    if (profileUrl) {
+      setProfileImage(profileUrl);
+    }
+  }, [profileUrl]);
+
   return (
     <label className="w-[19.8rem] h-[19.8rem] cursor-pointer">
       {profileImage ? (
         <img
-          src={profileImage}
+          src={profileUrl}
           alt="프로필이미지"
           className="w-full h-full object-cover rounded-full"
         />

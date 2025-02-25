@@ -53,16 +53,14 @@ const MyInfo = () => {
     register,
     handleSubmit,
     setValue,
-    reset,
     trigger,
-    watch,
     formState: { errors },
   } = useForm<UserProfileUpdateValue>({
     resolver: zodResolver(UserProfileUpdateSchema),
     mode: 'onSubmit',
     defaultValues: {
       name: userData?.name || '',
-      image: null, // 🔥 image는 null로 초기화 (파일 업로드 시 변경)
+      image: null,
     },
   });
 
@@ -74,6 +72,7 @@ const MyInfo = () => {
 
       // 유저 정보 변경 성공시
       if (result.status === 200) {
+        setActiveModal('complete');
       }
       // 유저 정보 변경 실패시
       if (result.status === 400) {
@@ -82,19 +81,12 @@ const MyInfo = () => {
       console.error('비밀번호변경 실패:', error);
     }
   };
-  // 현재 입력된 name 값 감시
-  const currentName = watch('name');
-
-  // 값이 변경되었는지 확인하는 함수
-  const hasChanges = () => {
-    return currentName !== userData?.name || !!watch('image');
-  };
 
   // 저장버튼 클릭시 검증
   const handleValidateBeforeOpenModal = () => {
     handleSubmit(
       () => {
-        setActiveModal('confirm'); // 유효성 검사 통과시 확인 모달 열기
+        setActiveModal('confirm');
       },
       errors => {
         console.log('Validation errors:', errors); // 에러 확인용
@@ -114,6 +106,9 @@ const MyInfo = () => {
         setActiveModal(null);
         break;
     }
+  };
+  const handleCloseModal = () => {
+    setActiveModal(null);
   };
   return (
     <>
@@ -144,7 +139,7 @@ const MyInfo = () => {
           title={MODAL_CONFIGS[activeModal].title}
           size={MODAL_CONFIGS[activeModal].size}
           variant={MODAL_CONFIGS[activeModal].variant}
-          // onClose={handleCloseModal}
+          onClose={handleCloseModal}
           onSubmit={handleModalAction}
         />
       )}
