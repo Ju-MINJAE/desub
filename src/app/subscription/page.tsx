@@ -80,6 +80,8 @@ const Subscription = () => {
         return '일시정지';
       case 'restarted':
         return '재개';
+      case 'refund_pending':
+        return '구독 취소 요청';
       default:
         return status;
     }
