@@ -298,7 +298,7 @@ const Subscription = () => {
                 )}
               </div>
 
-              <div className="mt-[2rem]">
+              <div className="mt-[2rem] text-center">
                 <p className="text-[5rem] font-bold italic">wassup!</p>
                 <div className="flex gap-[1rem]">
                   <p className="text-[5rem] font-bold">
