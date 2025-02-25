@@ -15,7 +15,7 @@ import Rating from 'react-rating';
 import '../../styles/review.css';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/hooks/redux/hooks';
-import { getUserSession } from '../actions/serverAction';
+import { getUserSession, clearUserSession } from '../actions/serverAction';
 import { getSubscriptionHistory, SubscriptionHistoryItem } from '@/api/subscription';
 import { formatDate } from '../../utils/dateUtils';
 import { postReview } from '@/api/review';
@@ -23,6 +23,10 @@ import useSubStatus from '@/hooks/useSubStatus';
 import LoadingWrapper from '../components/ui/LoadingWrapper';
 import { getProfileImage } from '@/utils/Profile';
 import { usePathname } from 'next/navigation';
+import { useAppDispatch } from '@/hooks/redux/hooks';
+import { logoutUser } from '@/api/auth';
+import { logout } from '@/store/authslice';
+import { clearUserData } from '@/store/userDataSlice';
 
 const Subscription = () => {
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
@@ -37,6 +41,7 @@ const Subscription = () => {
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
   const [history, setHistory] = useState<SubscriptionHistoryItem[]>([]);
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const pathname = usePathname();
   // 유저정보
   const userData = useAppSelector(state => state.userData);
@@ -149,10 +154,26 @@ const Subscription = () => {
 
   const goToTrelloLink = () => (window.location.href = 'https://trello.com/b/8NZhWTI4/desub');
 
+  // 임시 로그아웃
+  const logoutSession = async () => {
+    const { accessToken, refreshToken } = await getUserSession();
+    if (accessToken && refreshToken) {
+      try {
+        await logoutUser(accessToken, refreshToken); // 로그아웃 api
+        router.push('/'); // 홈으로 이동
+      } catch (error) {
+        console.error('로그아웃 실패', error);
+      }
+    }
+    await clearUserSession(); // 토큰 삭제
+    dispatch(logout());
+    dispatch(clearUserData());
+  };
+
   // 프로필사진
   const serverImage = userData?.img_url || '';
   const displayedImage = getProfileImage(serverImage);
-  const isDefaultImage = displayedImage === "/icons/profile.svg";
+  const isDefaultImage = displayedImage === '/icons/profile.svg';
   return (
     <LoadingWrapper>
       <div className="h-full">
@@ -260,22 +281,22 @@ const Subscription = () => {
           {/* 프로필 */}
           <div className="flex flex-col gap-[9.9rem] border-r">
             <div className="mt-[5.5rem] flex flex-col items-center">
-            <div className="w-[19.8rem] h-[19.8rem] rounded-full relative">
-              {/* 구독페이지 기본 프사 */}
-              {pathname === "/subscription" && isDefaultImage ? (
-                <div className="w-full h-full flex justify-center items-center rounded-full">
-                  <span className="bg-[#d9d9d9] w-[19.8rem] h-[19.8rem] rounded-full flex"></span>
-                </div>
-              ) : (
-                <Image
-                  src={displayedImage}
-                  alt="프로필이미지"
-                  className="w-full h-full object-cover rounded-full"
-                  width={198}
-                  height={198}
-                />
-              )}
-            </div>
+              <div className="w-[19.8rem] h-[19.8rem] rounded-full relative">
+                {/* 구독페이지 기본 프사 */}
+                {pathname === '/subscription' && isDefaultImage ? (
+                  <div className="w-full h-full flex justify-center items-center rounded-full">
+                    <span className="bg-[#d9d9d9] w-[19.8rem] h-[19.8rem] rounded-full flex"></span>
+                  </div>
+                ) : (
+                  <Image
+                    src={displayedImage}
+                    alt="프로필이미지"
+                    className="w-full h-full object-cover rounded-full"
+                    width={198}
+                    height={198}
+                  />
+                )}
+              </div>
 
               <div className="mt-[2rem]">
                 <p className="text-[5rem] font-bold italic">wassup!</p>
@@ -283,7 +304,7 @@ const Subscription = () => {
                   <p className="text-[5rem] font-bold">
                     <span className="underline">{userData?.name}</span> 님
                   </p>
-                  
+
                   <button>
                     <Image
                       src="/icons/setting.svg"
@@ -321,7 +342,9 @@ const Subscription = () => {
               </TextButton>
             </div>
             <div>
-              <button className="font-bold text-[1.5rem] text-[#878787]">logout</button>
+              <button className="font-bold text-[1.5rem] text-[#878787]" onClick={logoutSession}>
+                logout
+              </button>
             </div>
           </div>
 
