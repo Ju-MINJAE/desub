@@ -108,7 +108,6 @@ const PaymentInfo = () => {
       console.log('로그인 후 진행해주세요.');
       return;
     }
-    console.log(issueResponse.billingKey);
 
     const { accessToken } = await getUserSession();
     if (!accessToken) return;

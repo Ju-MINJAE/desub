@@ -269,7 +269,7 @@ export const resumeSubscription = async (plan: number, accessToken: string) => {
 export const changeCardInfo = async (billingKey: string, accessToken: string) => {
   try {
     if (!accessToken) return { sub_status: 'error', error: '인증 토큰이 없습니다.' };
-    console.log('빌링키확인', billingKey);
+
     const response = await fetch(`${API_BASE_URL}/api/payment/update-billing-key/`, {
       method: 'POST',
       headers: {
@@ -282,7 +282,7 @@ export const changeCardInfo = async (billingKey: string, accessToken: string) =>
         billing_key: billingKey,
       }),
     });
-    console.log('반환값', response);
+
     if (!response.ok) {
       const errorData = await response.json();
       const errorMessage = errorData.error?.[0] || `HTTP error! Status: ${response.status}`;
@@ -290,7 +290,7 @@ export const changeCardInfo = async (billingKey: string, accessToken: string) =>
     }
 
     const data = await response.json();
-    console.log('반환값2', data);
+
     return data.message;
   } catch (error) {
     console.error('구독재개 중 오류 발생:', error);

@@ -251,8 +251,12 @@ const Subscription = () => {
         {/* 프로필 */}
         <div className="flex flex-col gap-[9.9rem] border-r">
           <div className="mt-[5.5rem] flex flex-col items-center">
-            <div className="w-[19.8rem] h-[19.8rem] border rounded-[100rem]">
-              <img src={userData?.img_url} alt="프로필사진" />
+            <div className="w-[19.8rem] h-[19.8rem] rounded-[100rem]">
+              <img
+                src={userData?.img_url ?? undefined}
+                alt="프로필사진"
+                className="w-full h-full object-cover rounded-full"
+              />
             </div>
             <div className="mt-[2rem]">
               <p className="text-[5rem] font-bold italic">wassup!</p>
