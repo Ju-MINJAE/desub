@@ -114,3 +114,39 @@ export const changePassword = async (
     throw error;
   }
 };
+
+export const updateUserProfile = async (
+  accessToken: string,
+  name?: string,
+  image?: File | null,
+) => {
+  try {
+    const formData = new FormData();
+    if (name) formData.append('name', name);
+    if (image) formData.append('image', image);
+
+    const response = await fetch(`${API_BASE_URL}/api/user/`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+    const status = response.status;
+    // 400 에러일 경우
+    if (response.status === 400) {
+      return { ...data, status };
+    }
+    if (!response.ok) {
+      throw new Error(data.message || '프로필업데이트 실패했습니다.');
+    }
+
+    console.log(data, 'data');
+    return { status, data };
+  } catch (error) {
+    console.error('프로필업데이트 실패:', error);
+    throw error;
+  }
+};

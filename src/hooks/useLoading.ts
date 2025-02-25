@@ -16,4 +16,4 @@ const useLoading = (loadingTime = 1000) => {
   return isLoading;
 };
 
-export default useLoading;
+export { useLoading };
