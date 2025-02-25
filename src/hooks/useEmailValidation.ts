@@ -36,7 +36,7 @@ export const useEmailValidation = (
       });
 
       const data = await response.json();
-      console.log(data);
+
       if (response.ok && data.available) {
         setEmailMessage(data.message);
         setIsEmailAvailable(true);

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Heading from '@/app/components/ui/Heading';
 import { Button } from '@/app/components/ui/Button';
 import { useAppSelector } from '@/hooks/redux/hooks';
+import type { RootState } from '@/store/store';
 import { saveBillingKey, searchPlanId, subscribe } from '@/api/payment';
 import { getUserSession } from '@/app/actions/serverAction';
 import { useRouter } from 'next/navigation';
@@ -17,12 +18,18 @@ import * as PortOne from '@portone/browser-sdk/v2';
 const Subscribe = () => {
   const userData = useAppSelector(state => state.userData);
   const planData = useAppSelector(state => state.plan);
+  const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
   const router = useRouter();
   const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
   const [mobileAlert, setMobileAlert] = useState(false);
+  const [isAuthenticatedAlert, setIsAuthenticated] = useState(false);
 
   const handlePayment = async () => {
     try {
+      if (!isAuthenticated) {
+        setIsAuthenticated(true);
+      }
+
       // 모바일 환경
       if (isMobile) {
         setMobileAlert(true);
@@ -34,7 +41,7 @@ const Subscribe = () => {
           console.log('로그인 후 진행해주세요.');
           return;
         }
-        console.log(userData);
+
         // 빌링키 발급
         const issueResponse = await PortOne.requestIssueBillingKey({
           storeId: STORE_ID,
@@ -66,7 +73,7 @@ const Subscribe = () => {
         }
         // // 구독 결제 요청
         const subscribeResponse = await subscribe(planId, accessToken);
-        console.log('?', subscribeResponse);
+
         router.push(
           `/pricing/paymentCompleteRedirect?data=${encodeURIComponent(
             JSON.stringify(subscribeResponse),
@@ -79,11 +86,22 @@ const Subscribe = () => {
   };
 
   const handleClosePopup = () => {
-    setMobileAlert(prev => !prev);
+    setMobileAlert(false);
+    setIsAuthenticated(false);
   };
 
   return (
     <div className="h-full">
+      {isAuthenticatedAlert && (
+        <Alert
+          buttonText="로그인 페이지로 이동"
+          size="full"
+          title="로그인 후에 진행해주시기 바랍니다."
+          variant="green"
+          onClose={() => handleClosePopup()}
+          onSubmit={() => router.push('/login')}
+        />
+      )}
       {mobileAlert && (
         <Alert
           buttonText="결제하기"

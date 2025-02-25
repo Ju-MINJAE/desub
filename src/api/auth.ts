@@ -86,7 +86,6 @@ export const saveGoogleUserPhone = async (
   marketing_agreement: boolean,
   accessToken: string,
 ): Promise<GoogleResponse & { status: number }> => {
-  console.log(phone, accessToken);
   try {
     const response = await fetch(`${API_BASE_URL}/api/user/g-phone/`, {
       method: 'POST',
@@ -114,7 +113,6 @@ export const saveGoogleUserPhone = async (
 };
 
 export const fetchRefreshedToken = async (refreshToken: string): Promise<LoginResponse> => {
-  console.log(refreshToken);
   try {
     const response = await fetch(`${API_BASE_URL}/api/user/refresh_token/`, {
       method: 'POST',

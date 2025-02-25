@@ -32,10 +32,10 @@ const PaymentInfo = () => {
 
   const userData = useAppSelector(state => state.userData);
   const cardInfo = userData?.subscription_info;
+
   // 구독현황
   const subscriptionData = useSubStatus();
   const userSubStatue = subscriptionData?.status.sub_status;
-  const m_redirect_url = `${window.location.origin}/pricing/subscribe`;
 
   useEffect(() => {
     const fetchCardData = async () => {
@@ -120,7 +120,6 @@ const PaymentInfo = () => {
         customer: {
           fullName: userData?.name,
         },
-        redirectUrl: m_redirect_url,
       });
 
       if (!issueResponse?.billingKey) {

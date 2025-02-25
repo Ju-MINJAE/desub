@@ -44,7 +44,7 @@ const SignupForm = () => {
       privacy_agreement: data.privacy,
       marketing_agreement: data.marketing ?? false,
     };
-    console.log(signupData);
+
     console.log('현재 입력값:', methods.watch());
     try {
       await signUp(signupData); // signUp 함수호출
