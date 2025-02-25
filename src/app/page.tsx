@@ -17,6 +17,7 @@ import { searchPlanId } from '@/api/payment';
 import { setPlanData } from '@/store/planDataSlice';
 import { useAppDispatch } from '@/hooks/redux/hooks';
 import LoadingWrapper from './components/ui/LoadingWrapper';
+import HomeImage from './components/home/HomeImage';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -54,7 +55,7 @@ const Home = () => {
         <FAQAccordion />
         <Marquee />
         <Membership />
-        {/* <div className="bg-gray w-full h-96">What is this?</div> */}
+        <HomeImage />
         <Contact />
       </div>
     </LoadingWrapper>
