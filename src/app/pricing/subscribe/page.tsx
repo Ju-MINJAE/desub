@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Heading from '@/app/components/ui/Heading';
 import { Button } from '@/app/components/ui/Button';
 import { useAppSelector } from '@/hooks/redux/hooks';
@@ -9,6 +10,7 @@ const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
 import { getUserSession } from '@/app/actions/serverAction';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { Alert } from '@/app/components/ui/Alert';
 
 import * as PortOne from '@portone/browser-sdk/v2';
 
@@ -16,59 +18,91 @@ const Subscribe = () => {
   const userData = useAppSelector(state => state.userData);
   const planData = useAppSelector(state => state.plan);
   const router = useRouter();
-  const m_redirect_url = `${window.location.origin}/pricing/subscribe`;
+  const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+  const [mobileAlert, setMobileAlert] = useState(false);
 
   const handlePayment = async () => {
     try {
-      if (!userData) {
-        console.log('로그인 후 진행해주세요.');
-        return;
-      }
-      // 빌링키 발급
-      const issueResponse = await PortOne.requestIssueBillingKey({
-        storeId: STORE_ID,
-        channelKey: CHANNEL_KEY,
-        billingKeyMethod: 'CARD',
-        issueId: `ISSUE${Date.now()}`,
-        customer: {
-          fullName: userData?.name,
-        },
-        redirectUrl: m_redirect_url,
-      });
-
-      if (!issueResponse?.billingKey) {
-        console.log('로그인 후 진행해주세요.');
-        return;
+      // 모바일 환경
+      if (isMobile) {
+        console.log('모바일');
+        setMobileAlert(true);
       }
 
-      const { accessToken } = await getUserSession();
-      if (!accessToken) return;
+      // pc 환경
+      if (!isMobile) {
+        if (!userData) {
+          console.log('로그인 후 진행해주세요.');
+          return;
+        }
+        console.log(userData);
+        // 빌링키 발급
+        const issueResponse = await PortOne.requestIssueBillingKey({
+          storeId: STORE_ID,
+          channelKey: CHANNEL_KEY,
+          billingKeyMethod: 'CARD',
+          issueId: `ISSUE${Date.now()}`,
+          customer: {
+            fullName: userData?.name,
+          },
+        });
 
-      // 빌링키 저장
-      await saveBillingKey(issueResponse?.billingKey as string, accessToken);
-      // 상품 아이디 조회
-      const planData = await searchPlanId();
-      const planId = planData.id;
+        if (!issueResponse?.billingKey) {
+          console.log('로그인 후 진행해주세요.');
+          return;
+        }
 
-      if (typeof planId !== 'number') {
-        console.log('구독 결제할 수 있는 상품이 없습니다.');
-        return;
+        // 모바일이면 유저가 결제 요청을 했을때 유저 고유 식별 아이디같은걸로 빌링키 발급해서 먼저 subscribe 요청받은걸로 결제 승인해주면 될것같은디
+
+        const { accessToken } = await getUserSession();
+        if (!accessToken) return;
+
+        // // 빌링키 저장
+        await saveBillingKey(issueResponse?.billingKey as string, accessToken);
+        // // 상품 아이디 조회
+        const planData = await searchPlanId();
+        const planId = planData.id;
+
+        if (typeof planId !== 'number') {
+          console.log('구독 결제할 수 있는 상품이 없습니다.');
+          return;
+        }
+        // // 구독 결제 요청
+        const subscribeResponse = await subscribe(planId, accessToken);
+        console.log('?', subscribeResponse);
+        router.push(
+          `/pricing/paymentCompleteRedirect?data=${encodeURIComponent(
+            JSON.stringify(subscribeResponse),
+          )}`,
+        );
       }
-      // 구독 결제 요청
-      const subscribeResponse = await subscribe(planId, accessToken);
-      console.log('?', subscribeResponse);
-      router.push(
-        `/pricing/paymentCompleteRedirect?data=${encodeURIComponent(
-          JSON.stringify(subscribeResponse),
-        )}`,
-      );
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleClosePopup = () => {
+    setMobileAlert(false);
+  };
+
   return (
     <div className="h-full">
+      {mobileAlert && (
+        <Alert
+          buttonText="결제하기"
+          size="full"
+          title={
+            <>
+              구글 소셜 로그인으로 가입된 계정입니다.
+              <br />
+              구글 로그인을 이용해주세요
+            </>
+          }
+          variant="green"
+          onClose={() => handleClosePopup()}
+          onSubmit={() => handleClosePopup()}
+        />
+      )}
       <div className="pt-[4.7rem] pl-[4.7rem]">
         <button
           onClick={() => router.push('/pricing')}
@@ -79,7 +113,7 @@ const Subscribe = () => {
         </button>
       </div>
 
-      <div className="h-[110vh] flex flex-col justify-center items-center mt-[6rem] md:mt-[10rem] md:h-[70vh]">
+      <div className="flex flex-col justify-center items-center mt-[6rem] md:mt-[10rem]">
         <div className="w-[35.5rem] md:w-[54rem] p-[3rem] border">
           <Heading tag="h1" className="!text-[4rem] md:!text-[5rem] leading-normal">
             {planData.plan_name}
