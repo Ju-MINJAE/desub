@@ -132,8 +132,8 @@ const PaymentInfo = () => {
       if (!accessToken) return;
 
       const billingKey = issueResponse.billingKey;
-      const response = await changeCardInfo(billingKey, accessToken);
-      console.log(response);
+      await changeCardInfo(billingKey, accessToken);
+      window.location.reload();
     }
   };
 
@@ -173,7 +173,7 @@ const PaymentInfo = () => {
               <p className="text-[1.6rem] min-w-[13.9rem]">결제카드</p>
               <div className="flex items-center gap-[1.5rem] text-[1.6rem] font-medium">
                 <p>
-                  {cardInfo?.card_name}&nbsp;&nbsp;
+                  {cardDetailInfo?.card_name}&nbsp;&nbsp;
                   {cardDetailInfo?.card_number}
                 </p>
               </div>
