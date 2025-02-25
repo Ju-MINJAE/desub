@@ -5,12 +5,13 @@ import Image from 'next/image';
 
 interface ConfirmProps {
   title: React.ReactNode;
-  contents: React.ReactNode;
+  contents?: React.ReactNode;
   buttonText1: string;
   buttonText2: string;
   variant1: 'green' | 'black' | 'outline';
   variant2: 'green' | 'black' | 'outline';
   className?: string;
+  titleClassName?: string;
   onClose: () => void;
   onSubmit?: () => void;
   onCancel?: () => void;
@@ -24,6 +25,7 @@ export const Confirm = ({
   variant1 = 'outline',
   variant2 = 'green',
   className = '',
+  titleClassName = '',
   onClose,
   onSubmit,
   onCancel,
@@ -64,7 +66,9 @@ export const Confirm = ({
           height={40}
           onClick={onClose}
         />
-        <div className="w-full gap-[7.2rem] flex flex-col justify-center items-center text-center">
+        <div
+          className={`w-full gap-[7.2rem] flex flex-col justify-center items-center text-center ${titleClassName}`}
+        >
           <div className="block gap-[1.6rem]">
             <div className="font-medium text-[2rem]">{title}</div>
             <div className="font-normal text-[1.6rem]">{contents}</div>

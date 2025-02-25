@@ -9,7 +9,6 @@ import Heading from '@/app/components/ui/Heading';
 import { Button } from '@/app/components/ui/Button';
 import { Input } from '@/app/components/ui/Input';
 import { saveGoogleUserPhone } from '@/api/auth';
-import { setUserSession } from '@/app/actions/serverAction';
 import { loginSuccess } from '@/store/authslice';
 import { useAppDispatch } from '@/hooks/redux/hooks';
 import { formatPhoneNumber } from '@/utils/phone';
@@ -18,14 +17,17 @@ import { formatTime } from '@/utils/time';
 import { getUserSession } from '@/app/actions/serverAction';
 import { Alert } from '@/app/components/ui/Alert';
 import AgreementItem from '@/app/components/signup/AgreementItem';
+import { Confirm } from '@/app/components/ui/Confirm';
 
 export default function Social() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [isAuthFieldVisible, setIsAuthFieldVisible] = useState(false);
+  const [showMarketingAlert, setShowMarketingAlert] = useState(false);
 
   const handleClosePopup = () => {
     setIsLoginPromptOpen(false);
+    setShowMarketingAlert(false);
   };
   const handleNavigateLogin = () => {
     router.push('/login/email'); // 로그인 페이지로 이동
@@ -41,6 +43,8 @@ export default function Social() {
     setValue,
     watch,
     setError,
+    trigger,
+    getValues,
   } = useForm<GoogleSignupValues>({
     resolver: zodResolver(GoogleSignupSchema),
     mode: 'onChange',
@@ -50,7 +54,7 @@ export default function Social() {
   const onSubmit = async (data: GoogleSignupValues) => {
     console.log(data);
     const { accessToken } = await getUserSession();
-    
+
     if (!accessToken) {
       console.log('엑세스 토큰이 없습니다.');
       return '엑세스 토큰이 없습니다.';
@@ -84,6 +88,56 @@ export default function Social() {
       setIsAuthFieldVisible(false);
     }, 240000);
   };
+
+  //  확인 버튼 클릭 시 동작 수정 (마케팅 동의 확인 후 처리)
+  const handleConfirmClick = (e: React.MouseEvent) => {
+    e.preventDefault(); // 기본 이벤트 방지
+    // 미동의 상태시
+    if (!watch('marketing')) {
+      setShowMarketingAlert(true);
+    } else {
+      handleSubmit(onSubmit)(); // 마케팅 동의된 상태면 바로 API 호출
+    }
+  };
+
+  //  "동의 없이 가입" 클릭 시 API 강제 호출
+  const handleProceedWithoutMarketing = async () => {
+    setShowMarketingAlert(false);
+
+    try {
+      const isValid = await trigger(); // 강제 검증 실행
+      if (!isValid) {
+        return;
+      }
+
+      const formData = getValues(); // 폼 데이터 가져오기
+      console.log('✅ 동의 없이 가입 - 데이터:', formData); // 디버깅용 로그
+      await onSubmit(formData);
+    } catch (error) {
+      console.error('🚨 handleProceedWithoutMarketing 오류:', error);
+    }
+  };
+
+  // "동의하고 가입" 클릭 시 마케팅 동의 체크 후 API 강제 호출
+  const handleAgreeAndSignup = async () => {
+    setValue('marketing', true, { shouldValidate: true }); // 마케팅 동의 체크 설정
+    setShowMarketingAlert(false);
+
+    try {
+      const isValid = await trigger(); // 강제 검증 실행
+      if (!isValid) {
+        console.error('❌ 폼 검증 실패. onSubmit 실행 안 됨.');
+        return;
+      }
+
+      const formData = getValues(); // 폼 데이터 가져오기
+      console.log('✅ 동의하고 가입 - 데이터:', formData); // 디버깅용 로그
+      await onSubmit(formData); // API 호출
+    } catch (error) {
+      console.error('🚨 handleAgreeAndSignup 오류:', error);
+    }
+  };
+
   const phoneNumber = watch('phone_number') || ''; // 입력 값 실시간 감지
   return (
     <div className="container mx-auto px-4 flex justify-center">
@@ -153,6 +207,7 @@ export default function Social() {
               type="submit"
               className="w-[40rem] h-[5.5rem] text-[1.6rem]"
               disabled={!isValid}
+              onClick={handleConfirmClick}
             >
               확인
             </Button>
@@ -174,6 +229,25 @@ export default function Social() {
             onClose={() => handleClosePopup()}
             onSubmit={() => handleNavigateLogin()}
             onTextButtonClick={() => handleNavigateFindAccount()}
+          />
+        )}
+        {/* 마케팅 미동의시 팝업 */}
+        {showMarketingAlert && (
+          <Confirm
+            buttonText1="동의 없이 가입"
+            buttonText2="동의하고 가입"
+            title={
+              <p>
+                마케팅 미동의 시 혜택과 공지가 미발송됩니다.
+                <br /> 동의 없이 가입하시겠어요?
+              </p>
+            }
+            titleClassName="mt-[-5rem]"
+            variant1="outline"
+            variant2="green"
+            onClose={() => handleClosePopup()}
+            onCancel={handleProceedWithoutMarketing} // ✅ 이벤트 인자 제거
+            onSubmit={handleAgreeAndSignup} // ✅ 이벤트 인자 제거
           />
         )}
       </div>
