@@ -11,7 +11,6 @@ interface Props {
 }
 
 const UserInfo = ({ register, errors, setValue, trigger }: Props) => {
-  console.log(errors, '?');
   const userData = useAppSelector(state => state.userData);
 
   useEffect(() => {

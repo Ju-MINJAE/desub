@@ -25,7 +25,6 @@ const Subscribe = () => {
     try {
       // 모바일 환경
       if (isMobile) {
-        console.log('모바일');
         setMobileAlert(true);
       }
 
@@ -51,8 +50,6 @@ const Subscribe = () => {
           console.log('로그인 후 진행해주세요.');
           return;
         }
-
-        // 모바일이면 유저가 결제 요청을 했을때 유저 고유 식별 아이디같은걸로 빌링키 발급해서 먼저 subscribe 요청받은걸로 결제 승인해주면 될것같은디
 
         const { accessToken } = await getUserSession();
         if (!accessToken) return;
@@ -82,7 +79,7 @@ const Subscribe = () => {
   };
 
   const handleClosePopup = () => {
-    setMobileAlert(false);
+    setMobileAlert(prev => !prev);
   };
 
   return (
@@ -91,13 +88,7 @@ const Subscribe = () => {
         <Alert
           buttonText="결제하기"
           size="full"
-          title={
-            <>
-              구글 소셜 로그인으로 가입된 계정입니다.
-              <br />
-              구글 로그인을 이용해주세요
-            </>
-          }
+          title="결제는 pc에서 진행해주시기 바랍니다."
           variant="green"
           onClose={() => handleClosePopup()}
           onSubmit={() => handleClosePopup()}

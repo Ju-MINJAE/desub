@@ -17,8 +17,6 @@ export interface PasswordField {
 }
 
 export interface SubscriptionInfo {
-  card_name: string;
-  card_number: string;
   end_date: string | null;
   next_bill_date: string;
   payment_amount: number;
