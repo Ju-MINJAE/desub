@@ -148,9 +148,9 @@ export default function Social() {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full flex flex-col items-center max-w-[70rem]"
+          className="w-full flex flex-col items-center md:max-w-[70rem] px-10"
         >
-          <div className="grid grid-cols-[54rem_14rem] gap-x-8 items-center">
+          <div className="w-full grid grid-cols md:grid-cols-[54rem_14rem] gap-x-8 items-center">
             <Input
               type="tel"
               placeholder="010-1234-5678"
@@ -162,7 +162,7 @@ export default function Social() {
             <Button
               type="button"
               variant="outline"
-              className="!w-[14rem] h-[5rem] text-[2rem]"
+              className="mt-[2rem] md:mt-0 !w-[11rem] md:!w-[14rem] md:!h-[5rem] md:text-[2rem] text-[1.6rem] !h-[4rem]"
               onClick={handleButtonClick}
               disabled={Boolean(successMessage)}
             >
@@ -170,7 +170,7 @@ export default function Social() {
             </Button>
           </div>
           {isAuthFieldVisible && !successMessage && (
-            <div className="grid grid-cols-[54rem_14rem] gap-x-8 items-center mt-[3rem]">
+            <div className="w-full grid grid-cols-1 md:grid-cols-[54rem_14rem] gap-x-8 items-center mt-[3rem]">
               <Input
                 type="text"
                 placeholder="인증번호 입력"
@@ -185,14 +185,14 @@ export default function Social() {
               <Button
                 type="button"
                 variant="outline"
-                className="!w-[14rem] h-[5rem] text-[2rem]"
+                className="mt-[2rem] md:mt-0 !w-[11rem] md:!w-[14rem] md:!h-[5rem] md:text-[2rem] text-[1.6rem] !h-[4rem]"
                 onClick={handleVerifyCode}
               >
                 인증 확인
               </Button>
             </div>
           )}
-          <div className="mt-[5rem] grid grid-cols-[70rem] self-baseline items-center ml-[-1.7rem]">
+          <div className="mt-[3rem] md:mt-[5rem] grid grid-cols-1 md:grid-cols-[70rem] self-baseline items-center ml-[-1.7rem]">
             <AgreementItem
               id="marketing"
               text="마케팅 수신에 동의합니다."
