@@ -256,7 +256,7 @@ const Subscription = () => {
         <div className="pt-[4.7rem] px-[4.7rem] flex justify-between">
           <BackButton text="my subscription" />
           {userSubStatue !== 'none' && (
-            <div className="flex items-center relative z-[-10]">
+            <div className="flex items-center">
               <Button
                 onClick={openReviewModal}
                 className={`w-[11.9rem] h-[3.3rem] text-[1.5rem] ${isBlinking ? 'blinking' : ''}`}
