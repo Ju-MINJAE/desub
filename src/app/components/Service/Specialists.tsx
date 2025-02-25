@@ -22,7 +22,7 @@ const Specialists = () => {
         }`}
       >
         <Image
-          src="/images/Specialists1.png"
+          src="/images/service_uiux.png"
           alt="Sevice_UIUX"
           fill
           sizes="(min-width: 768px) 27.4rem, 17.1rem"
@@ -36,7 +36,7 @@ const Specialists = () => {
         }`}
       >
         <Image
-          src="/images/Specialists1.png"
+          src="/images/service_ecommerce.png"
           alt="Sevice_E-commerce"
           fill
           sizes="(min-width: 768px) 27.4rem, 14rem"
@@ -50,7 +50,7 @@ const Specialists = () => {
         }`}
       >
         <Image
-          src="/images/Specialists1.png"
+          src="/images/service_branding.png"
           alt="Sevice_Branding"
           fill
           sizes="(min-width: 768px) 31.1rem, 15rem"
@@ -64,7 +64,7 @@ const Specialists = () => {
         }`}
       >
         <Image
-          src="/images/Specialists1.png"
+          src="/images/service_printing.png"
           alt="Sevice_Printing"
           fill
           sizes="(min-width: 768px) 21.6rem, 13.8rem"
@@ -78,7 +78,7 @@ const Specialists = () => {
         }`}
       >
         <Image
-          src="/images/Specialists1.png"
+          src="/images/service_productdesign.png"
           alt="Sevice_Product Design"
           fill
           sizes="(min-width: 768px) 42.6rem, 17.1rem"
@@ -90,7 +90,7 @@ const Specialists = () => {
         {items.map(item => (
           <p
             key={item.id}
-            className="hover:underline hover:decoration-2"
+            className="hover:underline hover:decoration-2 hover:bg-primary"
             onMouseEnter={() => setHoverIndex(item.id)}
             onMouseLeave={() => setHoverIndex(null)}
           >

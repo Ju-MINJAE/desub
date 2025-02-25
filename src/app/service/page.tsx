@@ -1,8 +1,8 @@
 'use client';
 
 import Heading from '@/app/components/ui/Heading';
-import Specialists from '../components/Service/Specialists';
-import PricingProcess from '../components/Service/PricingProcess';
+import Specialists from '../components/service/Specialists';
+import PricingProcess from '../components/service/PricingProcess';
 import Image from 'next/image';
 import LoadingWrapper from '../components/ui/LoadingWrapper';
 import { motion } from 'framer-motion';
