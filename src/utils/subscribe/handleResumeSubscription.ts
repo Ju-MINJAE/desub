@@ -6,8 +6,7 @@ export const handleResumeSubscription = async (plan: number) => {
     const { accessToken } = await getUserSession();
     if (!accessToken) return;
 
-    const response = await await resumeSubscription(plan, accessToken);
-    console.log(response);
+    await resumeSubscription(plan, accessToken);
   } catch (error) {
     console.error(error);
   }

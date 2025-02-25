@@ -15,7 +15,7 @@ const PaymentCompleteRedirect = () => {
     : null;
   const [paymentFailure, setPaymentFailure] = useState(false);
   const [message, setMessage] = useState('');
-  console.log(data);
+
   useEffect(() => {
     if (data.sub_status > 400) {
       setPaymentFailure(true);
