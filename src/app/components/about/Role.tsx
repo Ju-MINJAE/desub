@@ -29,7 +29,7 @@ const RoleSection: React.FC = () => {
         about role
       </span>
 
-      <div className="container mx-auto max-w-[140rem] pt-[22.6rem] px-[2rem] md:px-0">
+      <div className="container mx-auto max-w-[140rem] pt-[5rem] md:pt-[22.6rem] px-[2rem] md:px-0">
         <div className="flex flex-col text-center space-y-[1rem] md:space-y-[1.6rem]">
           <span className="text-[3rem] sm:text-[6rem] md:text-[9rem]">wassup?!</span>
           <span className="text-[3rem] sm:text-[6rem] md:hidden">desub is ready</span>

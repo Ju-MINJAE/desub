@@ -25,7 +25,7 @@ const Pricing = () => {
 
   return (
     <LoadingWrapper>
-      <div className="flex flex-col justify-center items-center text-center pt-[12.2rem] pb-[13.3rem]">
+      <div className="flex flex-col justify-center items-center text-center pt-[5rem] md:pt-[12.2rem] pb-[13.3rem]">
         <Heading tag="h1" className="mb-[1.6rem] md:mb-[9.9rem]">
           are you ready to
           <br /> join us?

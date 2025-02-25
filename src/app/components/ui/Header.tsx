@@ -91,7 +91,7 @@ const Header = () => {
   ];
 
   return (
-    <div className="w-full fixed top-0 left-0 z-50 bg-white border-b">
+    <div className="w-full fixed bottom-0 left-0 z-50 bg-white border-t md:fixed md:top-0 md:bottom-auto md:border-b md:border-t-0">
       <header className="px-[2rem] md:px-[3.7rem] py-[2rem] flex items-center justify-between">
         <div className="flex items-center">
           <Button
@@ -202,11 +202,6 @@ const Header = () => {
               >
                 subscribe
               </Button>
-              {/* <Link href="/login" className="hidden md:block">
-                <button className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem]">
-                  login
-                </button>
-              </Link> */}
               <button
                 className="ml-[2rem] lg:ml-[3.9rem] text-[1.6rem] lg:text-[2rem] hidden md:block"
                 onClick={() => router.push('/login')}

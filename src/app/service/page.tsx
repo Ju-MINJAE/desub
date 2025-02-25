@@ -9,7 +9,7 @@ import LoadingWrapper from '../components/ui/LoadingWrapper';
 const Service = () => {
   return (
     <LoadingWrapper>
-      <div className="w-full flex flex-col justify-center items-center pt-[12.2rem] pb-[13.3rem]">
+      <div className="w-full flex flex-col justify-center items-center pt-[5rem] md:pt-[12.2rem] pb-[13.3rem]">
         <div className="text-left w-full max-w-[90%] mx-auto gap-[1.6rem] md:gap-14 flex flex-col">
           <Heading tag="h1">
             We specialize in the
