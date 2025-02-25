@@ -21,6 +21,8 @@ import { formatDate } from '../../utils/dateUtils';
 import { postReview } from '@/api/review';
 import useSubStatus from '@/hooks/useSubStatus';
 import LoadingWrapper from '../components/ui/LoadingWrapper';
+import { getProfileImage } from '@/utils/Profile';
+import { usePathname } from 'next/navigation';
 
 const Subscription = () => {
   const [subscriptionStatusModal, setSubscriptionStatusModal] = useState(false);
@@ -35,6 +37,7 @@ const Subscription = () => {
   const [isBlinking, setIsBlinking] = useState<boolean>(true);
   const [history, setHistory] = useState<SubscriptionHistoryItem[]>([]);
   const router = useRouter();
+  const pathname = usePathname();
   // 유저정보
   const userData = useAppSelector(state => state.userData);
   // 구독현황
@@ -146,6 +149,10 @@ const Subscription = () => {
 
   const goToTrelloLink = () => (window.location.href = 'https://trello.com/b/8NZhWTI4/desub');
 
+  // 프로필사진
+  const serverImage = userData?.img_url || '';
+  const displayedImage = getProfileImage(serverImage);
+  const isDefaultImage = displayedImage === "/icons/profile.svg";
   return (
     <LoadingWrapper>
       <div className="h-full">
@@ -253,19 +260,30 @@ const Subscription = () => {
           {/* 프로필 */}
           <div className="flex flex-col gap-[9.9rem] border-r">
             <div className="mt-[5.5rem] flex flex-col items-center">
-              <div className="w-[19.8rem] h-[19.8rem] rounded-[100rem]">
-                <img
-                  src={userData?.img_url ?? undefined}
-                  alt="프로필사진"
+            <div className="w-[19.8rem] h-[19.8rem] rounded-full relative">
+              {/* 구독페이지 기본 프사 */}
+              {pathname === "/subscription" && isDefaultImage ? (
+                <div className="w-full h-full flex justify-center items-center rounded-full">
+                  <span className="bg-[#d9d9d9] w-[19.8rem] h-[19.8rem] rounded-full flex"></span>
+                </div>
+              ) : (
+                <Image
+                  src={displayedImage}
+                  alt="프로필이미지"
                   className="w-full h-full object-cover rounded-full"
+                  width={198}
+                  height={198}
                 />
-              </div>
+              )}
+            </div>
+
               <div className="mt-[2rem]">
                 <p className="text-[5rem] font-bold italic">wassup!</p>
                 <div className="flex gap-[1rem]">
                   <p className="text-[5rem] font-bold">
                     <span className="underline">{userData?.name}</span> 님
                   </p>
+                  
                   <button>
                     <Image
                       src="/icons/setting.svg"

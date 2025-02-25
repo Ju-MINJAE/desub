@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { UseFormRegister } from 'react-hook-form';
 import { UserProfileUpdateValue } from '@/app/profiles/schemas/UserProfileUpdateSchema';
 import { useAppSelector } from '@/hooks/redux/hooks';
+import { getProfileImage } from '@/utils/Profile';
 
 interface ProfilesImageProps {
   register: UseFormRegister<UserProfileUpdateValue>;
@@ -27,22 +28,20 @@ const ProfilesImage: React.FC<ProfilesImageProps> = ({ register, setValue }) => 
     }
   };
 
-  // localPreview가 있으면 그것을, 없으면 서버 이미지를 사용
-  const displayedImage = localPreview || serverImage || undefined;
+  const displayedImage = localPreview || getProfileImage(serverImage);
 
   return (
     <label className="w-[19.8rem] h-[19.8rem] cursor-pointer">
-      {displayedImage ? (
-        <img
+      <div className="relative w-full h-full">
+        <Image
           src={displayedImage}
           alt="프로필이미지"
           className="w-full h-full object-cover rounded-full"
+          width={198}
+          height={198}
+          priority 
         />
-      ) : (
-        <div className="w-full h-full bg-gray flex justify-center items-center rounded-full">
-          <Image src="/icons/profile.svg" alt="desub_myInfo_Profile" width={198} height={198} />
-        </div>
-      )}
+      </div>
       <input
         type="file"
         accept="image/*"
