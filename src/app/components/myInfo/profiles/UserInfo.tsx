@@ -23,7 +23,7 @@ const UserInfo = ({ register, errors, setValue, trigger }: Props) => {
     <div className="w-full md:w-[57.4rem] flex flex-col gap-[2.6rem] flex-grow-0">
       {/* 이메일 (읽기 전용) */}
       <div className="flex justify-between items-center w-full">
-        <p className="text-[1.6rem] min-w-[13.9rem]">이메일</p>
+        <p className="text-[1.6rem] w-[10rem] md:min-w-[13.9rem]">이메일</p>
         <Input
           className="md:h-[4.7rem] !text-[1.6rem]"
           type="email"
@@ -34,7 +34,7 @@ const UserInfo = ({ register, errors, setValue, trigger }: Props) => {
 
       {/* 이름 */}
       <div className="flex justify-between items-center w-full">
-        <p className="text-[1.6rem] min-w-[13.9rem]">이름</p>
+        <p className="text-[1.6rem] w-[10rem] md:min-w-[13.9rem]">이름</p>
         <div className="flex flex-col gap-[1rem] w-full">
           <Input
             {...register('name')}
