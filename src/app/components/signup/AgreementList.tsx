@@ -24,29 +24,33 @@ export const AgreementList = () => {
 
   return (
     <div className="flex flex-col gap-10">
-      <label className="flex items-center space-x-[1.7rem]">
-        <input
-          type="checkbox"
-          className="peer hidden"
-          checked={allChecked}
-          onChange={e => handleAllCheck(e.target.checked)}
-        />
-        <span
-          style={{ border: '3px solid black' }}
-          className="w-[2.3rem] h-[2.3rem] rounded-sm peer-checked:bg-primary peer-checked:border-black"
-        />
-        <span className="font-bold text-[1.8rem]">전체 동의</span>
-      </label>
+      <div className="flex">
+        <label className="flex items-center space-x-[1.7rem] cursor-pointer">
+          <input
+            type="checkbox"
+            className="peer hidden"
+            checked={allChecked}
+            onChange={e => handleAllCheck(e.target.checked)}
+          />
+          <span
+            style={{ border: '3px solid black' }}
+            className="w-[2.3rem] h-[2.3rem] rounded-sm peer-checked:bg-primary peer-checked:border-black"
+          />
+          <span className="font-bold text-[1.8rem]">전체 동의</span>
+        </label>
+      </div>
       {AGREEMENT_ITEMS.map(item => (
         <div key={item.id} className="flex flex-col gap-1">
-          <AgreementItem
-            id={item.id}
-            text={item.text}
-            required={item.required}
-            link={item.link}
-            checked={watch(item.id) ?? false}
-            onChange={checked => setValue(item.id, checked, { shouldValidate: true })}
-          />
+          <div className="flex">
+            <AgreementItem
+              id={item.id}
+              text={item.text}
+              required={item.required}
+              link={item.link}
+              checked={watch(item.id) ?? false}
+              onChange={checked => setValue(item.id, checked, { shouldValidate: true })}
+            />
+          </div>
           {errors[item.id as keyof SignupFormData] && (
             <p className="mt-[0.25rem] ml-[5.3rem] text-[1.5rem] text-red">
               {errors[item.id as keyof SignupFormData]?.message}

@@ -31,7 +31,7 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="w-full min-h-[100vh] md:min-h-auto md:w-1/2 flex flex-col justify-center items-center text-center p-8 md:p-0 md:order-1">
+        <div className="w-full min-h-[70vh] md:min-h-auto md:w-1/2 flex flex-col justify-center items-center text-center p-8 md:p-0 md:order-1">
           <div>
             <Heading tag="h1" className="mb-[5rem] md:mb-[16.8rem]">
               login

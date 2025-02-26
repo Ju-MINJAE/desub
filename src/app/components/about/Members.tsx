@@ -103,7 +103,7 @@ const MembersSection: React.FC = () => {
               }}
               className="w-full max-w-[34.5rem] h-[11.9rem] mt-[3rem] border rounded-[34.5rem] flex flex-col items-center justify-center"
             >
-              <p className="text-[1.5rem] font-bold">
+              <p className="px-8 text-[1.5rem] font-bold">
                 {member.role}
                 <br />
                 {member.name}
