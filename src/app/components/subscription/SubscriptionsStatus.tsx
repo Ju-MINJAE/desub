@@ -22,7 +22,7 @@ const SubscriptionsStatus = () => {
   return (
     <div className="flex flex-col">
       <div className="w-full max-w-[40.1rem] flex justify-between gap-[5px] md:gap-0">
-        <p className="md:mt-0 mt-5 text-[4rem] md:text-[5rem] font-bold">{statusText}</p>
+        <p className="md:mt-0 mt-5 text-[2.5rem] md:text-[5rem] font-bold">{statusText}</p>
       </div>
       {(status === 'none' || status === 'cancelled') && (
         <Button

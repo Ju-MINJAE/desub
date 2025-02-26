@@ -60,7 +60,7 @@ const SubscriptionActive = () => {
   return (
     <div>
       <div className="flex w-[40.1rem] md:justify-between flex-col md:flex-row gap-[5px] md:gap-0">
-        <p className="text-[4rem] md:text-[5rem] font-bold">구독중</p>
+        <p className="text-[2.5rem] md:text-[5rem] font-bold">구독중</p>
         <Button
           className="!w-[12rem] md:!w-[14.7rem] h-[4rem] md:h-[6rem] font-bold text-[1.6rem] md:text-[1.8rem] flex justify-center items-center gap-[0.6rem]"
           size="small"

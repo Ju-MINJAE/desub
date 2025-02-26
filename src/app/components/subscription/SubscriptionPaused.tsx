@@ -4,8 +4,6 @@ import { Button } from '../ui/Button';
 import Image from 'next/image';
 import Unsubscription from './Unsubscription';
 import { useEffect, useState } from 'react';
-import { getUserSession } from '@/app/actions/serverAction';
-import { statusSubscriptions } from '@/api/subscription';
 import { formatDateShort, formatRemainingBillDate } from '@/utils/dateUtils';
 import { handleCancelSubscription } from '@/utils/subscribe/handleCancelSubscription';
 import { handleResumeSubscription } from '@/utils/subscribe/handleResumeSubscription';
@@ -56,7 +54,7 @@ const SubscriptionPaused = () => {
   return (
     <div>
       <div className="flex w-[40.1rem] md:justify-between flex-col md:flex-row gap-[5px] md:gap-0">
-        <p className="text-[4rem] md:text-[5rem] font-bold">일시정지</p>
+        <p className="text-[2.5rem] md:text-[5rem] font-bold">일시정지</p>
         <Button
           className="!w-[12rem] md:w-[14.7rem] h-[4rem] md:h-[6rem] font-bold text-[1.6rem] md:text-[1.8rem] flex justify-center items-center gap-[0.6rem]"
           size="small"
