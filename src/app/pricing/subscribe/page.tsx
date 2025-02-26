@@ -12,6 +12,9 @@ import Image from 'next/image';
 const STORE_ID = process.env.NEXT_PUBLIC_STORE_ID!;
 const CHANNEL_KEY = process.env.NEXT_PUBLIC_CHANNEL_KEY!;
 import { Alert } from '@/app/components/ui/Alert';
+import { useAppDispatch } from '@/hooks/redux/hooks';
+import { clearUserData, setUserData } from '@/store/userDataSlice';
+import { fetchUserData } from '@/api/userData';
 
 import * as PortOne from '@portone/browser-sdk/v2';
 
@@ -20,6 +23,7 @@ const Subscribe = () => {
   const planData = useAppSelector(state => state.plan);
   const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
   const [mobileAlert, setMobileAlert] = useState(false);
   const [isAuthenticatedAlert, setIsAuthenticated] = useState(false);
@@ -73,6 +77,13 @@ const Subscribe = () => {
         }
         // // 구독 결제 요청
         const subscribeResponse = await subscribe(planId, accessToken);
+
+        if (subscribeResponse.message === '정기 결제 및 다음 결제 예약 성공') {
+          dispatch(clearUserData());
+          // 구독하면 로컬의 유저정보(구독현황) 변경
+          const newUserData = await fetchUserData();
+          dispatch(setUserData(newUserData));
+        }
 
         router.push(
           `/pricing/paymentCompleteRedirect?data=${encodeURIComponent(

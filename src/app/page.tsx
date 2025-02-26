@@ -43,10 +43,7 @@ const Home = () => {
   return (
     <LoadingWrapper>
       <div className="flex flex-col">
-        <div className="relative w-full h-[80vh] mb-10">
-          <BannerImage />
-        </div>
-
+        <BannerImage />
         <HeroText />
         <Features />
         <UniqueProcess />

@@ -9,12 +9,16 @@ import useSubStatus from '@/hooks/useSubStatus';
 import { Button } from '../ui/Button';
 import Image from 'next/image';
 import Unsubscription from './Unsubscription';
+import { useAppDispatch } from '@/hooks/redux/hooks';
+import { clearUserData, setUserData } from '@/store/userDataSlice';
+import { fetchUserData } from '@/api/userData';
 
 const SubscriptionActive = () => {
   const subscriptionData = useSubStatus();
   const plan = subscriptionData.status.plan;
   const [subscriptionInfo, setSubscriptionInfo] = useState<string>('');
   const [nextBillDate, setNextBillDate] = useState<string>('');
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -42,7 +46,15 @@ const SubscriptionActive = () => {
   };
 
   const handleUnsubscribe = async (selectedReason: SubscriptionCancelReason) => {
-    await handleCancelSubscription(plan, selectedReason);
+    const unsubscribeResponse = await handleCancelSubscription(plan, selectedReason);
+    console.log(unsubscribeResponse);
+
+    if (unsubscribeResponse.message === '구독 취소 완료, 환불 대기 상태로 변경됨') {
+      dispatch(clearUserData());
+      // 구취하면 로컬의 유저정보(구독현황) 변경
+      const newUserData = await fetchUserData();
+      dispatch(setUserData(newUserData));
+    }
     window.location.reload();
   };
 
