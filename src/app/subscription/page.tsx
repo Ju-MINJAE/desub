@@ -178,7 +178,7 @@ const Subscription = () => {
   const isDefaultImage = displayedImage === '/icons/profile.svg';
   return (
     <LoadingWrapper>
-      <div className="h-full overflow-x-hidden">
+      <div className="h-full overflow-x-hidden md:overflow-x-auto">
         {reviewModal && (
           <Alert
             buttonText="작성완료"
@@ -287,7 +287,7 @@ const Subscription = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 h-auto md:h-[71.2rem] mt-[2.9rem] px-[5.8rem]">
           {/* 프로필 */}
-          <div className="flex flex-col gap-[9.9rem] pb-10 md:pb-0 border-b md:border-r">
+          <div className="flex flex-col gap-[9.9rem] pb-10 md:pb-0 border-b md:border-b-0 md:border-r">
             <div className="mt-[5.5rem] flex flex-col items-center">
               <div className="w-[19.8rem] h-[19.8rem] rounded-full relative z-[-10]">
                 {/* 구독페이지 기본 프사 */}
