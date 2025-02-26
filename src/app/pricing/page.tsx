@@ -5,13 +5,26 @@ import { Button } from '@/app/components/ui/Button';
 import TextButton from '@/app/components/ui/TextButton';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAppSelector } from '@/hooks/redux/hooks';
 import LoadingWrapper from '../components/ui/LoadingWrapper';
 
 const Pricing = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    checkScreenSize(); // 초기값 설정
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+
   const router = useRouter();
   const planData = useAppSelector(state => state.plan);
 
@@ -142,12 +155,12 @@ const Pricing = () => {
                   height={9}
                   className="mr-[1.5rem] md:w-[20px] md:h-[13px] mt-[1rem]"
                 />
-                <span className="flex flex-wrap items-center">
+                <span className="flex flex-wrap items-center relative">
                   All design assets from
                   <span className="relative inline-flex items-center ml-2">
                     <span
-                      className="font-bold underline cursor-pointer"
-                      onClick={handleTooltipToggle}
+                      className="md:font-bold md:underline cursor-none md:cursor-pointer"
+                      onClick={isDesktop ? handleTooltipToggle : undefined}
                     >
                       dshop
                     </span>
@@ -156,10 +169,10 @@ const Pricing = () => {
                       alt="dshop_info"
                       width={16}
                       height={16}
-                      className="absolute -top-2 -right-5"
+                      className="hidden md:block absolute -top-2 -right-5"
                     />
                     {isTooltipOpen && (
-                      <div className="absolute -translate-x-[70%] md:-top-52 md:-left-28 transform -translate-y-[70%] md:translate-x-2 md:translate-y-0 bg-black rounded-[2.3rem] text-white text-[1.5rem] px-[3.6rem] py-[3rem] min-w-[25rem] md:min-w-[37.8rem] z-40">
+                      <div className="hidden md:block absolute -translate-x-[70%] md:-top-52 md:-left-28 transform -translate-y-[70%] md:translate-x-2 md:translate-y-0 bg-black rounded-[2.3rem] text-white text-[1.5rem] px-[3.6rem] py-[3rem] min-w-[25rem] md:min-w-[37.8rem] z-40">
                         dshop은 dbre의 design asset을 구매 가능한 온라인몰입니다. <br />
                         <Link
                           href="https://www.dbre.co.kr/dshop"
