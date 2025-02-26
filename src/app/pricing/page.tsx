@@ -159,7 +159,7 @@ const Pricing = () => {
                       className="absolute -top-2 -right-5"
                     />
                     {isTooltipOpen && (
-                      <div className="fixed md:absolute top-1/2 left-1/2 md:-top-52 md:-left-28 transform -translate-x-1/2 -translate-y-1/2 md:translate-x-2 md:translate-y-0 bg-black rounded-[2.3rem] text-white text-[1.5rem] px-[3.6rem] py-[3rem] min-w-[37.8rem] z-40">
+                      <div className="absolute -translate-x-[70%] md:-top-52 md:-left-28 transform -translate-y-[70%] md:translate-x-2 md:translate-y-0 bg-black rounded-[2.3rem] text-white text-[1.5rem] px-[3.6rem] py-[3rem] min-w-[25rem] md:min-w-[37.8rem] z-40">
                         dshop은 dbre의 design asset을 구매 가능한 온라인몰입니다. <br />
                         <Link
                           href="https://www.dbre.co.kr/dshop"
