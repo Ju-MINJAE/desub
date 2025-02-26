@@ -8,7 +8,7 @@ const HeroText = () => {
   const isInView = useInView(ref, { once: true, amount: 0.7 });
 
   return (
-    <div ref={ref} className="mt-[10rem] md:mt-[17rem] text-center">
+    <div ref={ref} className="mt-[7rem] md:mt-[10rem] text-center">
       <motion.div
         className="font-normal text-[1.6rem] md:text-[4rem]"
         initial={{ y: 50, opacity: 0 }}
