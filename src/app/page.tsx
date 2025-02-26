@@ -42,7 +42,7 @@ const Home = () => {
 
   return (
     <LoadingWrapper>
-      <div className="flex flex-col">
+      <div className="flex flex-col overflow-x-hidden">
         <BannerImage />
         <HeroText />
         <Features />
