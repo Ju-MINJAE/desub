@@ -313,13 +313,17 @@ const Subscription = () => {
                     <span className="underline pr-3 md:pr-5">{userData?.name}</span> 님
                   </p>
 
-                  <button>
+                  <button
+                    type="button"
+                    onClick={() => router.push('/myInfo')}
+                    className="w-[2rem] h-[2rem] md:w-[2.4rem] md:h-[2.4rem]"
+                  >
                     <Image
                       src="/icons/setting.svg"
                       alt="desub_myInfo"
-                      width={24}
-                      height={24}
-                      onClick={() => router.push('/myInfo')}
+                      width={20}
+                      height={20}
+                      className="md:w-[24px] md:h-[24px]"
                     />
                   </button>
                 </div>
