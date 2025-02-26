@@ -55,10 +55,10 @@ const SubscriptionPaused = () => {
 
   return (
     <div>
-      <div className="flex w-[40.1rem] justify-between">
-        <p className="text-[5rem] font-bold">일시정지</p>
+      <div className="flex w-[40.1rem] md:justify-between flex-col md:flex-row gap-[5px] md:gap-0">
+        <p className="text-[4rem] md:text-[5rem] font-bold">일시정지</p>
         <Button
-          className="w-[14.7rem] h-[6rem] font-bold text-[1.8rem] flex justify-center items-center gap-[0.6rem]"
+          className="!w-[12rem] md:w-[14.7rem] h-[4rem] md:h-[6rem] font-bold text-[1.6rem] md:text-[1.8rem] flex justify-center items-center gap-[0.6rem]"
           size="small"
           variant="outline"
           onClick={() => plan !== null && handleSubscriptionStatus(plan)}

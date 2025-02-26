@@ -178,7 +178,7 @@ const Subscription = () => {
   const isDefaultImage = displayedImage === '/icons/profile.svg';
   return (
     <LoadingWrapper>
-      <div className="h-full">
+      <div className="h-full overflow-x-hidden">
         {reviewModal && (
           <Alert
             buttonText="작성완료"
@@ -261,7 +261,7 @@ const Subscription = () => {
             <div className="flex items-center">
               <Button
                 onClick={openReviewModal}
-                className={`w-[11.9rem] h-[3.3rem] text-[1.5rem] ${isBlinking ? 'blinking' : ''}`}
+                className={`!w-[11.9rem] h-[3.3rem] text-[1.5rem] ${isBlinking ? 'blinking' : ''}`}
                 size="small"
                 variant="outline"
               >
@@ -273,15 +273,21 @@ const Subscription = () => {
                 className="cursor-pointer"
                 onClick={openReviewModal}
               >
-                <Image src="/icons/review.svg" alt="review_button" width={176.99} height={68} />
+                <Image
+                  src="/icons/review.svg"
+                  alt="review_button"
+                  width={176.99}
+                  height={68}
+                  className="hidden md:block"
+                />
               </div>
             </div>
           )}
         </div>
 
-        <div className="grid grid-cols-2 h-[71.2rem] mt-[2.9rem] px-[5.8rem]">
+        <div className="grid grid-cols-1 md:grid-cols-2 h-auto md:h-[71.2rem] mt-[2.9rem] px-[5.8rem]">
           {/* 프로필 */}
-          <div className="flex flex-col gap-[9.9rem] border-r">
+          <div className="flex flex-col gap-[9.9rem] pb-10 md:pb-0 border-b md:border-r">
             <div className="mt-[5.5rem] flex flex-col items-center">
               <div className="w-[19.8rem] h-[19.8rem] rounded-full relative z-[-10]">
                 {/* 구독페이지 기본 프사 */}
@@ -300,11 +306,11 @@ const Subscription = () => {
                 )}
               </div>
 
-              <div className="mt-[2rem] text-center">
-                <p className="text-[5rem] font-bold italic">wassup!</p>
+              <div className="mt-[3rem] md:mt-[2rem] text-center">
+                <p className="text-[3rem] md:text-[5rem] font-bold italic">wassup!</p>
                 <div className="flex gap-[1rem]">
-                  <p className="text-[5rem] font-bold">
-                    <span className="underline">{userData?.name}</span> 님
+                  <p className="text-[4rem] md:text-[5rem] font-bold flex whitespace-nowrap">
+                    <span className="underline pr-3 md:pr-5">{userData?.name}</span> 님
                   </p>
 
                   <button>
@@ -319,9 +325,9 @@ const Subscription = () => {
                 </div>
               </div>
 
-              <div className="flex gap-[2.7rem] mt-[5rem]">
+              <div className="flex gap-[2rem] md:gap-[2.7rem] mt-[5rem]">
                 <Button
-                  className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem]"
+                  className="w-full px-5 whitespace-nowrap md:w-[20.9rem] h-[4rem] md:h-[6rem] border border-black font-bold text-[1.6rem] md:text-[1.8rem]"
                   size="small"
                   variant="green"
                   onClick={() => router.push('/workRequest')}
@@ -330,13 +336,19 @@ const Subscription = () => {
                 </Button>
 
                 <Button
-                  className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem] flex justify-center items-center gap-[1.7rem]"
+                  className="w-full px-5 md:w-[20.9rem] h-[4rem] md:h-[6rem] border border-black font-bold text-[1.6rem] md:text-[1.8rem] flex justify-center items-center gap-[1.7rem]"
                   size="small"
                   variant="outline"
                   onClick={goToTrelloLink}
                 >
                   Workspace
-                  <Image src="/icons/workSpace.svg" alt="desub_workspace" width={24} height={24} />
+                  <Image
+                    src="/icons/workSpace.svg"
+                    alt="desub_workspace"
+                    width={24}
+                    height={24}
+                    className="hidden md:flex"
+                  />
                 </Button>
               </div>
               <TextButton href="/HowToRequest" className="mt-[4rem] text-[1.5rem]">
@@ -350,11 +362,11 @@ const Subscription = () => {
             </div>
           </div>
 
-          <div className="flex flex-col pl-[5.9rem] justify-center">
-            <div className="flex justify-between mt-[0.9rem]">
+          <div className="flex flex-col md:pl-[5.9rem] justify-center min-h-[50rem] md:h-auto">
+            <div className="flex md:flex-row flex-col justify-between mt-[0.9rem]">
               <p className="font-bold">Status</p>
               <button
-                className="font-bold underline"
+                className="font-bold underline mr-auto md:mr-0 md:pt-0 pt-5"
                 onClick={() => setSubscriptionStatusModal(true)}
               >
                 구독현황 변경 및 결제이력

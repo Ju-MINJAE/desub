@@ -21,12 +21,12 @@ const SubscriptionsStatus = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="w-full max-w-[40.1rem] flex justify-between">
-        <p className="text-[5rem] font-bold">{statusText}</p>
+      <div className="w-full max-w-[40.1rem] flex justify-between gap-[5px] md:gap-0">
+        <p className="md:mt-0 mt-5 text-[4rem] md:text-[5rem] font-bold">{statusText}</p>
       </div>
       {(status === 'none' || status === 'cancelled') && (
         <Button
-          className="w-[20.9rem] h-[6rem] border border-black font-bold text-[1.8rem] mt-[6.7rem]"
+          className="w-[15rem] md:w-[20.9rem] h-[4rem] md:h-[6rem] border border-black font-bold text-[1.6rem] md:text-[1.8rem] mt-[6.7rem]"
           size="small"
           variant="green"
           onClick={() => router.push('/pricing')}
