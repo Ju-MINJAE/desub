@@ -76,7 +76,7 @@ const Service = () => {
             },
           }}
           id="text"
-          className="w-full mt-[18rem] md:mt-[40rem] flex flex-col gap-3 md:gap-14 justify-start pl-[3.1rem] md:pl-[80rem] pr-8"
+          className="w-full mt-[18rem] md:mt-[40rem] flex flex-col gap-3 md:gap-14 justify-start pl-[5%] md:pl-[50%]"
         >
           <motion.div
             variants={{

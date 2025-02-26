@@ -25,7 +25,7 @@ const PricingProcess = () => {
 
   return (
     <div className="flex justify-end w-full mt-[45.274rem]">
-      <div className="flex flex-col items-start pr-[16rem] md:pr-[48.5rem]">
+      <div className="flex flex-col items-start pr-[17rem] md:pr-[48.5rem]">
         <Image
           src="/icons/ellipses.svg"
           alt="Ellipses_Service"
