@@ -71,7 +71,7 @@ const Header = () => {
     { href: '/about', label: 'about' },
     { href: '/service', label: 'service' },
     { href: '/pricing', label: 'pricing' },
-    { href: '/book', label: 'book a call' },
+    // { href: '/book', label: 'book a call' },
   ];
 
   return (
