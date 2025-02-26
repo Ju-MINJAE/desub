@@ -47,7 +47,6 @@ const SubscriptionActive = () => {
 
   const handleUnsubscribe = async (selectedReason: SubscriptionCancelReason) => {
     const unsubscribeResponse = await handleCancelSubscription(plan, selectedReason);
-    console.log(unsubscribeResponse);
 
     if (unsubscribeResponse.message === '구독 취소 완료, 환불 대기 상태로 변경됨') {
       dispatch(clearUserData());
