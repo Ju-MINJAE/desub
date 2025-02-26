@@ -45,13 +45,13 @@ export const Alert = ({
   const getSizeStyles = (size?: AlertProps['size']) => {
     switch (size) {
       case 'full':
-        return 'w-[60%] md:w-[100%] h-[4rem] md:h-[5rem] text-[1.5rem] md:text-[1.8rem]';
+        return 'w-full h-[5rem] text-[1.8rem]';
       case 'small':
-        return 'w-[20rem] h-[5rem] text-[1.8rem]';
+        return 'w-full h-[5rem] text-[1.8rem]';
       case 'normal':
-        return 'w-[32.8rem] h-[5rem] text-[1.8rem]';
+        return 'w-full h-[5rem] text-[1.8rem]';
       default:
-        return 'w-[60%] md:w-[100%] h-[4rem] md:h-[5rem] text-[1.5rem] md:text-[1.8rem]';
+        return 'w-full h-[5rem] text-[1.8rem]';
     }
   };
 
