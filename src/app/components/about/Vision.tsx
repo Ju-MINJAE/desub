@@ -5,17 +5,25 @@ import { motion } from 'framer-motion';
 
 const VisionSection: React.FC = () => {
   return (
-    <section className="mt-[13.6rem] md:mt-[28.35rem] mx-auto lg:mx-[11.1rem] pl-[4.5rem] md:pl-0">
+    <section className="relative mt-[13.6rem] md:mt-[28.35rem] mx-auto lg:mx-[11.1rem] pl-[4.5rem] md:pl-0">
       <div className="flex text-[1.8rem] sm:text-[2.4rem] md:text-[3rem]">
-        <motion.span
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="-rotate-90 text-[3rem] transform origin-top-left translate-y-[15rem] font-bold hidden md:inline-block"
-        >
-          our vision
-        </motion.span>
+        <div className="hidden md:block relative w-[8rem]">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="absolute"
+            style={{
+              transformOrigin: 'left top',
+              transform: 'rotate(-90deg) translateX(-100%)',
+              top: '15rem',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <span className="text-[3rem] font-bold">our vision</span>
+          </motion.div>
+        </div>
         <div className="space-y-[3rem] font-bold">
           <h3 className="text-[3rem] sm:text-[4rem] font-bold mt-[8rem] mb-[4rem] md:hidden">
             our vision
