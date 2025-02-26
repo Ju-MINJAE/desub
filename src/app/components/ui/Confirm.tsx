@@ -56,7 +56,7 @@ export const Confirm = ({
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-60">
       <div
-        className={`w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center bg-white ${className}`}
+        className={`min-w-[30rem] md:min-w-[45.6rem] h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center bg-white ${className}`}
       >
         <Image
           className="self-end cursor-pointer"
@@ -74,13 +74,13 @@ export const Confirm = ({
             <div className="font-normal text-[1.6rem]">{contents}</div>
           </div>
         </div>
-        <div className="flex gap-[5%]">
+        <div className="flex gap-[5%] w-full">
           <button
             onClick={onCancel}
             className={`
             rounded-[50px]
             px-[1.375rem] py-[0.3125rem]
-            w-[20rem] h-[5rem] text-[1.8rem]
+           w-full h-[5rem] text-[1.8rem]
             ${getVariantStyles1(variant1)}
           `}
             {...props}
@@ -92,7 +92,7 @@ export const Confirm = ({
             className={`
             rounded-[50px]
             px-[1.375rem] py-[0.3125rem]
-            w-[20rem] h-[5rem] text-[1.8rem]
+           w-full h-[5rem] text-[1.8rem]
             ${getVariantStyles2(variant2)}
           `}
             {...props}
