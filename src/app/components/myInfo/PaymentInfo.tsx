@@ -165,7 +165,7 @@ const PaymentInfo = () => {
             />
           )}
           <hr className="w-[70rem] border-lightgray" />
-          <div className="flex flex-col gap-[5rem] w-full md:w-[57.4rem]">
+          <div className="flex flex-col gap-[5rem] w-full md:w-[57.4rem] md:px-0 px-[4rem]">
             <p className="text-[2rem] font-extrabold">결제정보</p>
 
             <div className="flex items-center">

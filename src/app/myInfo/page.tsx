@@ -113,7 +113,10 @@ const MyInfo = () => {
   };
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="h-full">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="h-full overflow-x-hidden md:overflow-x-auto"
+      >
         <BackButton className="pt-[4.7rem] px-[4.7rem]" text="my info" />
         <div className="w-full flex flex-col gap-[9.5rem] items-center">
           <ProfileDetails
@@ -125,7 +128,7 @@ const MyInfo = () => {
           <div className="flex w-full md:w-[57.4rem] md:justify-start justify-center">
             <Password />
           </div>
-          <div className="flex flex-col gap-[5rem]">
+          <div className="flex flex-col gap-[5rem] w-full md:w-[57.4rem]">
             <PaymentInfo />
           </div>
           <Button type="button" variant="black" onClick={handleValidateBeforeOpenModal}>
