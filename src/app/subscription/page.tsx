@@ -233,18 +233,18 @@ const Subscription = () => {
             contents={
               <div className="w-full h-[15rem] flex flex-col overflow-hidden">
                 <div className="flex pb-[1.9rem] text-[1.5rem] font-bold">
-                  <div className="w-3/4">
+                  <div className="w-2/3 md:w-3/4">
                     <p>일시</p>
                   </div>
-                  <div className="w-1/4">
+                  <div className="w-1/3 md:w-1/4">
                     <p>내용</p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-[1.5rem] text-[1.5rem] overflow-y-auto">
                   {reversedHistory.map((item, index) => (
                     <div key={index} className="flex items-center text-medium">
-                      <div className="w-3/4">{formatDate(item.change_date)}</div>
-                      <div className="w-1/4">{translateStatus(item.status)}</div>
+                      <div className="w-2/3 md:w-3/4">{formatDate(item.change_date)}</div>
+                      <div className="w-1/3 md:w-1/4">{translateStatus(item.status)}</div>
                     </div>
                   ))}
                 </div>

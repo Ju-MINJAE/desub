@@ -51,7 +51,7 @@ const SignupForm = () => {
       // 완료화면으로 이동
       router.push('/signup/complete');
     } catch (error) {
-      alert('오류 발생');
+      console.error(error);
     }
   };
 

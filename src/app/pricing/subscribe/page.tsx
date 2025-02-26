@@ -115,7 +115,7 @@ const Subscribe = () => {
       )}
       {mobileAlert && (
         <Alert
-          buttonText="결제하기"
+          buttonText="확인"
           size="full"
           title="결제는 pc에서 진행해주시기 바랍니다."
           variant="green"

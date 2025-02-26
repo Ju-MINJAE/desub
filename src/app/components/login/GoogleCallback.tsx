@@ -45,7 +45,8 @@ const GoogleCallback = () => {
         }
       } catch (error) {
         console.error('🚨 구글 로그인 오류:', error);
-        alert('로그인 요청 중 문제가 발생했습니다. 다시 시도해주세요.');
+        // TODO: 나중에 Alert 컴포넌트로 띄우기
+        // alert('로그인 요청 중 문제가 발생했습니다. 다시 시도해주세요.');
         router.push('/login');
       }
     };

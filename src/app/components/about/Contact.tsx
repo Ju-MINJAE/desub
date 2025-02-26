@@ -14,9 +14,9 @@ const ContactSection: React.FC = () => {
           whileInView={{ opacity: 1, rotate: -13.369, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           viewport={{ once: true }}
-          className="absolute w-full md:w-[71rem] h-[15rem] top-[-50%] md:top-[-20%] right-0 md:right-[2%] bg-primary shadow-lg flex items-center z-10"
+          className="absolute w-full md:w-[71rem] h-[10rem] md:h-[15rem] top-[-50%] md:top-[-20%] right-0 md:right-[2%] bg-primary shadow-lg flex items-center z-10"
         >
-          <p className="text-[2.5rem] md:text-[4rem] font-bold text-center w-full">
+          <p className="text-[2rem] md:text-[4rem] font-bold text-center w-full">
             wassup? desub! wassup? desub!
             <br />
             wassup? desub! wassup? desub!

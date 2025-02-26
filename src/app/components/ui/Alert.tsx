@@ -45,20 +45,20 @@ export const Alert = ({
   const getSizeStyles = (size?: AlertProps['size']) => {
     switch (size) {
       case 'full':
-        return 'w-[100%] h-[5rem] text-[1.8rem]';
+        return 'w-[60%] md:w-[100%] h-[4rem] md:h-[5rem] text-[1.5rem] md:text-[1.8rem]';
       case 'small':
         return 'w-[20rem] h-[5rem] text-[1.8rem]';
       case 'normal':
         return 'w-[32.8rem] h-[5rem] text-[1.8rem]';
       default:
-        return 'w-[100%] h-[5rem] text-[1.8rem]';
+        return 'w-[60%] md:w-[100%] h-[4rem] md:h-[5rem] text-[1.5rem] md:text-[1.8rem]';
     }
   };
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-[9999]">
       <div
-        className={`min-w-[45.6rem] min-h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center bg-white ${className}`}
+        className={`min-w-[30rem] md:min-w-[45.6rem] min-h-[30.4rem] rounded-[3rem] px-[2.7rem] pt-[2.2rem] pb-[2.8rem] flex flex-col justify-between items-center bg-white ${className}`}
       >
         <Image
           className="self-end cursor-pointer mb-0"
@@ -68,8 +68,8 @@ export const Alert = ({
           height={40}
           onClick={onClose}
         />
-        <div className="font-medium text-center text-[2rem]">{title}</div>
-        <div className="w-full h-full font-normal text-[1.6rem]">{contents}</div>
+        <div className="font-medium text-center text-[1.8rem] md:text-[2rem]">{title}</div>
+        <div className="w-full h-full font-normal text-[1.4rem] md:text-[1.6rem]">{contents}</div>
         <button
           type={buttonType}
           onClick={onSubmit}
