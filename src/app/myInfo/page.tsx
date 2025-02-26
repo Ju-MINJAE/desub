@@ -115,10 +115,10 @@ const MyInfo = () => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="h-full overflow-x-hidden md:overflow-x-auto"
+        className="h-full"
       >
         <BackButton className="pt-[4.7rem] px-[4.7rem]" text="my info" />
-        <div className="w-full flex flex-col gap-[9.5rem] items-center">
+        <div className="w-full flex flex-col gap-[9.5rem] items-center mt-10 md:mt-0">
           <ProfileDetails
             register={register}
             errors={errors}

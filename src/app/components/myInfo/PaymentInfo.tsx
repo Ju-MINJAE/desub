@@ -164,33 +164,34 @@ const PaymentInfo = () => {
               onSubmit={() => handleMobileAlertClosePopup()}
             />
           )}
-          <hr className="w-[70rem] border-lightgray" />
+          <hr className="w-full md:w-[70rem] border-lightgray" />
           <div className="flex flex-col gap-[5rem] w-full md:w-[57.4rem] md:px-0 px-[4rem]">
             <p className="text-[2rem] font-extrabold">결제정보</p>
 
-            <div className="flex items-center">
-              <p className="text-[1.6rem] min-w-[13.9rem]">결제카드</p>
+            <div className="flex md:items-center items-baseline justify-between md:justify-start">
+              <p className="text-[1.6rem] min-w-[10rem] md:min-w-[13.9rem]">결제카드</p>
               <div className="flex items-center gap-[1.5rem] text-[1.6rem] font-medium">
-                <p>
-                  {cardDetailInfo?.card_name}&nbsp;&nbsp;
-                  {cardDetailInfo?.card_number}
+                <p className="md:flex text-right">
+                  <span className="flex">{cardDetailInfo?.card_name}&nbsp;&nbsp;</span>
+                  <span>{cardDetailInfo?.card_number}</span>
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center">
-              <p className="text-[1.6rem] min-w-[13.9rem]">다음 정기 결제일</p>
+            <div className="flex md:items-center items-baseline justify-between md:justify-start">
+              <p className="text-[1.6rem] min-w-[10rem] md:min-w-[13.9rem]">다음 정기 결제일</p>
               <div className="flex items-center text-[1.6rem] font-medium">
-                <p>
-                  {formattedNextBillDate}&nbsp;/&nbsp;
-                  {formattedPrice}원
+                <p className="md:flex text-right">
+                  <span className="flex">{formattedNextBillDate}</span>
+                  <span className="mx-1 hidden md:block">/</span>
+                  <span>{formattedPrice}원</span>
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center">
-              <p className="text-[1.6rem] min-w-[13.9rem]">결제 이메일</p>
-              <div className="w-3/4 flex items-center text-[1.6rem] font-medium">
+            <div className="flex md:items-center items-baseline justify-between md:justify-start">
+              <p className="text-[1.6rem] min-w-[10rem] md:min-w-[13.9rem]">결제 이메일</p>
+              <div className="flex items-center text-[1.6rem] text-right">
                 <p>{userData?.email || '-'}</p>
               </div>
             </div>

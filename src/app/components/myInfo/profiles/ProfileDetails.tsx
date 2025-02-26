@@ -13,9 +13,9 @@ interface ProfileDetailsProps {
   trigger: UseFormTrigger<UserProfileUpdateValue>;
 }
 
-const ProfileDetails: React.FC<ProfileDetailsProps> = ({ register, errors, setValue,trigger }) => {
+const ProfileDetails: React.FC<ProfileDetailsProps> = ({ register, errors, setValue, trigger }) => {
   return (
-    <div className="flex flex-col items-center gap-[5rem]">
+    <div className="flex flex-col items-center gap-[5rem] px-[4rem]">
       <ProfilesImage register={register} setValue={setValue} />
       <p className="text-[2rem] font-extrabold">내 정보</p>
       <UserInfo register={register} errors={errors} setValue={setValue} trigger={trigger} />
