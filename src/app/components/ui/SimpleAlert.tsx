@@ -14,7 +14,7 @@ export const SimpleAlert = ({ title, contents, className = '', onClose }: Simple
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-60">
       <div
-        className={`w-[45.6rem] h-[30.4rem] rounded-[3rem] p-[2.7rem] flex flex-col bg-white gap-[4rem] ${className}`}
+        className={`w-[80%] md:w-[45.6rem] h-[30.4rem] rounded-[3rem] p-[2.7rem] flex flex-col bg-white gap-[1rem] md:gap-[4rem] ${className}`}
       >
         <div className="flex justify-between items-center">
           <div className="text-[2rem] font-medium">{title}</div>
