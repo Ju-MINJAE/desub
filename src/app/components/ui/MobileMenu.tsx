@@ -63,7 +63,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
     { href: '/about', label: 'About' },
     { href: '/service', label: 'Service' },
     { href: '/pricing', label: 'Pricing' },
-    { href: '/book', label: 'Book a call' },
+    // { href: '/book', label: 'Book a call' },
     { href: '/pricing/subscribe', label: 'Subscribe', className: 'pt-[3.5rem]' },
     ...(isAuthenticated ? [{ href: '/subscription', label: 'My subscription' }] : []),
   ];
