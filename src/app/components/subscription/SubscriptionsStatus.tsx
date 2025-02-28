@@ -14,7 +14,8 @@ const SubscriptionsStatus = () => {
     active: '구독중',
     none: '미구독',
     cancelled: '미구독',
-    refund_pending: '구독 취소 승인 중',
+    // refund_pending: '구독 취소 승인 중',
+    refund_pending: '구독중',
     paused: '일시정지',
     error: '오류 발생',
   }[status];
