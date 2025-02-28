@@ -25,7 +25,7 @@ const SubscriptionActive = () => {
       try {
         if (subscriptionData.status.sub_status === 'active') {
           const formattedEndDate = formatDateShort(subscriptionData.status.end_date);
-          const daysRemaining = calculateRemainingDays(subscriptionData.status.end_date);
+          // const daysRemaining = calculateRemainingDays(subscriptionData.status.end_date);
           // setSubscriptionInfo(`~${formattedEndDate} / D-${daysRemaining}일 남음`);
           setSubscriptionInfo(`~${formattedEndDate}`);
 
