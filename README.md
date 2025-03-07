@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## 🧑🏻‍💻 팀 소개 
 
-First, run the development server:
+<table>
+  <thead>
+    <tr>
+      <th align="center"> FE 윤현정 </th>
+      <th align="center"> FE 주민재 </th>
+      <th align="center"> FE 한효찬 </th>
+      <th align="center"> FE 안지선 </th>
+      <th align="center"> BE 임수혁 </th>
+      <th align="center"> BE 강산 </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">
+        <a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/yoonhyeonjeong">
+          <img src="https://avatars.githubusercontent.com/u/66927252?v=4" width="100" style="max-width: 100%;">
+        </a>
+      </td>
+      <td align="center">
+        <a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/Ju-MINJAE">
+          <img src="https://avatars.githubusercontent.com/u/145652237?v=4" width="100" style="max-width: 100%;">
+        </a>
+      </td>
+      <td align="center">
+        <a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/hanhyochan">
+          <img src="https://avatars.githubusercontent.com/u/166975979?v=4" width="100" style="max-width: 100%;">
+        </a>
+      </td>
+      <td align="center">
+        <a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/jiseon-nnn">
+          <img src="https://avatars.githubusercontent.com/u/180498220?v=4" width="100" style="max-width: 100%;">
+        </a>
+      </td>
+       <td align="center">
+        <a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/limsu1015">
+          <img src="https://avatars.githubusercontent.com/u/179792450?v=4" width="100" style="max-width: 100%;">
+        </a>
+      </td>
+      <td align="center">
+        <a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/mountain-kangkang">
+          <img src="https://avatars.githubusercontent.com/u/96615456?v=4" width="100" style="max-width: 100%;">
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/yoonhyeonjeong">@yoonhyeonjeong</a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/Ju-MINJAE">@Ju-MINJAE</a>
+      </td>
+      <td align="center">
+         <a href="https://github.com/hanhyochan">@hanhyochan</a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/jiseon-nnn">@jiseon-nnn</a>
+      </td>
+       <td align="center">
+        <a href="https://github.com/limsu1015">@limsu1015</a>
+      </td>
+         <td align="center">
+        <a href="https://github.com/mountain-kangkang">@mountain-kangkang</a>
+      </td>
+    </tr>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+  </tbody>
+</table>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📖 desub
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### design + subscription
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> 합리적인 가격으로 최고의 디자인 팀을 구독 <br />
+> 디자이너의 이직, 인사 이동 리스크 없이 작업물 산출<br />
+> 쉽고 빠른 디자인 커뮤니케이션
 
-## Learn More
+---
+## 배포 링크
 
-To learn more about Next.js, take a look at the following resources:
+> ### [desub](https://www.desub.kr)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 사용 스택
 
-## Deploy on Vercel
+![desub](https://github.com/user-attachments/assets/0f4ad774-0b5d-4e1d-9917-038c47f567d1)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+--- 
+
+
+## 📋 Documents
+> [📜 API 명세서](https://docs.google.com/spreadsheets/d/1sx2uSEixh9EUacEfXV9xWmQPP07XizprTK7cfd-IcN4/edit?usp=sharing)
+> 
+> [📜 요구사항 정의서](https://docs.google.com/spreadsheets/d/1sx2uSEixh9EUacEfXV9xWmQPP07XizprTK7cfd-IcN4/edit?usp=sharing)
+> 
+> [📜 ERD](https://drive.google.com/file/d/1fJ1csA7N2YxLkUf5gTIP9zwIxVP8NibJ/view?usp=sharing)
+> 
+> [📜 테이블 명세서](https://docs.google.com/spreadsheets/d/1sx2uSEixh9EUacEfXV9xWmQPP07XizprTK7cfd-IcN4/edit?usp=sharing)
+>
+> [📜 화면 정의서](https://docs.google.com/spreadsheets/d/1vud5xV8rB9Y6akOIma49hSzdZsoj8DVG0-fYE4NdP_g/edit?usp=sharing)
+>
+> [📜 플로우 차트](https://www.figma.com/board/dBJtsHeJYlFh0cyLdg1txy/desub_service_flow?node-id=0-1&t=6WHHPhFZrEYQUZGd-1)
+>
+> [📜 와이어프레임](https://www.figma.com/design/glHpNsiDT7trlViTlNex4i/desub-%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84?node-id=24-2&t=oU5VgP5zaSJ5ycfJ-1)
+
+
+----
